@@ -1,0 +1,994 @@
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEMO1                          TABLE
+FAIL                           TABLE
+TEST1                          TABLE
+COLLEGE                        TABLE
+SCHOOL                         TABLE
+UNIVERSITY                     TABLE
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+TESTSTU2                       TABLE
+ACCOUNTS                       TABLE
+TEST_EMP                       TABLE
+
+18 rows selected.
+
+SQL> select * from demo1
+  2  ;
+
+        ID
+----------
+        10
+        20
+
+SQL> /
+
+        ID
+----------
+        10
+        20
+
+SQL> select * from fail;
+
+        ID
+----------
+        10
+        20
+        30
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+DNAME
+--------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20
+RESEARCH
+
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+SALES
+
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+SALES
+
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+RESEARCH
+
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+SALES
+
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+SALES
+
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+ACCOUNTING
+
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+RESEARCH
+
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+ACCOUNTING
+
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+SALES
+
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+RESEARCH
+
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+SALES
+
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+RESEARCH
+
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+ACCOUNTING
+
+      8800 pk         ceo                                  3000
+
+
+
+15 rows selected.
+
+SQL> set pagesize 1000
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+DNAME
+--------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20
+RESEARCH
+
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+SALES
+
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+SALES
+
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+RESEARCH
+
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+SALES
+
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+SALES
+
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+ACCOUNTING
+
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+RESEARCH
+
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+ACCOUNTING
+
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+SALES
+
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+RESEARCH
+
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+SALES
+
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+RESEARCH
+
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+ACCOUNTING
+
+      8800 pk         ceo                                  3000
+
+
+
+15 rows selected.
+
+SQL> setline 1000
+SP2-0734: unknown command beginning "setline 10..." - rest of line ignored.
+SQL> set line 1000
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+
+15 rows selected.
+
+SQL> create table empdemo as select * from emp;
+
+Table created.
+
+SQL> create table deptdemo as select * from dept;
+
+Table created.
+
+SQL> select * from empdemo;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+
+15 rows selected.
+
+SQL> select * from deptdemo;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> merge into empdemo e using deptdemo d on e.deptno=d.deptno when matched then update set e.deptno=d.deptno when not matched insert (e.deptno) values(d.deptno);
+merge into empdemo e using deptdemo d on e.deptno=d.deptno when matched then update set e.deptno=d.deptno when not matched insert (e.deptno) values(d.deptno)
+                                         *
+ERROR at line 1:
+ORA-00969: missing ON keyword
+
+
+SQL> merge into empdemo e using deptdemo d on( e.deptno=d.deptno) when matched then update set e.deptno=d.deptno when not matched insert (e.deptno) values(d.deptno);
+merge into empdemo e using deptdemo d on( e.deptno=d.deptno) when matched then update set e.deptno=d.deptno when not matched insert (e.deptno) values(d.deptno)
+                                                                                                                             *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> merge into empdemo e using deptdemo d on( e.deptno=d.deptno) when matched then update set e.deptno=d.deptno when not matched then insert (e.deptno) values(d.deptno);
+merge into empdemo e using deptdemo d on( e.deptno=d.deptno) when matched then update set e.deptno=d.deptno when not matched then insert (e.deptno) values(d.deptno)
+                                          *
+ERROR at line 1:
+ORA-38104: Columns referenced in the ON Clause cannot be updated: "E"."DEPTNO"
+
+
+SQL> select * from view;
+select * from view
+              *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> select * from user_view;
+select * from user_view
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from user_views;
+
+no rows selected
+
+SQL>
+SQL> desc user_views;
+ Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ VIEW_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 NOT NULL VARCHAR2(30)
+ TEXT_LENGTH                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        NUMBER
+ TEXT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               LONG
+ TYPE_TEXT_LENGTH                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   NUMBER
+ TYPE_TEXT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          VARCHAR2(4000)
+ OID_TEXT_LENGTH                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    NUMBER
+ OID_TEXT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           VARCHAR2(4000)
+ VIEW_TYPE_OWNER                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    VARCHAR2(30)
+ VIEW_TYPE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          VARCHAR2(30)
+ SUPERVIEW_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     VARCHAR2(30)
+
+SQL> create view empdat as select 8 from emp;
+create view empdat as select 8 from emp
+                             *
+ERROR at line 1:
+ORA-00998: must name this expression with a column alias
+
+
+SQL> create view empdat as select * from emp;
+create view empdat as select * from emp
+            *
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> show system_privs;
+SP2-0735: unknown SHOW option beginning "system_pri..."
+SQL> select * from system_privs;
+select * from system_privs
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from seession_privs;
+select * from seession_privs
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from session_privs;
+
+PRIVILEGE
+----------------------------------------
+CREATE SESSION
+UNLIMITED TABLESPACE
+CREATE TABLE
+CREATE CLUSTER
+CREATE SEQUENCE
+CREATE PROCEDURE
+CREATE TRIGGER
+CREATE TYPE
+CREATE OPERATOR
+CREATE INDEXTYPE
+
+10 rows selected.
+
+SQL> select * from role_sys_privs
+  2  /
+
+ROLE                           PRIVILEGE                                ADM
+------------------------------ ---------------------------------------- ---
+RESOURCE                       CREATE SEQUENCE                          NO
+RESOURCE                       CREATE TRIGGER                           NO
+RESOURCE                       CREATE CLUSTER                           NO
+RESOURCE                       CREATE PROCEDURE                         NO
+RESOURCE                       CREATE TYPE                              NO
+CONNECT                        CREATE SESSION                           NO
+RESOURCE                       CREATE OPERATOR                          NO
+RESOURCE                       CREATE TABLE                             NO
+RESOURCE                       CREATE INDEXTYPE                         NO
+
+9 rows selected.
+
+SQL> show user
+USER is "SCOTT"
+SQL> conn sys as sysdba/sys;
+SP2-0306: Invalid option.
+Usage: CONN[ECT] [logon] [AS {SYSDBA|SYSOPER}]
+where <logon>  ::= <username>[/<password>][@<connect_identifier>] | /
+SQL> conn sys as sysdba
+Enter password:
+Connected.
+SQL> desc session_privs;
+ Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ PRIVILEGE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 NOT NULL VARCHAR2(40)
+
+SQL> select * from session_privs;
+
+PRIVILEGE
+----------------------------------------
+ALTER SYSTEM
+AUDIT SYSTEM
+CREATE SESSION
+ALTER SESSION
+RESTRICTED SESSION
+CREATE TABLESPACE
+ALTER TABLESPACE
+MANAGE TABLESPACE
+DROP TABLESPACE
+UNLIMITED TABLESPACE
+CREATE USER
+BECOME USER
+ALTER USER
+DROP USER
+CREATE ROLLBACK SEGMENT
+ALTER ROLLBACK SEGMENT
+DROP ROLLBACK SEGMENT
+CREATE TABLE
+CREATE ANY TABLE
+ALTER ANY TABLE
+BACKUP ANY TABLE
+DROP ANY TABLE
+LOCK ANY TABLE
+COMMENT ANY TABLE
+SELECT ANY TABLE
+INSERT ANY TABLE
+UPDATE ANY TABLE
+DELETE ANY TABLE
+CREATE CLUSTER
+CREATE ANY CLUSTER
+ALTER ANY CLUSTER
+DROP ANY CLUSTER
+CREATE ANY INDEX
+ALTER ANY INDEX
+DROP ANY INDEX
+CREATE SYNONYM
+CREATE ANY SYNONYM
+DROP ANY SYNONYM
+SYSDBA
+SYSOPER
+CREATE PUBLIC SYNONYM
+DROP PUBLIC SYNONYM
+CREATE VIEW
+CREATE ANY VIEW
+DROP ANY VIEW
+CREATE SEQUENCE
+CREATE ANY SEQUENCE
+ALTER ANY SEQUENCE
+DROP ANY SEQUENCE
+SELECT ANY SEQUENCE
+CREATE DATABASE LINK
+CREATE PUBLIC DATABASE LINK
+DROP PUBLIC DATABASE LINK
+CREATE ROLE
+DROP ANY ROLE
+GRANT ANY ROLE
+ALTER ANY ROLE
+AUDIT ANY
+ALTER DATABASE
+FORCE TRANSACTION
+FORCE ANY TRANSACTION
+CREATE PROCEDURE
+CREATE ANY PROCEDURE
+ALTER ANY PROCEDURE
+DROP ANY PROCEDURE
+EXECUTE ANY PROCEDURE
+CREATE TRIGGER
+CREATE ANY TRIGGER
+ALTER ANY TRIGGER
+DROP ANY TRIGGER
+CREATE PROFILE
+ALTER PROFILE
+DROP PROFILE
+ALTER RESOURCE COST
+ANALYZE ANY
+GRANT ANY PRIVILEGE
+CREATE MATERIALIZED VIEW
+CREATE ANY MATERIALIZED VIEW
+ALTER ANY MATERIALIZED VIEW
+DROP ANY MATERIALIZED VIEW
+CREATE ANY DIRECTORY
+DROP ANY DIRECTORY
+CREATE TYPE
+CREATE ANY TYPE
+ALTER ANY TYPE
+DROP ANY TYPE
+EXECUTE ANY TYPE
+UNDER ANY TYPE
+CREATE LIBRARY
+CREATE ANY LIBRARY
+ALTER ANY LIBRARY
+DROP ANY LIBRARY
+EXECUTE ANY LIBRARY
+CREATE OPERATOR
+CREATE ANY OPERATOR
+ALTER ANY OPERATOR
+DROP ANY OPERATOR
+EXECUTE ANY OPERATOR
+CREATE INDEXTYPE
+CREATE ANY INDEXTYPE
+ALTER ANY INDEXTYPE
+DROP ANY INDEXTYPE
+UNDER ANY VIEW
+QUERY REWRITE
+GLOBAL QUERY REWRITE
+EXECUTE ANY INDEXTYPE
+UNDER ANY TABLE
+CREATE DIMENSION
+CREATE ANY DIMENSION
+ALTER ANY DIMENSION
+DROP ANY DIMENSION
+MANAGE ANY QUEUE
+ENQUEUE ANY QUEUE
+DEQUEUE ANY QUEUE
+CREATE ANY CONTEXT
+DROP ANY CONTEXT
+CREATE ANY OUTLINE
+ALTER ANY OUTLINE
+DROP ANY OUTLINE
+ADMINISTER RESOURCE MANAGER
+ADMINISTER DATABASE TRIGGER
+MERGE ANY VIEW
+ON COMMIT REFRESH
+EXEMPT ACCESS POLICY
+RESUMABLE
+SELECT ANY DICTIONARY
+DEBUG CONNECT SESSION
+DEBUG ANY PROCEDURE
+FLASHBACK ANY TABLE
+GRANT ANY OBJECT PRIVILEGE
+CREATE EVALUATION CONTEXT
+CREATE ANY EVALUATION CONTEXT
+ALTER ANY EVALUATION CONTEXT
+DROP ANY EVALUATION CONTEXT
+EXECUTE ANY EVALUATION CONTEXT
+CREATE RULE SET
+CREATE ANY RULE SET
+ALTER ANY RULE SET
+DROP ANY RULE SET
+EXECUTE ANY RULE SET
+EXPORT FULL DATABASE
+IMPORT FULL DATABASE
+CREATE RULE
+CREATE ANY RULE
+ALTER ANY RULE
+DROP ANY RULE
+EXECUTE ANY RULE
+ANALYZE ANY DICTIONARY
+ADVISOR
+CREATE JOB
+CREATE ANY JOB
+EXECUTE ANY PROGRAM
+EXECUTE ANY CLASS
+MANAGE SCHEDULER
+SELECT ANY TRANSACTION
+DROP ANY SQL PROFILE
+ALTER ANY SQL PROFILE
+ADMINISTER SQL TUNING SET
+ADMINISTER ANY SQL TUNING SET
+CREATE ANY SQL PROFILE
+EXEMPT IDENTITY POLICY
+MANAGE FILE GROUP
+MANAGE ANY FILE GROUP
+READ ANY FILE GROUP
+CHANGE NOTIFICATION
+CREATE EXTERNAL JOB
+
+166 rows selected.
+
+SQL> select * from session_privs where role=connect;
+select * from session_privs where role=connect
+                                       *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from role_user_privs ;
+select * from role_user_privs
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from role_sys_privs ;
+
+ROLE                           PRIVILEGE                                ADM
+------------------------------ ---------------------------------------- ---
+DBA                            CREATE SESSION                           YES
+DBA                            ALTER SESSION                            YES
+DBA                            DROP TABLESPACE                          YES
+DBA                            BECOME USER                              YES
+DBA                            DROP ROLLBACK SEGMENT                    YES
+DBA                            SELECT ANY TABLE                         YES
+DBA                            INSERT ANY TABLE                         YES
+DBA                            UPDATE ANY TABLE                         YES
+DBA                            DROP ANY INDEX                           YES
+DBA                            SELECT ANY SEQUENCE                      YES
+DBA                            CREATE ROLE                              YES
+DBA                            EXECUTE ANY PROCEDURE                    YES
+DBA                            ALTER PROFILE                            YES
+DBA                            CREATE ANY DIRECTORY                     YES
+DBA                            CREATE ANY LIBRARY                       YES
+DBA                            EXECUTE ANY LIBRARY                      YES
+DBA                            ALTER ANY INDEXTYPE                      YES
+DBA                            DROP ANY INDEXTYPE                       YES
+DBA                            DEQUEUE ANY QUEUE                        YES
+DBA                            EXECUTE ANY EVALUATION CONTEXT           YES
+DBA                            EXPORT FULL DATABASE                     YES
+DBA                            CREATE RULE                              YES
+DBA                            ALTER ANY SQL PROFILE                    YES
+DBA                            ADMINISTER ANY SQL TUNING SET            YES
+DBA                            CHANGE NOTIFICATION                      YES
+IMP_FULL_DATABASE              BECOME USER                              NO
+IMP_FULL_DATABASE              CREATE ANY MATERIALIZED VIEW             NO
+IMP_FULL_DATABASE              CREATE ANY SYNONYM                       NO
+IMP_FULL_DATABASE              EXECUTE ANY PROCEDURE                    NO
+IMP_FULL_DATABASE              DROP ANY TRIGGER                         NO
+IMP_FULL_DATABASE              DROP ANY LIBRARY                         NO
+RECOVERY_CATALOG_OWNER         CREATE SYNONYM                           NO
+SCHEDULER_ADMIN                CREATE ANY JOB                           YES
+EXP_FULL_DATABASE              READ ANY FILE GROUP                      NO
+OEM_ADVISOR                    CREATE JOB                               NO
+OEM_MONITOR                    MANAGE ANY QUEUE                         NO
+DBA                            ALTER ROLLBACK SEGMENT                   YES
+DBA                            DELETE ANY TABLE                         YES
+DBA                            ALTER DATABASE                           YES
+DBA                            FORCE ANY TRANSACTION                    YES
+DBA                            ALTER ANY PROCEDURE                      YES
+DBA                            DROP ANY TRIGGER                         YES
+DBA                            DROP ANY MATERIALIZED VIEW               YES
+DBA                            UNDER ANY TYPE                           YES
+DBA                            ALTER ANY LIBRARY                        YES
+DBA                            CREATE DIMENSION                         YES
+DBA                            DEBUG ANY PROCEDURE                      YES
+DBA                            CREATE RULE SET                          YES
+DBA                            ALTER ANY RULE SET                       YES
+DBA                            ANALYZE ANY DICTIONARY                   YES
+IMP_FULL_DATABASE              CREATE ANY CLUSTER                       NO
+IMP_FULL_DATABASE              CREATE ANY INDEX                         NO
+IMP_FULL_DATABASE              INSERT ANY TABLE                         NO
+IMP_FULL_DATABASE              CREATE ANY LIBRARY                       NO
+IMP_FULL_DATABASE              DROP ANY SEQUENCE                        NO
+IMP_FULL_DATABASE              DROP ROLLBACK SEGMENT                    NO
+IMP_FULL_DATABASE              DROP ANY CONTEXT                         NO
+RECOVERY_CATALOG_OWNER         CREATE CLUSTER                           NO
+AQ_ADMINISTRATOR_ROLE          DEQUEUE ANY QUEUE                        YES
+AQ_ADMINISTRATOR_ROLE          CREATE EVALUATION CONTEXT                YES
+SCHEDULER_ADMIN                EXECUTE ANY PROGRAM                      YES
+SCHEDULER_ADMIN                EXECUTE ANY CLASS                        YES
+RESOURCE                       CREATE SEQUENCE                          NO
+RESOURCE                       CREATE TRIGGER                           NO
+DBA                            RESTRICTED SESSION                       YES
+DBA                            CREATE TABLESPACE                        YES
+DBA                            ALTER TABLESPACE                         YES
+DBA                            CREATE USER                              YES
+DBA                            ALTER USER                               YES
+DBA                            LOCK ANY TABLE                           YES
+DBA                            CREATE VIEW                              YES
+DBA                            DROP ANY VIEW                            YES
+DBA                            GRANT ANY ROLE                           YES
+DBA                            CREATE TRIGGER                           YES
+DBA                            CREATE TYPE                              YES
+DBA                            EXECUTE ANY OPERATOR                     YES
+DBA                            CREATE ANY DIMENSION                     YES
+DBA                            ALTER ANY DIMENSION                      YES
+DBA                            CREATE ANY OUTLINE                       YES
+DBA                            ADMINISTER DATABASE TRIGGER              YES
+DBA                            RESUMABLE                                YES
+DBA                            FLASHBACK ANY TABLE                      YES
+DBA                            CREATE ANY RULE SET                      YES
+DBA                            EXECUTE ANY RULE SET                     YES
+DBA                            IMPORT FULL DATABASE                     YES
+DBA                            EXECUTE ANY RULE                         YES
+DBA                            EXECUTE ANY PROGRAM                      YES
+EXP_FULL_DATABASE              EXECUTE ANY PROCEDURE                    NO
+EXP_FULL_DATABASE              RESUMABLE                                NO
+IMP_FULL_DATABASE              CREATE ANY PROCEDURE                     NO
+IMP_FULL_DATABASE              CREATE ANY VIEW                          NO
+IMP_FULL_DATABASE              CREATE TABLESPACE                        NO
+IMP_FULL_DATABASE              SELECT ANY TABLE                         NO
+IMP_FULL_DATABASE              CREATE ANY CONTEXT                       NO
+IMP_FULL_DATABASE              CREATE ANY OPERATOR                      NO
+IMP_FULL_DATABASE              GLOBAL QUERY REWRITE                     NO
+IMP_FULL_DATABASE              DROP ANY OUTLINE                         NO
+IMP_FULL_DATABASE              DROP ANY VIEW                            NO
+IMP_FULL_DATABASE              DROP PROFILE                             NO
+IMP_FULL_DATABASE              DROP USER                                NO
+IMP_FULL_DATABASE              DROP ANY TYPE                            NO
+RECOVERY_CATALOG_OWNER         ALTER SESSION                            NO
+AQ_ADMINISTRATOR_ROLE          ENQUEUE ANY QUEUE                        YES
+AQ_ADMINISTRATOR_ROLE          CREATE RULE SET                          YES
+OEM_MONITOR                    CREATE SESSION                           NO
+OEM_MONITOR                    CREATE JOB                               NO
+RESOURCE                       CREATE CLUSTER                           NO
+RESOURCE                       CREATE PROCEDURE                         NO
+RESOURCE                       CREATE TYPE                              NO
+DBA                            CREATE ANY TABLE                         YES
+DBA                            CREATE ANY INDEX                         YES
+DBA                            CREATE ANY SEQUENCE                      YES
+DBA                            ALTER ANY ROLE                           YES
+DBA                            ANALYZE ANY                              YES
+DBA                            DROP ANY LIBRARY                         YES
+DBA                            CREATE ANY OPERATOR                      YES
+DBA                            CREATE INDEXTYPE                         YES
+DBA                            UNDER ANY TABLE                          YES
+DBA                            DROP ANY DIMENSION                       YES
+DBA                            SELECT ANY DICTIONARY                    YES
+DBA                            GRANT ANY OBJECT PRIVILEGE               YES
+DBA                            CREATE EVALUATION CONTEXT                YES
+DBA                            CREATE ANY EVALUATION CONTEXT            YES
+DBA                            DROP ANY EVALUATION CONTEXT              YES
+DBA                            CREATE ANY RULE                          YES
+DBA                            CREATE JOB                               YES
+DBA                            CREATE ANY JOB                           YES
+EXP_FULL_DATABASE              SELECT ANY TABLE                         NO
+EXP_FULL_DATABASE              EXECUTE ANY TYPE                         NO
+IMP_FULL_DATABASE              CREATE PUBLIC DATABASE LINK              NO
+IMP_FULL_DATABASE              CREATE PUBLIC SYNONYM                    NO
+IMP_FULL_DATABASE              CREATE ROLLBACK SEGMENT                  NO
+IMP_FULL_DATABASE              CREATE ROLE                              NO
+IMP_FULL_DATABASE              DROP ANY INDEX                           NO
+IMP_FULL_DATABASE              DROP ANY TABLE                           NO
+IMP_FULL_DATABASE              DROP ANY MATERIALIZED VIEW               NO
+IMP_FULL_DATABASE              DROP ANY ROLE                            NO
+IMP_FULL_DATABASE              ALTER ANY TYPE                           NO
+RECOVERY_CATALOG_OWNER         CREATE DATABASE LINK                     NO
+AQ_ADMINISTRATOR_ROLE          CREATE RULE                              YES
+IMP_FULL_DATABASE              MANAGE ANY QUEUE                         NO
+DBA                            ALTER SYSTEM                             YES
+DBA                            AUDIT SYSTEM                             YES
+DBA                            CREATE ROLLBACK SEGMENT                  YES
+DBA                            DROP ANY TABLE                           YES
+DBA                            COMMENT ANY TABLE                        YES
+DBA                            CREATE CLUSTER                           YES
+DBA                            ALTER ANY INDEX                          YES
+DBA                            DROP PUBLIC DATABASE LINK                YES
+DBA                            CREATE PROFILE                           YES
+DBA                            ALTER ANY MATERIALIZED VIEW              YES
+DBA                            ALTER ANY TYPE                           YES
+DBA                            DROP ANY TYPE                            YES
+DBA                            UNDER ANY VIEW                           YES
+DBA                            EXECUTE ANY INDEXTYPE                    YES
+DBA                            DROP ANY CONTEXT                         YES
+DBA                            ALTER ANY OUTLINE                        YES
+DBA                            ADMINISTER RESOURCE MANAGER              YES
+DBA                            MANAGE SCHEDULER                         YES
+DBA                            MANAGE FILE GROUP                        YES
+EXP_FULL_DATABASE              BACKUP ANY TABLE                         NO
+IMP_FULL_DATABASE              CREATE PROFILE                           NO
+IMP_FULL_DATABASE              COMMENT ANY TABLE                        NO
+IMP_FULL_DATABASE              CREATE ANY INDEXTYPE                     NO
+IMP_FULL_DATABASE              CREATE ANY DIMENSION                     NO
+IMP_FULL_DATABASE              DROP ANY CLUSTER                         NO
+IMP_FULL_DATABASE              DROP ANY PROCEDURE                       NO
+IMP_FULL_DATABASE              DROP PUBLIC SYNONYM                      NO
+IMP_FULL_DATABASE              DROP ANY DIRECTORY                       NO
+RECOVERY_CATALOG_OWNER         CREATE SESSION                           NO
+RECOVERY_CATALOG_OWNER         CREATE TABLE                             NO
+RECOVERY_CATALOG_OWNER         CREATE SEQUENCE                          NO
+RECOVERY_CATALOG_OWNER         CREATE PROCEDURE                         NO
+EXP_FULL_DATABASE              ADMINISTER RESOURCE MANAGER              NO
+OEM_MONITOR                    ADVISOR                                  NO
+CONNECT                        CREATE SESSION                           NO
+DBA                            CREATE TABLE                             YES
+DBA                            BACKUP ANY TABLE                         YES
+DBA                            CREATE ANY CLUSTER                       YES
+DBA                            DROP ANY SYNONYM                         YES
+DBA                            DROP PUBLIC SYNONYM                      YES
+DBA                            CREATE ANY VIEW                          YES
+DBA                            CREATE SEQUENCE                          YES
+DBA                            ALTER ANY SEQUENCE                       YES
+DBA                            FORCE TRANSACTION                        YES
+DBA                            CREATE PROCEDURE                         YES
+DBA                            CREATE ANY PROCEDURE                     YES
+DBA                            ALTER RESOURCE COST                      YES
+DBA                            DROP ANY DIRECTORY                       YES
+DBA                            CREATE ANY TYPE                          YES
+DBA                            CREATE ANY INDEXTYPE                     YES
+DBA                            ENQUEUE ANY QUEUE                        YES
+DBA                            ON COMMIT REFRESH                        YES
+DBA                            DEBUG CONNECT SESSION                    YES
+DBA                            DROP ANY RULE SET                        YES
+DBA                            EXECUTE ANY CLASS                        YES
+DBA                            MANAGE ANY FILE GROUP                    YES
+EXP_FULL_DATABASE              SELECT ANY SEQUENCE                      NO
+IMP_FULL_DATABASE              EXECUTE ANY TYPE                         NO
+IMP_FULL_DATABASE              UPDATE ANY TABLE                         NO
+IMP_FULL_DATABASE              CREATE ANY DIRECTORY                     NO
+IMP_FULL_DATABASE              CREATE ANY TYPE                          NO
+IMP_FULL_DATABASE              DROP ANY SYNONYM                         NO
+IMP_FULL_DATABASE              DROP PUBLIC DATABASE LINK                NO
+IMP_FULL_DATABASE              DROP TABLESPACE                          NO
+IMP_FULL_DATABASE              ALTER ANY TRIGGER                        NO
+IMP_FULL_DATABASE              DROP ANY INDEXTYPE                       NO
+IMP_FULL_DATABASE              DROP ANY DIMENSION                       NO
+IMP_FULL_DATABASE              ANALYZE ANY                              NO
+RECOVERY_CATALOG_OWNER         CREATE VIEW                              NO
+RECOVERY_CATALOG_OWNER         CREATE TYPE                              NO
+AQ_ADMINISTRATOR_ROLE          MANAGE ANY QUEUE                         YES
+IMP_FULL_DATABASE              ADMINISTER RESOURCE MANAGER              NO
+SCHEDULER_ADMIN                MANAGE SCHEDULER                         YES
+SCHEDULER_ADMIN                CREATE EXTERNAL JOB                      YES
+RESOURCE                       CREATE OPERATOR                          NO
+DBA                            ALTER ANY TABLE                          YES
+DBA                            DROP ANY CLUSTER                         YES
+DBA                            CREATE SYNONYM                           YES
+DBA                            CREATE PUBLIC SYNONYM                    YES
+DBA                            DROP ANY SEQUENCE                        YES
+DBA                            DROP ANY ROLE                            YES
+DBA                            AUDIT ANY                                YES
+DBA                            DROP ANY PROCEDURE                       YES
+DBA                            CREATE ANY TRIGGER                       YES
+DBA                            ALTER ANY TRIGGER                        YES
+DBA                            DROP PROFILE                             YES
+DBA                            GRANT ANY PRIVILEGE                      YES
+DBA                            CREATE LIBRARY                           YES
+DBA                            CREATE OPERATOR                          YES
+DBA                            DROP ANY OUTLINE                         YES
+DBA                            MERGE ANY VIEW                           YES
+DBA                            ADMINISTER SQL TUNING SET                YES
+IMP_FULL_DATABASE              CREATE ANY TABLE                         NO
+IMP_FULL_DATABASE              CREATE DATABASE LINK                     NO
+IMP_FULL_DATABASE              CREATE USER                              NO
+IMP_FULL_DATABASE              AUDIT ANY                                NO
+IMP_FULL_DATABASE              CREATE ANY SQL PROFILE                   NO
+IMP_FULL_DATABASE              ALTER ANY PROCEDURE                      NO
+IMP_FULL_DATABASE              DROP ANY OPERATOR                        NO
+IMP_FULL_DATABASE              RESUMABLE                                NO
+IMP_FULL_DATABASE              DROP ANY SQL PROFILE                     NO
+OEM_ADVISOR                    ADMINISTER SQL TUNING SET                NO
+OEM_MONITOR                    SELECT ANY DICTIONARY                    NO
+OEM_MONITOR                    ANALYZE ANY                              NO
+RESOURCE                       CREATE TABLE                             NO
+RESOURCE                       CREATE INDEXTYPE                         NO
+DBA                            MANAGE TABLESPACE                        YES
+DBA                            DROP USER                                YES
+DBA                            ALTER ANY CLUSTER                        YES
+DBA                            CREATE ANY SYNONYM                       YES
+DBA                            CREATE DATABASE LINK                     YES
+DBA                            CREATE PUBLIC DATABASE LINK              YES
+DBA                            CREATE MATERIALIZED VIEW                 YES
+DBA                            CREATE ANY MATERIALIZED VIEW             YES
+DBA                            EXECUTE ANY TYPE                         YES
+DBA                            DROP ANY OPERATOR                        YES
+DBA                            QUERY REWRITE                            YES
+DBA                            GLOBAL QUERY REWRITE                     YES
+DBA                            MANAGE ANY QUEUE                         YES
+DBA                            CREATE ANY CONTEXT                       YES
+DBA                            ALTER ANY EVALUATION CONTEXT             YES
+DBA                            ALTER ANY RULE                           YES
+DBA                            DROP ANY RULE                            YES
+DBA                            ADVISOR                                  YES
+DBA                            SELECT ANY TRANSACTION                   YES
+DBA                            DROP ANY SQL PROFILE                     YES
+DBA                            CREATE ANY SQL PROFILE                   YES
+DBA                            READ ANY FILE GROUP                      YES
+DBA                            CREATE EXTERNAL JOB                      YES
+IMP_FULL_DATABASE              CREATE ANY SEQUENCE                      NO
+IMP_FULL_DATABASE              CREATE ANY TRIGGER                       NO
+IMP_FULL_DATABASE              ALTER ANY TABLE                          NO
+IMP_FULL_DATABASE              ADMINISTER DATABASE TRIGGER              NO
+RECOVERY_CATALOG_OWNER         CREATE TRIGGER                           NO
+SCHEDULER_ADMIN                CREATE JOB                               YES
+OEM_ADVISOR                    ADVISOR                                  NO
+OEM_MONITOR                    ANALYZE ANY DICTIONARY                   NO
+
+278 rows selected.
+
+SQL> grant create any view,create any materialized view to scott;
+
+Grant succeeded.
+
+SQL> conn scott/tiger;
+Connected.
+SQL> create view getdata as select * from emp;
+
+View created.
+
+SQL> select * from getdata;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+
+15 rows selected.
+
+SQL> insert into getdata values(2,"Sunny");
+insert into getdata values(2,"Sunny")
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into getdata(empno,enme) values(2,"Sunny");
+insert into getdata(empno,enme) values(2,"Sunny")
+                                         *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into getdata(empno,ename) values(2,"Sunny");
+insert into getdata(empno,ename) values(2,"Sunny")
+                                          *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into getdata(empno,ename,job) values(2,"Sunny","admin");
+insert into getdata(empno,ename,job) values(2,"Sunny","admin")
+                                                      *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into getdata(empno,ename,deptno) values(2,"Sunny",40);
+insert into getdata(empno,ename,deptno) values(2,"Sunny",40)
+                                                 *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into getdata(empno,ename,deptno) values(2,'sunny',40);
+
+1 row created.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+
+16 rows selected.
+
+SQL> insert into getdata(empno,ename,deptno) values(2,'sunny',40);
+insert into getdata(empno,ename,deptno) values(2,'sunny',40)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.PK_EMP) violated
+
+
+SQL> insert into getdata(empno,ename,deptno) values(2,'sunny',40);
+insert into getdata(empno,ename,deptno) values(2,'sunny',40)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.PK_EMP) violated
+
+
+SQL> select * from user_views;
+
+VIEW_NAME                      TEXT_LENGTH TEXT                                                                     TYPE_TEXT_LENGTH
+------------------------------ ----------- -------------------------------------------------------------------------------- ----------------
+TYPE_TEXT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE                      SUPERVIEW_NAME
+------------------------------ ------------------------------ ------------------------------
+GETDATA                                 84 select "EMPNO","ENAME","JOB","MGR","HIREDATE","SAL","COMM","DEPTNO","DNAME" from
+
+
+
+
+
+
+SQL> set line 10000000;
+SP2-0267: linesize option 10000000 out of range (1 through 32767)
+SQL> set line 10000
+SQL> select * from user_views;
+
+VIEW_NAME                      TEXT_LENGTH TEXT                                                                     TYPE_TEXT_LENGTH TYPE_TEXT
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              OID_TEXT_LENGTH OID_TEXT
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       VIEW_TYPE_OWNER                VIEW_TYPE                      SUPERVIEW_NAME
+------------------------------ ----------- -------------------------------------------------------------------------------- ---------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------- --------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ------------------------------ ------
+------------------------ ------------------------------
+GETDATA                                 84 select "EMPNO","ENAME","JOB","MGR","HIREDATE","SAL","COMM","DEPTNO","DNAME" from
+
+SQL> set line 1000000
+SP2-0267: linesize option 1000000 out of range (1 through 32767)
+SQL> set line 100000
+SP2-0267: linesize option 100000 out of range (1 through 32767)
+SQL> set line 32767
+SQL> select * from user_views;
+
+VIEW_NAME                      TEXT_LENGTH TEXT                                                                     TYPE_TEXT_LENGTH TYPE_TEXT
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              OID_TEXT_LENGTH OID_TEXT
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       VIEW_TYPE_OWNER                VIEW_TYPE                      SUPERVIEW_NAME
+------------------------------ ----------- -------------------------------------------------------------------------------- ---------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------- --------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ------------------------------ ------
+------------------------ ------------------------------
+GETDATA                                 84 select "EMPNO","ENAME","JOB","MGR","HIREDATE","SAL","COMM","DEPTNO","DNAME" from

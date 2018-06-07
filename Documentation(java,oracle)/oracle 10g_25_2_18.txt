@@ -1,0 +1,690 @@
+
+
+SQL> select deptno from emp group by deptno;
+
+    DEPTNO
+----------
+        30
+        20
+        10
+
+SQL> select deptno,sal from emp group by deptno;
+select deptno,sal from emp group by deptno
+              *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select deptno,sal from emp group by deptno,sal;
+
+    DEPTNO        SAL
+---------- ----------
+        10       5000
+        20        800
+        20       2975
+        10       2450
+        30       1250
+        20       3000
+        30        950
+        20       1100
+        10       1300
+        30       1600
+        30       2850
+        30       1500
+
+12 rows selected.
+
+SQL> select deptno,sum(sal) from emp group by deptno,sal;
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        10       5000
+        20        800
+        20       2975
+        10       2450
+        30       2500
+        20       6000
+        30        950
+        20       1100
+        10       1300
+        30       1600
+        30       2850
+        30       1500
+
+12 rows selected.
+
+SQL> select deptno,sum(sal) from emp group by deptno;
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        30       9400
+        20      10875
+        10       8750
+
+SQL> select deptno,sum(sal),max(sal) from emp group by deptno;
+
+    DEPTNO   SUM(SAL)   MAX(SAL)
+---------- ---------- ----------
+        30       9400       2850
+        20      10875       3000
+        10       8750       5000
+
+SQL> select deptno,sum(sal),max(sal),count(*) from emp group by deptno having ;
+select deptno,sum(sal),max(sal),count(*) from emp group by deptno having
+                                                                        *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select deptno,sum(sal),max(sal),count(*) from emp group by deptno having count(*)=3 ;
+
+    DEPTNO   SUM(SAL)   MAX(SAL)   COUNT(*)
+---------- ---------- ---------- ----------
+        10       8750       5000          3
+
+SQL> select deptno,sum(sal),max(sal),count(*),count(deptno) from emp group by deptno having count(*)=3 ;
+
+    DEPTNO   SUM(SAL)   MAX(SAL)   COUNT(*) COUNT(DEPTNO)
+---------- ---------- ---------- ---------- -------------
+        10       8750       5000          3             3
+
+SQL> select deptno,sum(sal),max(sal),count(*),count(deptno) from emp group by deptn;
+select deptno,sum(sal),max(sal),count(*),count(deptno) from emp group by deptn
+                                                                         *
+ERROR at line 1:
+ORA-00904: "DEPTN": invalid identifier
+
+
+SQL> select deptno,sum(sal),max(sal),count(*),count(deptno) from emp group by deptn0;
+select deptno,sum(sal),max(sal),count(*),count(deptno) from emp group by deptn0
+                                                                         *
+ERROR at line 1:
+ORA-00904: "DEPTN0": invalid identifier
+
+
+SQL> select deptno,sum(sal),max(sal),count(*),count(deptno) from emp group by deptno;
+
+    DEPTNO   SUM(SAL)   MAX(SAL)   COUNT(*) COUNT(DEPTNO)
+---------- ---------- ---------- ---------- -------------
+        30       9400       2850          6             6
+        20      10875       3000          5             5
+        10       8750       5000          3             3
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select deptno,sum(sal) from emp group by deptno;
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        30       9400
+        20      10875
+        10       8750
+
+SQL> select deptno,sum(sal) from emp group by deptno having sum(sal)>20000;
+
+no rows selected
+
+SQL> select deptno,sum(sal) from emp group by deptno having sum(sal)>2000;
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        30       9400
+        20      10875
+        10       8750
+
+SQL> select deptno,sum(sal) from emp group by deptno having sum(sal)>10000;
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        20      10875
+
+SQL> select hiredate from emp;
+
+HIREDATE
+---------
+17-DEC-80
+20-FEB-81
+22-FEB-81
+02-APR-81
+28-SEP-81
+01-MAY-81
+09-JUN-81
+19-APR-87
+17-NOV-81
+08-SEP-81
+23-MAY-87
+03-DEC-81
+03-DEC-81
+23-JAN-82
+
+14 rows selected.
+
+SQL> select to_char(hiredate,YYYY) year,count(*) from emp;
+select to_char(hiredate,YYYY) year,count(*) from emp
+                        *
+ERROR at line 1:
+ORA-00904: "YYYY": invalid identifier
+
+
+SQL> select to_char(hiredate,'YYYY') year,count(*) from emp;
+select to_char(hiredate,'YYYY') year,count(*) from emp
+               *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select to_char(hiredate,'YYYY') year,count(*) from emp group by hiredate ;
+
+YEAR   COUNT(*)
+---- ----------
+1987          1
+1981          1
+1981          2
+1982          1
+1981          1
+1980          1
+1981          1
+1981          1
+1981          1
+1987          1
+1981          1
+1981          1
+1981          1
+
+13 rows selected.
+
+SQL> select to_char(hiredate,'YYYY') year,count(*) from emp group by hiredate having count(*)>1;
+
+YEAR   COUNT(*)
+---- ----------
+1981          2
+
+SQL> select to_char(hiredate,'YYYY') year,count(*) from emp group by to_char(hiredate,'YYYY') ;
+
+YEAR   COUNT(*)
+---- ----------
+1987          2
+1980          1
+1982          1
+1981         10
+
+SQL> select to_char(hiredate,'YYYY') year,count(*) from emp group by to_char(hiredate,'yyyy') ;
+select to_char(hiredate,'YYYY') year,count(*) from emp group by to_char(hiredate,'yyyy')
+               *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select to_char(hiredate,'YYYY') year,count(*) from emp group by to_char(hiredate,'YYYY') ;
+
+YEAR   COUNT(*)
+---- ----------
+1987          2
+1980          1
+1982          1
+1981         10
+
+SQL> select to_char(hiredate,'YYYY') year,count(*) from emp group by to_char(hiredate,'YYYY') order by count(*) ;
+
+YEAR   COUNT(*)
+---- ----------
+1980          1
+1982          1
+1987          2
+1981         10
+
+SQL> select to_char(hiredate,'YYYY') year,count(*) from emp group by to_char(hiredate,'YYYY') order by count(*) desc ;
+
+YEAR   COUNT(*)
+---- ----------
+1981         10
+1987          2
+1982          1
+1980          1
+
+SQL> select deptno,sum(sal) from emp;
+select deptno,sum(sal) from emp
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select deptno,sum(sal) from emp group by deptno;
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        30       9400
+        20      10875
+        10       8750
+
+SQL> select deptno,sum(sal) from emp group by deptno having count(*)>3;
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        30       9400
+        20      10875
+
+SQL> select comm from emp;
+
+      COMM
+----------
+
+       300
+       500
+
+      1400
+
+
+
+
+         0
+
+
+
+
+
+14 rows selected.
+
+SQL> select * from emp group by comm;
+select * from emp group by comm
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select * from emp group by deptno;
+select * from emp group by deptno
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select * from emp group by deptno;
+select * from emp group by deptno
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select deptno from emp group by deptno;
+
+    DEPTNO
+----------
+        30
+        20
+        10
+
+SQL> select comm from emp group by comm;
+
+      COMM
+----------
+
+      1400
+       500
+       300
+         0
+
+SQL> select comm from emp group by comm order by somm desc;
+select comm from emp group by comm order by somm desc
+                                            *
+ERROR at line 1:
+ORA-00904: "SOMM": invalid identifier
+
+
+SQL> select comm from emp group by comm order by comm desc;
+
+      COMM
+----------
+
+      1400
+       500
+       300
+         0
+
+SQL> select comm from emp group by comm order by comm desc nulls first;
+
+      COMM
+----------
+
+      1400
+       500
+       300
+         0
+
+SQL> select deptno from dept;
+
+    DEPTNO
+----------
+        10
+        20
+        30
+        40
+
+SQL> select * from de[t;
+select * from de[t
+                *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select * from dept,emp;
+
+    DEPTNO DNAME          LOC                EMPNO ENAME      JOB              MGR HIREDATE
+---------- -------------- ------------- ---------- ---------- --------- ---------- ---------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+        10 ACCOUNTING     NEW YORK            7369 SMITH      CLERK           7902 17-DEC-80
+       800                    20
+
+        10 ACCOUNTING     NEW YORK            7499 ALLEN      SALESMAN        7698 20-FEB-81
+      1600        300         30
+
+        10 ACCOUNTING     NEW YORK            7521 WARD       SALESMAN        7698 22-FEB-81
+      1250        500         30
+
+        10 ACCOUNTING     NEW YORK            7566 JONES      MANAGER         7839 02-APR-81
+      2975                    20
+
+        10 ACCOUNTING     NEW YORK            7654 MARTIN     SALESMAN        7698 28-SEP-81
+      1250       1400         30
+
+        10 ACCOUNTING     NEW YORK            7698 BLAKE      MANAGER         7839 01-MAY-81
+      2850                    30
+
+        10 ACCOUNTING     NEW YORK            7782 CLARK      MANAGER         7839 09-JUN-81
+      2450                    10
+
+        10 ACCOUNTING     NEW YORK            7788 SCOTT      ANALYST         7566 19-APR-87
+      3000                    20
+
+        10 ACCOUNTING     NEW YORK            7839 KING       PRESIDENT            17-NOV-81
+      5000                    10
+
+        10 ACCOUNTING     NEW YORK            7844 TURNER     SALESMAN        7698 08-SEP-81
+      1500          0         30
+
+        10 ACCOUNTING     NEW YORK            7876 ADAMS      CLERK           7788 23-MAY-87
+      1100                    20
+
+        10 ACCOUNTING     NEW YORK            7900 JAMES      CLERK           7698 03-DEC-81
+       950                    30
+
+        10 ACCOUNTING     NEW YORK            7902 FORD       ANALYST         7566 03-DEC-81
+      3000                    20
+
+        10 ACCOUNTING     NEW YORK            7934 MILLER     CLERK           7782 23-JAN-82
+      1300                    10
+
+        20 RESEARCH       DALLAS              7369 SMITH      CLERK           7902 17-DEC-80
+       800                    20
+
+        20 RESEARCH       DALLAS              7499 ALLEN      SALESMAN        7698 20-FEB-81
+      1600        300         30
+
+        20 RESEARCH       DALLAS              7521 WARD       SALESMAN        7698 22-FEB-81
+      1250        500         30
+
+        20 RESEARCH       DALLAS              7566 JONES      MANAGER         7839 02-APR-81
+      2975                    20
+
+        20 RESEARCH       DALLAS              7654 MARTIN     SALESMAN        7698 28-SEP-81
+      1250       1400         30
+
+        20 RESEARCH       DALLAS              7698 BLAKE      MANAGER         7839 01-MAY-81
+      2850                    30
+
+        20 RESEARCH       DALLAS              7782 CLARK      MANAGER         7839 09-JUN-81
+      2450                    10
+
+        20 RESEARCH       DALLAS              7788 SCOTT      ANALYST         7566 19-APR-87
+      3000                    20
+
+        20 RESEARCH       DALLAS              7839 KING       PRESIDENT            17-NOV-81
+      5000                    10
+
+        20 RESEARCH       DALLAS              7844 TURNER     SALESMAN        7698 08-SEP-81
+      1500          0         30
+
+        20 RESEARCH       DALLAS              7876 ADAMS      CLERK           7788 23-MAY-87
+      1100                    20
+
+        20 RESEARCH       DALLAS              7900 JAMES      CLERK           7698 03-DEC-81
+       950                    30
+
+        20 RESEARCH       DALLAS              7902 FORD       ANALYST         7566 03-DEC-81
+      3000                    20
+
+        20 RESEARCH       DALLAS              7934 MILLER     CLERK           7782 23-JAN-82
+      1300                    10
+
+        30 SALES          CHICAGO             7369 SMITH      CLERK           7902 17-DEC-80
+       800                    20
+
+        30 SALES          CHICAGO             7499 ALLEN      SALESMAN        7698 20-FEB-81
+      1600        300         30
+
+        30 SALES          CHICAGO             7521 WARD       SALESMAN        7698 22-FEB-81
+      1250        500         30
+
+        30 SALES          CHICAGO             7566 JONES      MANAGER         7839 02-APR-81
+      2975                    20
+
+    DEPTNO DNAME          LOC                EMPNO ENAME      JOB              MGR HIREDATE
+---------- -------------- ------------- ---------- ---------- --------- ---------- ---------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+
+        30 SALES          CHICAGO             7654 MARTIN     SALESMAN        7698 28-SEP-81
+      1250       1400         30
+
+        30 SALES          CHICAGO             7698 BLAKE      MANAGER         7839 01-MAY-81
+      2850                    30
+
+        30 SALES          CHICAGO             7782 CLARK      MANAGER         7839 09-JUN-81
+      2450                    10
+
+        30 SALES          CHICAGO             7788 SCOTT      ANALYST         7566 19-APR-87
+      3000                    20
+
+        30 SALES          CHICAGO             7839 KING       PRESIDENT            17-NOV-81
+      5000                    10
+
+        30 SALES          CHICAGO             7844 TURNER     SALESMAN        7698 08-SEP-81
+      1500          0         30
+
+        30 SALES          CHICAGO             7876 ADAMS      CLERK           7788 23-MAY-87
+      1100                    20
+
+        30 SALES          CHICAGO             7900 JAMES      CLERK           7698 03-DEC-81
+       950                    30
+
+        30 SALES          CHICAGO             7902 FORD       ANALYST         7566 03-DEC-81
+      3000                    20
+
+        30 SALES          CHICAGO             7934 MILLER     CLERK           7782 23-JAN-82
+      1300                    10
+
+        40 OPERATIONS     BOSTON              7369 SMITH      CLERK           7902 17-DEC-80
+       800                    20
+
+        40 OPERATIONS     BOSTON              7499 ALLEN      SALESMAN        7698 20-FEB-81
+      1600        300         30
+
+        40 OPERATIONS     BOSTON              7521 WARD       SALESMAN        7698 22-FEB-81
+      1250        500         30
+
+        40 OPERATIONS     BOSTON              7566 JONES      MANAGER         7839 02-APR-81
+      2975                    20
+
+        40 OPERATIONS     BOSTON              7654 MARTIN     SALESMAN        7698 28-SEP-81
+      1250       1400         30
+
+        40 OPERATIONS     BOSTON              7698 BLAKE      MANAGER         7839 01-MAY-81
+      2850                    30
+
+        40 OPERATIONS     BOSTON              7782 CLARK      MANAGER         7839 09-JUN-81
+      2450                    10
+
+        40 OPERATIONS     BOSTON              7788 SCOTT      ANALYST         7566 19-APR-87
+      3000                    20
+
+        40 OPERATIONS     BOSTON              7839 KING       PRESIDENT            17-NOV-81
+      5000                    10
+
+        40 OPERATIONS     BOSTON              7844 TURNER     SALESMAN        7698 08-SEP-81
+      1500          0         30
+
+        40 OPERATIONS     BOSTON              7876 ADAMS      CLERK           7788 23-MAY-87
+      1100                    20
+
+        40 OPERATIONS     BOSTON              7900 JAMES      CLERK           7698 03-DEC-81
+       950                    30
+
+        40 OPERATIONS     BOSTON              7902 FORD       ANALYST         7566 03-DEC-81
+      3000                    20
+
+        40 OPERATIONS     BOSTON              7934 MILLER     CLERK           7782 23-JAN-82
+      1300                    10
+
+
+56 rows selected.
+
+SQL> select dept.deptno,ename,sal from emp,dept;
+
+    DEPTNO ENAME             SAL
+---------- ---------- ----------
+        10 SMITH             800
+        10 ALLEN            1600
+        10 WARD             1250
+        10 JONES            2975
+        10 MARTIN           1250
+        10 BLAKE            2850
+        10 CLARK            2450
+        10 SCOTT            3000
+        10 KING             5000
+        10 TURNER           1500
+        10 ADAMS            1100
+        10 JAMES             950
+        10 FORD             3000
+        10 MILLER           1300
+        20 SMITH             800
+        20 ALLEN            1600
+        20 WARD             1250
+        20 JONES            2975
+        20 MARTIN           1250
+        20 BLAKE            2850
+        20 CLARK            2450
+        20 SCOTT            3000
+        20 KING             5000
+        20 TURNER           1500
+        20 ADAMS            1100
+        20 JAMES             950
+        20 FORD             3000
+        20 MILLER           1300
+        30 SMITH             800
+        30 ALLEN            1600
+        30 WARD             1250
+        30 JONES            2975
+        30 MARTIN           1250
+        30 BLAKE            2850
+        30 CLARK            2450
+        30 SCOTT            3000
+        30 KING             5000
+        30 TURNER           1500
+        30 ADAMS            1100
+        30 JAMES             950
+        30 FORD             3000
+        30 MILLER           1300
+        40 SMITH             800
+        40 ALLEN            1600
+        40 WARD             1250
+        40 JONES            2975
+        40 MARTIN           1250
+        40 BLAKE            2850
+        40 CLARK            2450
+        40 SCOTT            3000
+        40 KING             5000
+        40 TURNER           1500
+        40 ADAMS            1100
+        40 JAMES             950
+        40 FORD             3000
+        40 MILLER           1300
+
+56 rows selected.
+
+SQL> select dept.deptno,ename,sal from emp e,dept d where e.deptno=d.deptno ;
+select dept.deptno,ename,sal from emp e,dept d where e.deptno=d.deptno
+       *
+ERROR at line 1:
+ORA-00904: "DEPT"."DEPTNO": invalid identifier
+
+
+SQL> select d.deptno,ename,sal from emp e,dept d where e.deptno=d.deptno ;
+
+    DEPTNO ENAME             SAL
+---------- ---------- ----------
+        20 SMITH             800
+        30 ALLEN            1600
+        30 WARD             1250
+        20 JONES            2975
+        30 MARTIN           1250
+        30 BLAKE            2850
+        10 CLARK            2450
+        20 SCOTT            3000
+        10 KING             5000
+        30 TURNER           1500
+        20 ADAMS            1100
+        30 JAMES             950
+        20 FORD             3000
+        10 MILLER           1300
+
+14 rows selected.
+
+SQL> select e.deptno,d.deptno,ename,sal from emp e,dept d where e.deptno=d.deptno ;
+
+    DEPTNO     DEPTNO ENAME             SAL
+---------- ---------- ---------- ----------
+        20         20 SMITH             800
+        30         30 ALLEN            1600
+        30         30 WARD             1250
+        20         20 JONES            2975
+        30         30 MARTIN           1250
+        30         30 BLAKE            2850
+        10         10 CLARK            2450
+        20         20 SCOTT            3000
+        10         10 KING             5000
+        30         30 TURNER           1500
+        20         20 ADAMS            1100
+        30         30 JAMES             950
+        20         20 FORD             3000
+        10         10 MILLER           1300
+
+14 rows selected.

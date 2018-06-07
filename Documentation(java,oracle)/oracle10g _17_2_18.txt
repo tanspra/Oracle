@@ -1,0 +1,1479 @@
+Oracle practice 17/02/2018
+------------------------------------------------------------------------------
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Sat Feb 17 22:47:47 2018
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+Enter user-name: scott
+Enter password:*****
+
+Connected to:
+Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production
+
+SQL> set line 100;
+SQL> set pagesize 100
+
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select ename 'gets salary =' sal from emp;
+select ename 'gets salary =' sal from emp
+             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select ename||'gets salary =|| sal from emp;
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> select ename||'gets salary ='|| sal from emp;
+
+ENAME||'GETSSALARY='||SAL
+---------------------------------------------------------------
+SMITHgets salary =800
+ALLENgets salary =1600
+WARDgets salary =1250
+JONESgets salary =2975
+MARTINgets salary =1250
+BLAKEgets salary =2850
+CLARKgets salary =2450
+SCOTTgets salary =3000
+KINGgets salary =5000
+TURNERgets salary =1500
+ADAMSgets salary =1100
+JAMESgets salary =950
+FORDgets salary =3000
+MILLERgets salary =1300
+
+14 rows selected.
+
+SQL> select ename||' gets salary = '|| sal from emp;
+
+ENAME||'GETSSALARY='||SAL
+-----------------------------------------------------------------
+SMITH gets salary = 800
+ALLEN gets salary = 1600
+WARD gets salary = 1250
+JONES gets salary = 2975
+MARTIN gets salary = 1250
+BLAKE gets salary = 2850
+CLARK gets salary = 2450
+SCOTT gets salary = 3000
+KING gets salary = 5000
+TURNER gets salary = 1500
+ADAMS gets salary = 1100
+JAMES gets salary = 950
+FORD gets salary = 3000
+MILLER gets salary = 1300
+
+14 rows selected.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select ename||' gets '||sal||' as salary and '||nvl(comm,0)||' as commission ' from emp;
+
+ENAME||'GETS'||SAL||'ASSALARYAND'||NVL(COMM,0)||'ASCOMMISSION'
+----------------------------------------------------------------------------------------------------
+SMITH gets 800 as salary and 0 as commission
+ALLEN gets 1600 as salary and 300 as commission
+WARD gets 1250 as salary and 500 as commission
+JONES gets 2975 as salary and 0 as commission
+MARTIN gets 1250 as salary and 1400 as commission
+BLAKE gets 2850 as salary and 0 as commission
+CLARK gets 2450 as salary and 0 as commission
+SCOTT gets 3000 as salary and 0 as commission
+KING gets 5000 as salary and 0 as commission
+TURNER gets 1500 as salary and 0 as commission
+ADAMS gets 1100 as salary and 0 as commission
+JAMES gets 950 as salary and 0 as commission
+FORD gets 3000 as salary and 0 as commission
+MILLER gets 1300 as salary and 0 as commission
+
+14 rows selected.
+
+SQL> select deptno from emp group by deptno;
+
+    DEPTNO
+----------
+        30
+        20
+        10
+
+SQL> select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3;
+select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3 groupby deptno;
+select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3 groupby deptno
+                                                                                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3 group by deptno;
+select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3 group by deptno
+                                      *
+ERROR at line 1:
+ORA-01427: single-row subquery returns more than one row
+
+
+SQL> select deptno,count(*) from emp where(select deptno,count(*) from emp group by deptno)>3 group by deptno;
+select deptno,count(*) from emp where(select deptno,count(*) from emp group by deptno)>3 group by deptno
+                                      *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select ename 'gets salary =' sal from emp;
+select ename 'gets salary =' sal from emp
+             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select ename||'gets salary =|| sal from emp;
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> select ename||'gets salary ='|| sal from emp;
+
+ENAME||'GETSSALARY='||SAL
+---------------------------------------------------------------
+SMITHgets salary =800
+ALLENgets salary =1600
+WARDgets salary =1250
+JONESgets salary =2975
+MARTINgets salary =1250
+BLAKEgets salary =2850
+CLARKgets salary =2450
+SCOTTgets salary =3000
+KINGgets salary =5000
+TURNERgets salary =1500
+ADAMSgets salary =1100
+JAMESgets salary =950
+FORDgets salary =3000
+MILLERgets salary =1300
+
+14 rows selected.
+
+SQL> select ename||' gets salary = '|| sal from emp;
+
+ENAME||'GETSSALARY='||SAL
+-----------------------------------------------------------------
+SMITH gets salary = 800
+ALLEN gets salary = 1600
+WARD gets salary = 1250
+JONES gets salary = 2975
+MARTIN gets salary = 1250
+BLAKE gets salary = 2850
+CLARK gets salary = 2450
+SCOTT gets salary = 3000
+KING gets salary = 5000
+TURNER gets salary = 1500
+ADAMS gets salary = 1100
+JAMES gets salary = 950
+FORD gets salary = 3000
+MILLER gets salary = 1300
+
+14 rows selected.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select ename||' gets '||sal||' as salary and '||nvl(comm,0)||' as commission ' from emp;
+
+ENAME||'GETS'||SAL||'ASSALARYAND'||NVL(COMM,0)||'ASCOMMISSION'
+----------------------------------------------------------------------------------------------------
+SMITH gets 800 as salary and 0 as commission
+ALLEN gets 1600 as salary and 300 as commission
+WARD gets 1250 as salary and 500 as commission
+JONES gets 2975 as salary and 0 as commission
+MARTIN gets 1250 as salary and 1400 as commission
+BLAKE gets 2850 as salary and 0 as commission
+CLARK gets 2450 as salary and 0 as commission
+SCOTT gets 3000 as salary and 0 as commission
+KING gets 5000 as salary and 0 as commission
+TURNER gets 1500 as salary and 0 as commission
+ADAMS gets 1100 as salary and 0 as commission
+JAMES gets 950 as salary and 0 as commission
+FORD gets 3000 as salary and 0 as commission
+MILLER gets 1300 as salary and 0 as commission
+
+14 rows selected.
+
+SQL> select deptno from emp group by deptno;
+
+    DEPTNO
+----------
+        30
+        20
+        10
+
+SQL> select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3;
+select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3 groupby deptno;
+select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3 groupby deptno
+                                                                                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3 group by deptno;
+select deptno,count(*) from emp where(select count(*) from emp group by deptno)>3 group by deptno
+                                      *
+ERROR at line 1:
+ORA-01427: single-row subquery returns more than one row
+
+
+SQL> select deptno,count(*) from emp where(select deptno,count(*) from emp group by deptno)>3 group by deptno;
+select deptno,count(*) from emp where(select deptno,count(*) from emp group by deptno)>3 group by deptno
+                                      *
+ERROR at line 1:
+ORA-00913: too many values
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEP
+---------- ---------- --------- ---------- --------- ---------- ---------- -------
+      7369 SMITH      CLERK           7902 17-DEC-80        800
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500
+      7566 JONES      MANAGER         7839 02-APR-81       2975
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000
+      7839 KING       PRESIDENT            17-NOV-81       5000
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100
+      7900 JAMES      CLERK           7698 03-DEC-81        950
+      7902 FORD       ANALYST         7566 03-DEC-81       3000
+      7934 MILLER     CLERK           7782 23-JAN-82       1300
+
+14 rows selected.
+
+SQL> select &vb from emp;
+Enter value for vb: ename
+old   1: select &vb from emp
+new   1: select ename from emp
+
+ENAME
+----------
+SMITH
+ALLEN
+WARD
+JONES
+MARTIN
+BLAKE
+CLARK
+SCOTT
+KING
+TURNER
+ADAMS
+JAMES
+FORD
+MILLER
+
+14 rows selected.
+
+SQL> /
+Enter value for vb: empno
+old   1: select &vb from emp
+new   1: select empno from emp
+
+     EMPNO
+----------
+      7369
+      7499
+      7521
+      7566
+      7654
+      7698
+      7782
+      7788
+      7839
+      7844
+      7876
+      7900
+      7902
+      7934
+
+14 rows selected.
+
+SQL> /
+Enter value for vb: emp,ename,mgr
+old   1: select &vb from emp
+new   1: select emp,ename,mgr from emp
+select emp,ename,mgr from emp
+       *
+ERROR at line 1:
+ORA-00904: "EMP": invalid identifier
+
+
+SQL> /
+Enter value for vb: mgr
+old   1: select &vb from emp
+new   1: select mgr from emp
+
+       MGR
+----------
+      7902
+      7698
+      7698
+      7839
+      7698
+      7839
+      7839
+      7566
+
+      7698
+      7788
+      7698
+      7566
+      7782
+
+14 rows selected.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEP
+---------- ---------- --------- ---------- --------- ---------- ---------- -------
+      7369 SMITH      CLERK           7902 17-DEC-80        800
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500
+      7566 JONES      MANAGER         7839 02-APR-81       2975
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000
+      7839 KING       PRESIDENT            17-NOV-81       5000
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100
+      7900 JAMES      CLERK           7698 03-DEC-81        950
+      7902 FORD       ANALYST         7566 03-DEC-81       3000
+      7934 MILLER     CLERK           7782 23-JAN-82       1300
+
+14 rows selected.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+TESTSTU2                       TABLE
+DUAL                           TABLE
+
+11 rows selected.
+
+SQL> select * from student
+  2  ;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+shubham           345 Patna                              800001         98
+prabhat           331 Punjab                             152107         87
+avinash           701 MP                                 548978         89
+ravikant          336 Gaya                               789654         95
+aashish           310 patna                              800001         98
+aashutosh         702 patna                              879654         90
+sushant           321 patna                              432123         78
+prashant          332 Bihar                              848207         89
+
+8 rows selected.
+
+SQL> select ltrim(name,s) from student;
+select ltrim(name,s) from student
+                  *
+ERROR at line 1:
+ORA-00904: "S": invalid identifier
+
+
+SQL> select ltrim(name,'s') from student;
+
+LTRIM(NAME
+----------
+hubham
+prabhat
+avinash
+ravikant
+aashish
+aashutosh
+ushant
+prashant
+
+8 rows selected.
+
+SQL> select trim(ename) from student;
+select trim(ename) from student
+            *
+ERROR at line 1:
+ORA-00904: "ENAME": invalid identifier
+
+
+SQL> select trim(name) from student;
+
+TRIM(NAME)
+----------
+shubham
+prabhat
+avinash
+ravikant
+aashish
+aashutosh
+sushant
+prashant
+
+8 rows selected.
+
+SQL> select trim('s' frm name) from student;
+select trim('s' frm name) from student
+                *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select trim('s' from name) from student;
+
+TRIM('S'FR
+----------
+hubham
+prabhat
+avinash
+ravikant
+aashish
+aashutosh
+ushant
+prashant
+
+8 rows selected.
+
+SQL> select trim('shu' from name) from student;
+select trim('shu' from name) from student
+       *
+ERROR at line 1:
+ORA-30001: trim set should have only one character
+
+
+SQL> select ename from emp;
+
+ENAME
+----------
+SMITH
+ALLEN
+WARD
+JONES
+MARTIN
+BLAKE
+CLARK
+SCOTT
+KING
+TURNER
+ADAMS
+JAMES
+FORD
+MILLER
+
+14 rows selected.
+
+SQL> select lpad(ename,10) from emp;
+
+LPAD(ENAME,10)
+----------------------------------------
+     SMITH
+     ALLEN
+      WARD
+     JONES
+    MARTIN
+     BLAKE
+     CLARK
+     SCOTT
+      KING
+    TURNER
+     ADAMS
+     JAMES
+      FORD
+    MILLER
+
+14 rows selected.
+
+SQL> select lpad(ename,10,'*') from emp;
+
+LPAD(ENAME,10,'*')
+----------------------------------------
+*****SMITH
+*****ALLEN
+******WARD
+*****JONES
+****MARTIN
+*****BLAKE
+*****CLARK
+*****SCOTT
+******KING
+****TURNER
+*****ADAMS
+*****JAMES
+******FORD
+****MILLER
+
+14 rows selected.
+
+SQL> select lpad(ename,4,'*') from emp;
+
+LPAD(ENAME,4,'*'
+----------------
+SMIT
+ALLE
+WARD
+JONE
+MART
+BLAK
+CLAR
+SCOT
+KING
+TURN
+ADAM
+JAME
+FORD
+MILL
+
+14 rows selected.
+
+SQL> select lpad(ename,10,'*'),rpad(ename,10,'*') from emp;
+
+LPAD(ENAME,10,'*')                       RPAD(ENAME,10,'*')
+---------------------------------------- ----------------------------------------
+*****SMITH                               SMITH*****
+*****ALLEN                               ALLEN*****
+******WARD                               WARD******
+*****JONES                               JONES*****
+****MARTIN                               MARTIN****
+*****BLAKE                               BLAKE*****
+*****CLARK                               CLARK*****
+*****SCOTT                               SCOTT*****
+******KING                               KING******
+****TURNER                               TURNER****
+*****ADAMS                               ADAMS*****
+*****JAMES                               JAMES*****
+******FORD                               FORD******
+****MILLER                               MILLER****
+
+14 rows selected.
+
+SQL> select lpad(ename,10,'*')||rpad(ename,10,'*') from emp;
+
+LPAD(ENAME,10,'*')||RPAD(ENAME,10,'*')
+--------------------------------------------------------------------------------
+*****SMITHSMITH*****
+*****ALLENALLEN*****
+******WARDWARD******
+*****JONESJONES*****
+****MARTINMARTIN****
+*****BLAKEBLAKE*****
+*****CLARKCLARK*****
+*****SCOTTSCOTT*****
+******KINGKING******
+****TURNERTURNER****
+*****ADAMSADAMS*****
+*****JAMESJAMES*****
+******FORDFORD******
+****MILLERMILLER****
+
+14 rows selected.
+
+SQL> select lower('PrASHANT') from emp;
+
+LOWER('P
+--------
+prashant
+prashant
+prashant
+prashant
+prashant
+prashant
+prashant
+prashant
+prashant
+prashant
+prashant
+prashant
+prashant
+prashant
+
+14 rows selected.
+
+SQL> select lower('PrASHANT') from dual;
+
+no rows selected
+
+SQL> drop table dual;
+
+Table dropped.
+
+SQL> show recyclebin;
+ORIGINAL NAME    RECYCLEBIN NAME                OBJECT TYPE  DROP TIME
+---------------- ------------------------------ ------------ -------------------
+DUAL             BIN$aDqzQ5JUTL64djLR83S3Jg==$0 TABLE        2018-02-17:22:45:58
+SQL> purge recyclebin
+  2  ;
+
+Recyclebin purged.
+
+
+SQL> select ascii(ename) from emp;
+
+ASCII(ENAME)
+------------
+          83
+          65
+          87
+          74
+          77
+          66
+          67
+          83
+          75
+          84
+          65
+          74
+          70
+          77
+
+14 rows selected.
+
+SQL> select chr(ascii(ename)) from emp;
+
+CHR(
+----
+S
+A
+W
+J
+M
+B
+C
+S
+K
+T
+A
+J
+F
+M
+
+14 rows selected.
+
+SQL> delect sysdate from dual;
+SP2-0734: unknown command beginning "delect sys..." - rest of line ignored.
+SQL> select sysdate from dual;
+
+SYSDATE
+---------
+17-FEB-18
+
+SQL> select add_months(sysdate,1000) from dual;
+
+ADD_MONTH
+---------
+17-JUN-01
+
+SQL> select add_months(sysdate,10) from dual;
+
+ADD_MONTH
+---------
+17-DEC-18
+
+SQL> select add_months(sysdate,100) from dual;
+
+ADD_MONTH
+---------
+17-JUN-26
+
+SQL> select last_day(sysdate) from dual;
+
+LAST_DAY(
+---------
+28-FEB-18
+
+SQL> select last_day(sysdate+1) from dual;
+
+LAST_DAY(
+---------
+28-FEB-18
+
+SQL> select last_day(sysdate+30) from dual;
+
+LAST_DAY(
+---------
+31-MAR-18
+
+SQL> select last_day(sysdate*3) from dual;
+select last_day(sysdate*3) from dual
+                *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE
+
+
+SQL> select next_day(sysdate,'tuesday') from dual;
+
+NEXT_DAY(
+---------
+20-FEB-18
+
+SQL> select months_between(sysdate,'25-jun-1997') from dual;
+
+MONTHS_BETWEEN(SYSDATE,'25-JUN-1997')
+-------------------------------------
+                           247.772818
+
+SQL> select sysdate from dual;
+
+SYSDATE
+---------
+17-FEB-18
+
+SQL> select months_between(sysdate,'25-06-1997') from dual;
+select months_between(sysdate,'25-06-1997') from dual
+                              *
+ERROR at line 1:
+ORA-01843: not a valid month
+
+
+SQL> select months_between(sysdate,to_date('25-06-1997','dd-mm-yyyy') from dual;
+select months_between(sysdate,to_date('25-06-1997','dd-mm-yyyy') from dual
+                                                                 *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select months_between(sysdate,to_date('25-06-1997','dd-mm-yyyy'}) from dual;
+select months_between(sysdate,to_date('25-06-1997','dd-mm-yyyy'}) from dual
+                                                               *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> select months_between(sysdate,to_date('25-06-1997','dd-mm-yyyy')) from dual;
+
+MONTHS_BETWEEN(SYSDATE,TO_DATE('25-06-1997','DD-MM-YYYY'))
+----------------------------------------------------------
+                                                247.772851
+
+SQL> select months_between(sysdate,to_date('17-02-1997','dd-mm-yyyy')) from dual;
+
+MONTHS_BETWEEN(SYSDATE,TO_DATE('17-02-1997','DD-MM-YYYY'))
+----------------------------------------------------------
+                                                       252
+
+SQL> select months_between(sysdate,to_date('20-02-1997','dd-mm-yyyy')) from dual;
+
+MONTHS_BETWEEN(SYSDATE,TO_DATE('20-02-1997','DD-MM-YYYY'))
+----------------------------------------------------------
+                                                251.934159
+
+SQL> select months_between(sysdate,to_date('20-02-1997','dd-mm-yyyy')/12) from dual;
+select months_between(sysdate,to_date('20-02-1997','dd-mm-yyyy')/12) from dual
+                              *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE
+
+
+SQL> select months_between(sysdate,to_date('20-02-1997','dd-mm-yyyy'))/12 from dual;
+
+MONTHS_BETWEEN(SYSDATE,TO_DATE('20-02-1997','DD-MM-YYYY'))/12
+-------------------------------------------------------------
+                                                    20.994514
+
+SQL> select trunc(months_between(sysdate,to_date('20-02-1997','dd-mm-yyyy'))/12) from dual;
+
+TRUNC(MONTHS_BETWEEN(SYSDATE,TO_DATE('20-02-1997','DD-MM-YYYY'))/12)
+--------------------------------------------------------------------
+                                                                  20
+
+SQL> select trunc(months_between(sysdate,to_date('&Bday','dd-mm-yyyy'))/12) from dual;
+Enter value for bday: 08-03-96
+old   1: select trunc(months_between(sysdate,to_date('&Bday','dd-mm-yyyy'))/12) from dual
+new   1: select trunc(months_between(sysdate,to_date('08-03-96','dd-mm-yyyy'))/12) from dual
+
+TRUNC(MONTHS_BETWEEN(SYSDATE,TO_DATE('08-03-96','DD-MM-YYYY'))/12)
+------------------------------------------------------------------
+                                                              1921
+
+SQL> /
+Enter value for bday: 21-09-1997
+old   1: select trunc(months_between(sysdate,to_date('&Bday','dd-mm-yyyy'))/12) from dual
+new   1: select trunc(months_between(sysdate,to_date('21-09-1997','dd-mm-yyyy'))/12) from dual
+
+TRUNC(MONTHS_BETWEEN(SYSDATE,TO_DATE('21-09-1997','DD-MM-YYYY'))/12)
+--------------------------------------------------------------------
+                                                                  20
+
+SQL> select round(months_between(sysdate,to_date('20-02-1997','dd-mm-yyyy'))/12) from dual;
+
+ROUND(MONTHS_BETWEEN(SYSDATE,TO_DATE('20-02-1997','DD-MM-YYYY'))/12)
+--------------------------------------------------------------------
+                                                                  21
+
+SQL> select to_char(sysdate,'ddd') from dual;
+
+TO_
+---
+048
+
+SQL> select to_char(sysdate,'ddmmyyyy') from dual;
+
+TO_CHAR(
+--------
+17022018
+
+SQL> select to_char(sysdate,'dd---------->mm--------------->yyyy') from dual;
+
+TO_CHAR(SYSDATE,'DD---------->MM---
+-----------------------------------
+17---------->02--------------->2018
+
+SQL> select to_char(sysdate,'yyddmmyy') from dual;
+
+TO_CHAR(
+--------
+18170218
+
+SQL> select to_char(sysdate,'YYddmmyy') from dual;
+
+TO_CHAR(
+--------
+18170218
+
+SQL> select to_char(sysdate,'dd/mm/yy/hh/min/ss') from dual;
+select to_char(sysdate,'dd/mm/yy/hh/min/ss') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(sysdate,'dd/mm/y/ hh/min/ss') from dual;
+select to_char(sysdate,'dd/mm/y/ hh/min/ss') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(sysdate,'dd/mm/yy hh/min/ss') from dual;
+select to_char(sysdate,'dd/mm/yy hh/min/ss') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(sysdate,'dd/mm/yy') from dual;
+
+TO_CHAR(
+--------
+17/02/18
+
+SQL> select to_char(sysdate,'dd/mm/yy hh') from dual;
+
+TO_CHAR(SYS
+-----------
+17/02/18 11
+
+SQL> select to_char(sysdate,'dd/mm/yy hh/min') from dual;
+select to_char(sysdate,'dd/mm/yy hh/min') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(sysdate,'dd/mm/yy hh:min') from dual;
+select to_char(sysdate,'dd/mm/yy hh:min') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(sysdate,'dd/mm/yy hh:MIN') from dual;
+select to_char(sysdate,'dd/mm/yy hh:MIN') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(sysdate,'dd/mm/yy hh24:MIN') from dual;
+select to_char(sysdate,'dd/mm/yy hh24:MIN') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(sysdate,'dd/mm/yy MIN') from dual;
+select to_char(sysdate,'dd/mm/yy MIN') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(sysdate,'dd/mm/yy ') from dual;
+
+TO_CHAR(S
+---------
+17/02/18
+
+SQL> select to_char(sysdate,'hh:min:ss') from dual;
+select to_char(sysdate,'hh:min:ss') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(sysdate,"hh:min:ss") from dual;
+select to_char(sysdate,"hh:min:ss") from dual
+                       *
+ERROR at line 1:
+ORA-00904: "hh:min:ss": invalid identifier
+
+
+SQL> select to_char(sysdate,"HH:MIN:SS") from dual;
+select to_char(sysdate,"HH:MIN:SS") from dual
+                       *
+ERROR at line 1:
+ORA-00904: "HH:MIN:SS": invalid identifier
+
+
+SQL> select to_char(sysdate,'hh:mi:ss') from dual;
+
+TO_CHAR(
+--------
+11:09:13
+
+SQL> select to_char(sysdate,"hh:mi:ss") from dual;
+select to_char(sysdate,"hh:mi:ss") from dual
+                       *
+ERROR at line 1:
+ORA-00904: "hh:mi:ss": invalid identifier
+
+
+SQL> select to_char(sysdate,'hh:mi:ss') from dual;
+
+TO_CHAR(
+--------
+11:09:47
+
+SQL> select to_char(sysdate,"hh:mi:ss") from dual;
+select to_char(sysdate,"hh:mi:ss") from dual
+                       *
+ERROR at line 1:
+ORA-00904: "hh:mi:ss": invalid identifier
+
+
+SQL> select to_char(sysdate,'hh mi ss') from dual;
+
+TO_CHAR(
+--------
+11 10 18
+
+SQL> select (to_date('&date','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual;
+Enter value for date: 2551997
+old   1: select (to_date('&date','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+new   1: select (to_date('2551997','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+select (to_date('2551997','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+                                   *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select to_char(to_date('&date','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual;
+Enter value for date: 2551987
+old   1: select to_char(to_date('&date','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+new   1: select to_char(to_date('2551987','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+select to_char(to_date('2551987','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+                       *
+ERROR at line 1:
+ORA-01843: not a valid month
+
+
+SQL> select to_char(to_date('&date','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual;
+Enter value for date: 250597
+old   1: select to_char(to_date('&date','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+new   1: select to_char(to_date('250597','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+
+TO_CHAR(TO_DATE('250597','DDMMYY'),'DDDDDDMMYYYYYYHHMISSDAYDYMONTHMONYEAR')
+----------------------------------------------------------------------------------------------------
+6 25 145 05 97 2097 12 00 00 saturday  sat may       may twenty ninety-seven
+
+SQL> /
+Enter value for date: 250697
+old   1: select to_char(to_date('&date','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+new   1: select to_char(to_date('250697','ddmmyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+
+TO_CHAR(TO_DATE('250697','DDMMYY'),'DDDDDDMMYYYYYYHHMISSDAYDYMONTHMONYEAR')
+----------------------------------------------------------------------------------------------------
+2 25 176 06 97 2097 12 00 00 tuesday   tue june      jun twenty ninety-seven
+
+SQL> select to_char(to_date('&date','ddmmyyyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual;
+Enter value for date: 25061997
+old   1: select to_char(to_date('&date','ddmmyyyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+new   1: select to_char(to_date('25061997','ddmmyyyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+
+TO_CHAR(TO_DATE('25061997','DDMMYYYY'),'DDDDDDMMYYYYYYHHMISSDAYDYMONTHMONYEAR'
+------------------------------------------------------------------------------
+3 25 176 06 97 1997 12 00 00 wednesday wed june      jun nineteen ninety-seven
+
+SQL> /
+Enter value for date: 831996
+old   1: select to_char(to_date('&date','ddmmyyyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+new   1: select to_char(to_date('831996','ddmmyyyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+select to_char(to_date('831996','ddmmyyyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+                       *
+ERROR at line 1:
+ORA-01847: day of month must be between 1 and last day of month
+
+
+SQL> 08031996
+SP2-0226: Invalid line number
+SQL> /
+Enter value for date: 08031996
+old   1: select to_char(to_date('&date','ddmmyyyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+new   1: select to_char(to_date('08031996','ddmmyyyy'),'d dd ddd mm yy yyyy hh mi ss day dy month mon year') from dual
+
+TO_CHAR(TO_DATE('08031996','DDMMYYYY'),'DDDDDDMMYYYYYYHHMISSDAYDYMONTHMONYEA
+----------------------------------------------------------------------------
+5 08 068 03 96 1996 12 00 00 friday    fri march     mar nineteen ninety-six
+
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select deptno,max(sal),min(sal),sum(sal) from emp group by deptno;
+
+    DEPTNO   MAX(SAL)   MIN(SAL)   SUM(SAL)
+---------- ---------- ---------- ----------
+        30       2850        950       9400
+        20       3000        800      10875
+        10       5000       1300       8750
+
+SQL> select deptno,max(sal),min(sal),sum(sal) from emp wheredept no=10 group by deptno;
+select deptno,max(sal),min(sal),sum(sal) from emp wheredept no=10 group by deptno
+                                                            *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select deptno,max(sal),min(sal),sum(sal) from emp where deptno=10 group by deptno;
+
+    DEPTNO   MAX(SAL)   MIN(SAL)   SUM(SAL)
+---------- ---------- ---------- ----------
+        10       5000       1300       8750
+
+SQL> select deptno,max(sal),min(sal),sum(sal) from emp where deptno>10 group by deptno;
+
+    DEPTNO   MAX(SAL)   MIN(SAL)   SUM(SAL)
+---------- ---------- ---------- ----------
+        30       2850        950       9400
+        20       3000        800      10875
+
+SQL> select count(*) from dual;
+
+  COUNT(*)
+----------
+         1
+
+SQL> select count(*) from emp;
+
+  COUNT(*)
+----------
+        14
+
+SQL> select count(*) from emp group by deptno;
+
+  COUNT(*)
+----------
+         6
+         5
+         3
+
+SQL> select ename from emp group by ename;
+
+ENAME
+----------
+ALLEN
+JONES
+FORD
+CLARK
+MILLER
+SMITH
+WARD
+MARTIN
+SCOTT
+TURNER
+ADAMS
+BLAKE
+KING
+JAMES
+
+14 rows selected.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select job|||||||||||||sal from emp;
+select job|||||||||||||sal from emp
+            *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select job||||sal from emp;
+select job||||sal from emp
+            *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select job||'+'||sal from emp;
+
+JOB||'+'||SAL
+--------------------------------------------------
+CLERK+800
+SALESMAN+1600
+SALESMAN+1250
+MANAGER+2975
+SALESMAN+1250
+MANAGER+2850
+MANAGER+2450
+ANALYST+3000
+PRESIDENT+5000
+SALESMAN+1500
+CLERK+1100
+CLERK+950
+ANALYST+3000
+CLERK+1300
+
+14 rows selected.
+
+SQL> select 'department number '|| deptno||' is repeated '||count(*)||' times .' from emp;
+select 'department number '|| deptno||' is repeated '||count(*)||' times .' from emp
+                              *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select 'department number '||deptno||' is repeated '||count(*)||' times .' from emp;
+select 'department number '||deptno||' is repeated '||count(*)||' times .' from emp
+                             *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select 'department number '||deptno||' is repeated '||count(*)||' times .' from emp group by deptno;
+
+'DEPARTMENTNUMBER'||DEPTNO||'ISREPEATED'||COUNT(*)||'TIMES.'
+----------------------------------------------------------------------------------------------------
+department number 30 is repeated 6 times .
+department number 20 is repeated 5 times .
+department number 10 is repeated 3 times .
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+TESTSTU2                       TABLE
+
+10 rows selected.
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select 8 from emp;
+
+         8
+----------
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+
+14 rows selected.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select 7888789788 from emp;
+
+7888789788
+----------
+7888789788
+7888789788
+7888789788
+7888789788
+7888789788
+7888789788
+7888789788
+7888789788
+7888789788
+7888789788
+7888789788
+7888789788
+7888789788
+7888789788
+
+14 rows selected.
+
+SQL> select 7888789788 from dual;
+
+7888789788
+----------
+7888789788
+
+SQL> select sysdate from dual;
+
+SYSDATE
+---------
+17-FEB-18
+
+SQL> select sysdate from emp;
+
+SYSDATE
+---------
+17-FEB-18
+17-FEB-18
+17-FEB-18
+17-FEB-18
+17-FEB-18
+17-FEB-18
+17-FEB-18
+17-FEB-18
+17-FEB-18
+17-FEB-18
+17-FEB-18
+17-FEB-18
+17-FEB-18
+17-FEB-18
+
+14 rows selected.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

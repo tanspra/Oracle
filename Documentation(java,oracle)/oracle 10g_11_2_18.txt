@@ -1,0 +1,2315 @@
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR
+---------- ---------- --------- ----------
+HIREDATE         SAL       COMM     DEPTNO
+--------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902
+17-DEC-80        800                    20
+
+      7499 ALLEN      SALESMAN        7698
+20-FEB-81       1600        300         30
+
+      7521 WARD       SALESMAN        7698
+22-FEB-81       1250        500         30
+
+      7566 JONES      MANAGER         7839
+02-APR-81       2975                    20
+
+      7654 MARTIN     SALESMAN        7698
+28-SEP-81       1250       1400         30
+
+      7698 BLAKE      MANAGER         7839
+01-MAY-81       2850                    30
+
+      7782 CLARK      MANAGER         7839
+09-JUN-81       2450                    10
+
+      7788 SCOTT      ANALYST         7566
+19-APR-87       3000                    20
+
+      7839 KING       PRESIDENT
+17-NOV-81       5000                    10
+
+      7844 TURNER     SALESMAN        7698
+08-SEP-81       1500          0         30
+
+      7876 ADAMS      CLERK           7788
+23-MAY-87       1100                    20
+
+      7900 JAMES      CLERK           7698
+03-DEC-81        950                    30
+
+      7902 FORD       ANALYST         7566
+03-DEC-81       3000                    20
+
+      7934 MILLER     CLERK           7782
+23-JAN-82       1300                    10
+
+
+14 rows selected.
+
+SQL> set line 100;
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select length(ename) from emp;
+
+LENGTH(ENAME)
+-------------
+            5
+            5
+            4
+            5
+            6
+            5
+            5
+            5
+            4
+            6
+            5
+            5
+            4
+            6
+
+14 rows selected.
+
+SQL> desc emp;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                 NOT NULL NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ MGR                                                            NUMBER(4)
+ HIREDATE                                                       DATE
+ SAL                                                            NUMBER(7,2)
+ COMM                                                           NUMBER(7,2)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+
+SQL> select * from bonus;
+
+no rows selected
+
+SQL> select * from salgrade;
+
+     GRADE      LOSAL      HISAL
+---------- ---------- ----------
+         1        700       1200
+         2       1201       1400
+         3       1401       2000
+         4       2001       3000
+         5       3001       9999
+
+SQL> desc bonus;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ENAME                                                          VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ SAL                                                            NUMBER
+ COMM                                                           NUMBER
+
+SQL> create table student(name varchar2(10),roll number(3),address varchar2(30),pin number(60),marks number(5,2));
+create table student(name varchar2(10),roll number(3),address varchar2(30),pin number(60),marks number(5,2))
+                                                                                      *
+ERROR at line 1:
+ORA-01727: numeric precision specifier is out of range (1 to 38)
+
+
+SQL> create table student(name varchar2(10),roll number(3),address varchar2(30),pin number(6),marks number(5,2));
+
+Table created.
+
+SQL> insert into student values('&name',&roll,'&address',&pin,&marks);
+Enter value for name: Shubham
+Enter value for roll: 345
+Enter value for address: Patna
+Enter value for pin: 800001
+Enter value for marks: 98
+old   1: insert into student values('&name',&roll,'&address',&pin,&marks)
+new   1: insert into student values('Shubham',345,'Patna',800001,98)
+
+1 row created.
+
+SQL> /
+Enter value for name: Prabhat
+Enter value for roll: 331
+Enter value for address: Punjab
+Enter value for pin: 152107
+Enter value for marks: 87
+old   1: insert into student values('&name',&roll,'&address',&pin,&marks)
+new   1: insert into student values('Prabhat',331,'Punjab',152107,87)
+
+1 row created.
+
+SQL> ed
+SP2-0110: Cannot create save file "afiedt.buf"
+SQL> ed/
+
+SQL>
+SQL>
+SQL> insert into student values('&name',&roll,'&address',&pin,&marks);
+Enter value for name: Avinash
+Enter value for roll: 701
+Enter value for address: MP
+Enter value for pin: 548978
+Enter value for marks: 89
+old   1: insert into student values('&name',&roll,'&address',&pin,&marks)
+new   1: insert into student values('Avinash',701,'MP',548978,89)
+
+1 row created.
+
+SQL> /
+Enter value for name: prashant
+Enter value for roll: 332
+Enter value for address: Bihar
+Enter value for pin: 848207
+Enter value for marks: 78
+old   1: insert into student values('&name',&roll,'&address',&pin,&marks)
+new   1: insert into student values('prashant',332,'Bihar',848207,78)
+
+1 row created.
+
+SQL> ed/
+
+SQL> insert into student values('&name',&roll,'&address',&pin,&marks);
+Enter value for name: ravikant
+Enter value for roll: 336
+Enter value for address: Gaya
+Enter value for pin: 789654
+Enter value for marks: 95
+old   1: insert into student values('&name',&roll,'&address',&pin,&marks)
+new   1: insert into student values('ravikant',336,'Gaya',789654,95)
+
+1 row created.
+
+SQL> ed/
+
+SQL> ed/
+
+SQL> abc.sql
+SP2-0042: unknown command "abc.sql" - rest of line ignored.
+SQL> insert into student values('&name',&roll,'&address',&pin,&marks);
+Enter value for name: aashish
+Enter value for roll: 310
+Enter value for address: patna
+Enter value for pin: 800001
+Enter value for marks: 98
+old   1: insert into student values('&name',&roll,'&address',&pin,&marks)
+new   1: insert into student values('aashish',310,'patna',800001,98)
+
+1 row created.
+
+SQL> ed/
+
+SQL> ed/
+
+SQL> /
+Enter value for name: aashutosh
+Enter value for roll: 702
+Enter value for address: patna
+Enter value for pin: 879654
+Enter value for marks: 90
+old   1: insert into student values('&name',&roll,'&address',&pin,&marks)
+new   1: insert into student values('aashutosh',702,'patna',879654,90)
+
+1 row created.
+
+SQL> /
+Enter value for name: sushant
+Enter value for roll: 432
+Enter value for address: patna
+Enter value for pin: 7890965
+Enter value for marks: jhkj
+old   1: insert into student values('&name',&roll,'&address',&pin,&marks)
+new   1: insert into student values('sushant',432,'patna',7890965,jhkj)
+insert into student values('sushant',432,'patna',7890965,jhkj)
+                                                         *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> /
+Enter value for name: sushant
+Enter value for roll: 321
+Enter value for address: patna
+Enter value for pin: 432123
+Enter value for marks: 78
+old   1: insert into student values('&name',&roll,'&address',&pin,&marks)
+new   1: insert into student values('sushant',321,'patna',432123,78)
+
+1 row created.
+
+SQL> select * from student
+  2  ;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+Shubham           345 Patna                              800001         98
+Prabhat           331 Punjab                             152107         87
+Avinash           701 MP                                 548978         89
+prashant          332 Bihar                              848207         78
+ravikant          336 Gaya                               789654         95
+aashish           310 patna                              800001         98
+aashutosh         702 patna                              879654         90
+sushant           321 patna                              432123         78
+
+8 rows selected.
+
+SQL> desc student;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ NAME                                                           VARCHAR2(10)
+ ROLL                                                           NUMBER(3)
+ ADDRESS                                                        VARCHAR2(30)
+ PIN                                                            NUMBER(6)
+ MARKS                                                          NUMBER(5,2)
+
+SQL> create table test(id number(2),tname varchar(20),tadd varchar2(20));
+
+Table created.
+
+SQL> insert into test(id,tname) values (&id,'&name');
+Enter value for id: 1
+Enter value for name: Pk
+old   1: insert into test(id,tname) values (&id,'&name')
+new   1: insert into test(id,tname) values (1,'Pk')
+
+1 row created.
+
+SQL> /
+Enter value for id: 2
+Enter value for name: shubham
+old   1: insert into test(id,tname) values (&id,'&name')
+new   1: insert into test(id,tname) values (2,'shubham')
+
+1 row created.
+
+SQL> /
+Enter value for id: 3
+Enter value for name: avinash
+old   1: insert into test(id,tname) values (&id,'&name')
+new   1: insert into test(id,tname) values (3,'avinash')
+
+1 row created.
+
+SQL> /
+Enter value for id: 4
+Enter value for name: aashish
+old   1: insert into test(id,tname) values (&id,'&name')
+new   1: insert into test(id,tname) values (4,'aashish')
+
+1 row created.
+
+SQL> /
+Enter value for id: 5
+Enter value for name: ravikant
+old   1: insert into test(id,tname) values (&id,'&name')
+new   1: insert into test(id,tname) values (5,'ravikant')
+
+1 row created.
+
+SQL> /
+Enter value for id: 6
+Enter value for name: aashish
+old   1: insert into test(id,tname) values (&id,'&name')
+new   1: insert into test(id,tname) values (6,'aashish')
+
+1 row created.
+
+SQL> /
+Enter value for id: 7
+Enter value for name: sushant
+old   1: insert into test(id,tname) values (&id,'&name')
+new   1: insert into test(id,tname) values (7,'sushant')
+
+1 row created.
+
+SQL> select * from test
+  2  ;
+
+        ID TNAME                TADD
+---------- -------------------- --------------------
+         1 Pk
+         2 shubham
+         3 avinash
+         4 aashish
+         5 ravikant
+         6 aashish
+         7 sushant
+
+7 rows selected.
+
+SQL> rename test to list;
+
+Table renamed.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+LIST                           TABLE
+
+6 rows selected.
+
+SQL> rename list to list_of_student;
+
+Table renamed.
+
+SQL> rename list to list_of_student;
+rename list to list_of_student
+*
+ERROR at line 1:
+ORA-04043: object LIST does not exist
+
+
+SQL> rename list_of_student to list of student;
+rename list_of_student to list of student
+                               *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> rename list_of_student to list-of-student;
+rename list_of_student to list-of-student
+                              *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> rename list_of_student to list_of_student;
+rename list_of_student to list_of_student
+                          *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+LIST_OF_STUDENT                TABLE
+
+6 rows selected.
+
+SQL> select * from list_of_student
+  2  ;
+
+        ID TNAME                TADD
+---------- -------------------- --------------------
+         1 Pk
+         2 shubham
+         3 avinash
+         4 aashish
+         5 ravikant
+         6 aashish
+         7 sushant
+
+7 rows selected.
+
+SQL> rename list_of_student to studentlist;
+
+Table renamed.
+
+SQL> select id from studentlist;
+
+        ID
+----------
+         1
+         2
+         3
+         4
+         5
+         6
+         7
+
+7 rows selected.
+
+SQL> create table test(attribute varchar2(90),value number(7,2));
+
+Table created.
+
+SQL> desc test;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ATTRIBUTE                                                      VARCHAR2(90)
+ VALUE                                                          NUMBER(7,2)
+
+SQL> alter table test add column res varchar(100);
+alter table test add column res varchar(100)
+                     *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> alter table test add(res varchar(100));
+
+Table altered.
+
+SQL> desc test
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ATTRIBUTE                                                      VARCHAR2(90)
+ VALUE                                                          NUMBER(7,2)
+ RES                                                            VARCHAR2(100)
+
+SQL> alter table test add(res char(100));
+alter table test add(res char(100))
+                     *
+ERROR at line 1:
+ORA-01430: column being added already exists in table
+
+
+SQL> alter table test add(type char(100));
+
+Table altered.
+
+SQL> desc test
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ATTRIBUTE                                                      VARCHAR2(90)
+ VALUE                                                          NUMBER(7,2)
+ RES                                                            VARCHAR2(100)
+ TYPE                                                           CHAR(100)
+
+SQL> alter table test drop column type;
+
+Table altered.
+
+SQL> desc test
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ATTRIBUTE                                                      VARCHAR2(90)
+ VALUE                                                          NUMBER(7,2)
+ RES                                                            VARCHAR2(100)
+
+SQL> rollback
+  2  ;
+
+Rollback complete.
+
+SQL> desc test
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ATTRIBUTE                                                      VARCHAR2(90)
+ VALUE                                                          NUMBER(7,2)
+ RES                                                            VARCHAR2(100)
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> show recyclebin;
+SQL> show recyclebin;
+SQL> create table test1();
+create table test1()
+                   *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> create table test1(name varchar2);
+create table test1(name varchar2)
+                                *
+ERROR at line 1:
+ORA-00906: missing left parenthesis
+
+
+SQL> create table test1(name varchar2());
+create table test1(name varchar2())
+                                 *
+ERROR at line 1:
+ORA-00910: specified length too long for its datatype
+
+
+SQL> create table test1(name varchar2(10));
+
+Table created.
+
+SQL> drop table test1;
+
+Table dropped.
+
+SQL>
+SQL> show recyclebin
+ORIGINAL NAME    RECYCLEBIN NAME                OBJECT TYPE  DROP TIME
+---------------- ------------------------------ ------------ -------------------
+TEST1            BIN$0NBB6M2QTe6rMiINIGlFbg==$0 TABLE        2018-02-11:04:41:02
+SQL> desc test 1
+Usage: DESCRIBE [schema.]object[@db_link]
+SQL> flashback test1 to before drop;
+flashback test1 to before drop
+          *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> flashback table test1 to before drop;
+
+Flashback complete.
+
+SQL> desc test1
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ NAME                                                           VARCHAR2(10)
+
+SQL> drop table test1 purge;
+
+Table dropped.
+
+SQL> show recyclebin;
+SQL> flashback table test1 to before drop;
+flashback table test1 to before drop
+*
+ERROR at line 1:
+ORA-38305: object not in RECYCLE BIN
+
+
+SQL> create table test1(name varchar2());
+create table test1(name varchar2())
+                                 *
+ERROR at line 1:
+ORA-00910: specified length too long for its datatype
+
+
+SQL> create table test1(name varchar2(10));
+
+Table created.
+
+SQL> purge table test1;
+purge table test1
+*
+ERROR at line 1:
+ORA-38307: object not in RECYCLE BIN
+
+
+SQL> desc test1
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ NAME                                                           VARCHAR2(10)
+
+SQL> purge table test1;
+purge table test1
+*
+ERROR at line 1:
+ORA-38307: object not in RECYCLE BIN
+
+
+SQL> drop test1
+  2  ;
+drop test1
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> /
+drop test1
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop table test1;
+
+Table dropped.
+
+SQL> purge table test1;
+
+Table purged.
+
+SQL> show recyclebin;
+SQL> rollback;
+
+Rollback complete.
+
+SQL> desc test1;
+ERROR:
+ORA-04043: object test1 does not exist
+
+
+SQL> show recyclebin;
+SQL> create table test1(name varchar2(10));
+
+Table created.
+
+SQL> drop table test1;
+
+Table dropped.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> desc test1;
+ERROR:
+ORA-04043: object test1 does not exist
+
+
+SQL> show recyclebin;
+ORIGINAL NAME    RECYCLEBIN NAME                OBJECT TYPE  DROP TIME
+---------------- ------------------------------ ------------ -------------------
+TEST1            BIN$L9PYJdToS+uzeB3WFeGGBg==$0 TABLE        2018-02-11:04:45:14
+SQL> flashback table test1 to before drop;
+
+Flashback complete.
+
+SQL> desc test1;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ NAME                                                           VARCHAR2(10)
+
+
+SQL> select user from dba_user;
+select user from dba_user
+                 *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select username from dba_user;
+select username from dba_user
+                     *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> conn
+Enter user-name: sys as sysdba
+Enter password:
+Connected.
+SQL> show user
+USER is "SYS"
+SQL> conn scott
+Enter password:
+Connected.
+SQL> show user;
+USER is "SCOTT"
+SQL> conn sys
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> conn sys/sys as sysdba
+Connected.
+SQL> show user
+USER is "SYS"
+SQL> conn
+Enter user-name: sys
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> show database
+SP2-0158: unknown SHOW option "database"
+SQL> show databases
+SP2-0158: unknown SHOW option "databases"
+SQL> show databases;
+SP2-0158: unknown SHOW option "databases"
+
+SQL> select * from student
+  2  ;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+Shubham           345 Patna                              800001         98
+Prabhat           331 Punjab                             152107         87
+Avinash           701 MP                                 548978         89
+prashant          332 Bihar                              848207         78
+ravikant          336 Gaya                               789654         95
+aashish           310 patna                              800001         98
+aashutosh         702 patna                              879654         90
+sushant           321 patna                              432123         78
+
+8 rows selected.
+
+SQL> select namefrom student;
+select namefrom student
+                      *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select name from student;
+
+NAME
+----------
+Shubham
+Prabhat
+Avinash
+prashant
+ravikant
+aashish
+aashutosh
+sushant
+
+8 rows selected.
+
+SQL> select name,roll from stuudent;
+select name,roll from stuudent
+                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select name,roll from student;
+
+NAME             ROLL
+---------- ----------
+Shubham           345
+Prabhat           331
+Avinash           701
+prashant          332
+ravikant          336
+aashish           310
+aashutosh         702
+sushant           321
+
+8 rows selected.
+
+SQL> select upper(name) from student;
+
+UPPER(NAME
+----------
+SHUBHAM
+PRABHAT
+AVINASH
+PRASHANT
+RAVIKANT
+AASHISH
+AASHUTOSH
+SUSHANT
+
+8 rows selected.
+
+SQL> select avg(roll) from student;
+
+ AVG(ROLL)
+----------
+    422.25
+
+SQL> select lower(name),upper(name),avg(roll) from student;
+select lower(name),upper(name),avg(roll) from student
+             *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select lower(name),avg(roll) from student;
+select lower(name),avg(roll) from student
+             *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select lower(name) from student;
+
+LOWER(NAME
+----------
+shubham
+prabhat
+avinash
+prashant
+ravikant
+aashish
+aashutosh
+sushant
+
+8 rows selected.
+
+SQL> select lower(name),upper(name) from student;
+
+LOWER(NAME UPPER(NAME
+---------- ----------
+shubham    SHUBHAM
+prabhat    PRABHAT
+avinash    AVINASH
+prashant   PRASHANT
+ravikant   RAVIKANT
+aashish    AASHISH
+aashutosh  AASHUTOSH
+sushant    SUSHANT
+
+8 rows selected.
+
+SQL> select lower(name),upper(name),init(name) from student;
+select lower(name),upper(name),init(name) from student
+                               *
+ERROR at line 1:
+ORA-00904: "INIT": invalid identifier
+
+
+SQL> select init(name) from student;
+select init(name) from student
+       *
+ERROR at line 1:
+ORA-00904: "INIT": invalid identifier
+
+
+SQL> delete from student where roll=332;
+
+1 row deleted.
+
+SQL> select * from student;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+Shubham           345 Patna                              800001         98
+Prabhat           331 Punjab                             152107         87
+Avinash           701 MP                                 548978         89
+ravikant          336 Gaya                               789654         95
+aashish           310 patna                              800001         98
+aashutosh         702 patna                              879654         90
+sushant           321 patna                              432123         78
+
+7 rows selected.
+
+SQL> select * from student where roll=332;
+
+no rows selected
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from student where roll=332;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+prashant          332 Bihar                              848207         78
+
+SQL> update student set name=upper(name);
+
+8 rows updated.
+
+SQL> select 8 from student;
+
+         8
+----------
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+
+8 rows selected.
+
+SQL> select * from student;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+PRASHANT          332 Bihar                              848207         78
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+
+8 rows selected.
+
+SQL> delete from student where roll=332;
+
+1 row deleted.
+
+SQL> select * from student;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+
+7 rows selected.
+
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Sun Feb 11 11:14:15 2018
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+Enter user-name: scott
+Enter password:
+
+Connected to:
+Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production
+
+SQL> select * from student;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+
+7 rows selected.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from student;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+
+7 rows selected.
+
+SQL> insert into student values(Prashant,332,Bihar,848207);
+insert into student values(Prashant,332,Bihar,848207)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into student values(Prashant,332,Bihar,848207,89);
+insert into student values(Prashant,332,Bihar,848207,89)
+                                        *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into student values('Prashant',332,'Bihar',848207,89);
+
+1 row created.
+
+SQL> select * from student;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+Prashant          332 Bihar                              848207         89
+
+8 rows selected.
+
+SQL> select roll+marks from student;
+
+ROLL+MARKS
+----------
+       443
+       418
+       790
+       431
+       408
+       792
+       399
+       421
+
+8 rows selected.
+
+SQL> create test2 as select * from student;
+create test2 as select * from student
+       *
+ERROR at line 1:
+ORA-00901: invalid CREATE command
+
+
+SQL> create table test2 as select * from student;
+
+Table created.
+
+SQL> select 8 from test2;
+
+         8
+----------
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+
+8 rows selected.
+
+SQL> select * from test2;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+Prashant          332 Bihar                              848207         89
+
+8 rows selected.
+
+SQL> create table  studentcopy as select name from student;
+
+Table created.
+
+SQL> select * from studentcopy;
+
+NAME
+----------
+SHUBHAM
+PRABHAT
+AVINASH
+RAVIKANT
+AASHISH
+AASHUTOSH
+SUSHANT
+Prashant
+
+8 rows selected.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TEST1                          TABLE
+TEST2                          TABLE
+
+10 rows selected.
+
+SQL> select test from tab;
+select test from tab
+       *
+ERROR at line 1:
+ORA-00904: "TEST": invalid identifier
+
+
+SQL> select tname from tab;
+
+TNAME
+------------------------------
+DEPT
+EMP
+BONUS
+SALGRADE
+STUDENT
+STUDENTCOPY
+STUDENTLIST
+TEST
+TEST1
+TEST2
+
+10 rows selected.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TEST1                          TABLE
+TEST2                          TABLE
+
+10 rows selected.
+
+SQL> select tabtype from tab;
+
+TABTYPE
+-------
+TABLE
+TABLE
+TABLE
+TABLE
+TABLE
+TABLE
+TABLE
+TABLE
+TABLE
+TABLE
+
+10 rows selected.
+
+SQL> drop tab;
+drop tab
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop table tab;
+drop table tab
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> c
+SP2-0025: Invalid change string.
+
+SQL> set line 100;
+SQL> set pagesize 100;
+SQL> select * from student;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+Prashant          332 Bihar                              848207         89
+
+8 rows selected.
+
+SQL> select * from test1;
+
+no rows selected
+
+SQL> select * from test2;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+Prashant          332 Bihar                              848207         89
+
+8 rows selected.
+
+SQL> drop test1;
+drop test1
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop table test1;
+
+Table dropped.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TEST2                          TABLE
+BIN$T9I4iv8cSd66N+RP0dBS7Q==$0 TABLE
+
+10 rows selected.
+
+SQL> select * from test;
+
+no rows selected
+
+SQL> select * from test2;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+Prashant          332 Bihar                              848207         89
+
+8 rows selected.
+
+SQL> rename test2 to teststu
+  2  ;
+
+Table renamed.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+BIN$T9I4iv8cSd66N+RP0dBS7Q==$0 TABLE
+
+10 rows selected.
+
+SQL> purge recyclebin;
+
+Recyclebin purged.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+
+9 rows selected.
+
+SQL> select * from student;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+Prashant          332 Bihar                              848207         89
+
+8 rows selected.
+
+SQL> select marks+12 advantage from student;
+
+ ADVANTAGE
+----------
+       110
+        99
+       101
+       107
+       110
+       102
+        90
+       101
+
+8 rows selected.
+
+SQL> select marks,marks+12 advantage from student;
+
+     MARKS  ADVANTAGE
+---------- ----------
+        98        110
+        87         99
+        89        101
+        95        107
+        98        110
+        90        102
+        78         90
+        89        101
+
+8 rows selected.
+
+SQL> select marks,marks+12 from student;
+
+     MARKS   MARKS+12
+---------- ----------
+        98        110
+        87         99
+        89        101
+        95        107
+        98        110
+        90        102
+        78         90
+        89        101
+
+8 rows selected.
+
+SQL> select marks,marks+12e from student;
+
+     MARKS          E
+---------- ----------
+        98        110
+        87         99
+        89        101
+        95        107
+        98        110
+        90        102
+        78         90
+        89        101
+
+8 rows selected.
+
+SQL> select marks,marks+12e from student;
+
+     MARKS          E
+---------- ----------
+        98        110
+        87         99
+        89        101
+        95        107
+        98        110
+        90        102
+        78         90
+        89        101
+
+8 rows selected.
+
+SQL> select marks,marks+e from student;
+select marks,marks+e from student
+                   *
+ERROR at line 1:
+ORA-00904: "E": invalid identifier
+
+
+SQL> select marks,marks+12e from student;
+
+     MARKS          E
+---------- ----------
+        98        110
+        87         99
+        89        101
+        95        107
+        98        110
+        90        102
+        78         90
+        89        101
+
+8 rows selected.
+
+SQL> select marks,marks+12fae from student;
+
+     MARKS         AE
+---------- ----------
+        98   1.1E+002
+        87   9.9E+001
+        89  1.01E+002
+        95  1.07E+002
+        98   1.1E+002
+        90  1.02E+002
+        78   9.0E+001
+        89  1.01E+002
+
+8 rows selected.
+
+SQL> select marks,marks+12 from student;
+
+     MARKS   MARKS+12
+---------- ----------
+        98        110
+        87         99
+        89        101
+        95        107
+        98        110
+        90        102
+        78         90
+        89        101
+
+8 rows selected.
+
+SQL> select marks,marks+1f2 from student;
+select marks,marks+1f2 from student
+                     *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select marks,marks+12d from student;
+
+     MARKS  MARKS+12D
+---------- ----------
+        98   1.1E+002
+        87   9.9E+001
+        89  1.01E+002
+        95  1.07E+002
+        98   1.1E+002
+        90  1.02E+002
+        78   9.0E+001
+        89  1.01E+002
+
+8 rows selected.
+
+SQL> set pagesize 50
+SQL> set line=10
+SP2-0268: linesize option not a valid number
+SQL> set line 10
+SQL> select * from student
+  2  ;
+
+NAME
+----------
+      ROLL
+----------
+ADDRESS
+----------
+       PIN
+----------
+     MARKS
+----------
+SHUBHAM
+       345
+Patna
+    800001
+        98
+
+PRABHAT
+       331
+Punjab
+    152107
+        87
+
+AVINASH
+       701
+MP
+    548978
+        89
+
+RAVIKANT
+       336
+Gaya
+    789654
+        95
+
+AASHISH
+       310
+patna
+    800001
+        98
+
+AASHUTOSH
+       702
+patna
+    879654
+        90
+
+SUSHANT
+       321
+patna
+
+NAME
+----------
+      ROLL
+----------
+ADDRESS
+----------
+       PIN
+----------
+     MARKS
+----------
+    432123
+        78
+
+Prashant
+       332
+Bihar
+    848207
+        89
+
+
+8 rows selected.
+
+SQL> set line 50
+SQL> select * from student
+  2  ;
+
+NAME             ROLL
+---------- ----------
+ADDRESS                               PIN
+------------------------------ ----------
+     MARKS
+----------
+SHUBHAM           345
+Patna                              800001
+        98
+
+PRABHAT           331
+Punjab                             152107
+        87
+
+AVINASH           701
+MP                                 548978
+        89
+
+RAVIKANT          336
+Gaya                               789654
+        95
+
+AASHISH           310
+patna                              800001
+        98
+
+AASHUTOSH         702
+patna                              879654
+        90
+
+SUSHANT           321
+patna                              432123
+        78
+
+Prashant          332
+Bihar                              848207
+        89
+
+
+8 rows selected.
+
+SQL> set line 100
+SQL> set pagesize 100
+SQL> select * from student
+  2  ;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+Prashant          332 Bihar                              848207         89
+
+8 rows selected.
+
+SQL> select * from student where marks between 80 and 85;
+
+no rows selected
+
+SQL> select * from student where marks between 80 and 90;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+AASHUTOSH         702 patna                              879654         90
+Prashant          332 Bihar                              848207         89
+
+SQL> select * from student where marks not  between 80 and 90;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+SUSHANT           321 patna                              432123         78
+
+SQL> select * from test;
+
+no rows selected
+
+SQL> create table teststu2 as select name,roll from student;
+
+Table created.
+
+SQL> select * from teststu2;
+
+NAME             ROLL
+---------- ----------
+SHUBHAM           345
+PRABHAT           331
+AVINASH           701
+RAVIKANT          336
+AASHISH           310
+AASHUTOSH         702
+SUSHANT           321
+Prashant          332
+
+8 rows selected.
+
+SQL> alter table teststu2 add column percent number(4,2);
+alter table teststu2 add column percent number(4,2)
+                         *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> alter table teststu2 add (percent number(4,2));
+
+Table altered.
+
+SQL> select * from teststu2;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+SHUBHAM           345
+PRABHAT           331
+AVINASH           701
+RAVIKANT          336
+AASHISH           310
+AASHUTOSH         702
+SUSHANT           321
+Prashant          332
+
+8 rows selected.
+
+SQL> update teststu set percent=98.09 where name='&name';
+Enter value for name: shubham
+old   1: update teststu set percent=98.09 where name='&name'
+new   1: update teststu set percent=98.09 where name='shubham'
+update teststu set percent=98.09 where name='shubham'
+                   *
+ERROR at line 1:
+ORA-00904: "PERCENT": invalid identifier
+
+
+SQL> /
+Enter value for name: SHUBHAM
+old   1: update teststu set percent=98.09 where name='&name'
+new   1: update teststu set percent=98.09 where name='SHUBHAM'
+update teststu set percent=98.09 where name='SHUBHAM'
+                   *
+ERROR at line 1:
+ORA-00904: "PERCENT": invalid identifier
+
+
+SQL> update teststu set percent=98 where name='&name';
+Enter value for name: shubham
+old   1: update teststu set percent=98 where name='&name'
+new   1: update teststu set percent=98 where name='shubham'
+update teststu set percent=98 where name='shubham'
+                   *
+ERROR at line 1:
+ORA-00904: "PERCENT": invalid identifier
+
+
+SQL> desc teststu2
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ NAME                                                           VARCHAR2(10)
+ ROLL                                                           NUMBER(3)
+ PERCENT                                                        NUMBER(4,2)
+
+SQL> update teststu set percent=98;
+update teststu set percent=98
+                   *
+ERROR at line 1:
+ORA-00904: "PERCENT": invalid identifier
+
+
+SQL> update teststu2 set percent=&% where name='&name';
+Enter value for name: shubham
+old   1: update teststu2 set percent=&% where name='&name'
+new   1: update teststu2 set percent=&% where name='shubham'
+update teststu2 set percent=&% where name='shubham'
+                             *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> update teststu2 set percent=&percent where name='&name';
+Enter value for percent: 98
+Enter value for name: shubham
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=98 where name='shubham'
+
+0 rows updated.
+
+SQL> select * from teststu2
+  2  ;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+SHUBHAM           345
+PRABHAT           331
+AVINASH           701
+RAVIKANT          336
+AASHISH           310
+AASHUTOSH         702
+SUSHANT           321
+Prashant          332
+
+8 rows selected.
+
+SQL> update teststu2 set percent=&percent where name='&name';
+Enter value for percent: 98
+Enter value for name: SHUBHAM
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=98 where name='SHUBHAM'
+
+1 row updated.
+
+SQL> /
+Enter value for percent: 67
+Enter value for name: prabhat
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=67 where name='prabhat'
+
+0 rows updated.
+
+SQL> /
+Enter value for percent: 90
+Enter value for name: PRABHAT
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=90 where name='PRABHAT'
+
+1 row updated.
+
+SQL> update teststu2 set name=lower(name);
+
+8 rows updated.
+
+SQL> select * from teststu2;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+shubham           345         98
+prabhat           331         90
+avinash           701
+ravikant          336
+aashish           310
+aashutosh         702
+sushant           321
+prashant          332
+
+8 rows selected.
+
+SQL> update teststu2 set name=init(name);
+update teststu2 set name=init(name)
+                         *
+ERROR at line 1:
+ORA-00904: "INIT": invalid identifier
+
+
+SQL> update teststu2 set percent=&percent where name='&name';
+Enter value for percent: 89
+Enter value for name: prabhat
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=89 where name='prabhat'
+
+1 row updated.
+
+SQL> /
+Enter value for percent: 98
+Enter value for name: aashish
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=98 where name='aashish'
+
+1 row updated.
+
+SQL> /
+Enter value for percent: 98.0999
+Enter value for name: ravikant
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=98.0999 where name='ravikant'
+
+1 row updated.
+
+SQL> /
+Enter value for percent: 54
+Enter value for name: avinash
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=54 where name='avinash'
+
+1 row updated.
+
+SQL> select * from teststu2;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+shubham           345         98
+prabhat           331         89
+avinash           701         54
+ravikant          336       98.1
+aashish           310         98
+aashutosh         702
+sushant           321
+prashant          332
+
+8 rows selected.
+
+SQL> rollback
+  2  ;
+
+Rollback complete.
+
+SQL> select * from teststu2;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+SHUBHAM           345
+PRABHAT           331
+AVINASH           701
+RAVIKANT          336
+AASHISH           310
+AASHUTOSH         702
+SUSHANT           321
+Prashant          332
+
+8 rows selected.
+
+SQL> update teststu2 set name=lower(name);
+
+8 rows updated.
+
+SQL> select * from teststu2;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+shubham           345
+prabhat           331
+avinash           701
+ravikant          336
+aashish           310
+aashutosh         702
+sushant           321
+prashant          332
+
+8 rows selected.
+
+SQL> update teststu2 set percent=&percent where name='&name';
+Enter value for percent: 98
+Enter value for name: shubham
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=98 where name='shubham'
+
+1 row updated.
+
+SQL> /
+Enter value for percent: 78
+Enter value for name: prashant
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=78 where name='prashant'
+
+1 row updated.
+
+SQL> /
+Enter value for percent: 65
+Enter value for name: avinash
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=65 where name='avinash'
+
+1 row updated.
+
+SQL> /
+Enter value for percent: 45
+Enter value for name: prabhat
+old   1: update teststu2 set percent=&percent where name='&name'
+new   1: update teststu2 set percent=45 where name='prabhat'
+
+1 row updated.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> select 8 from teststu2;
+
+         8
+----------
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+
+8 rows selected.
+
+SQL> select * from teststu2;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+shubham           345         98
+prabhat           331         45
+avinash           701         65
+ravikant          336
+aashish           310
+aashutosh         702
+sushant           321
+prashant          332         78
+
+8 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from teststu2;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+shubham           345         98
+prabhat           331         45
+avinash           701         65
+ravikant          336
+aashish           310
+aashutosh         702
+sushant           321
+prashant          332         78
+
+8 rows selected.
+
+SQL> select nvl(null,100) from dual;
+
+NVL(NULL,100)
+-------------
+          100
+
+SQL> select nvl(percent,100) from teststu2;
+
+NVL(PERCENT,100)
+----------------
+              98
+              45
+              65
+             100
+             100
+             100
+             100
+              78
+
+8 rows selected.
+
+SQL> select nvl2(percent,10,00) from teststu2;
+
+NVL2(PERCENT,10,00)
+-------------------
+                 10
+                 10
+                 10
+                  0
+                  0
+                  0
+                  0
+                 10
+
+8 rows selected.
+
+SQL> select nvl2(percent,percent,00) from teststu2;
+
+NVL2(PERCENT,PERCENT,00)
+------------------------
+                      98
+                      45
+                      65
+                       0
+                       0
+                       0
+                       0
+                      78
+
+8 rows selected.
+
+SQL> select nvl2(percent,percent,25) from teststu2;
+
+NVL2(PERCENT,PERCENT,25)
+------------------------
+                      98
+                      45
+                      65
+                      25
+                      25
+                      25
+                      25
+                      78
+
+8 rows selected.
+
+SQL> select * from teststu2;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+shubham           345         98
+prabhat           331         45
+avinash           701         65
+ravikant          336
+aashish           310
+aashutosh         702
+sushant           321
+prashant          332         78
+
+8 rows selected.
+
+SQL> select * from teststu2 where percent is null;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+ravikant          336
+aashish           310
+aashutosh         702
+sushant           321
+
+SQL> select * from teststu2 where percent is not null;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+shubham           345         98
+prabhat           331         45
+avinash           701         65
+prashant          332         78
+
+SQL> select * from student;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+Prashant          332 Bihar                              848207         89
+
+8 rows selected.
+
+SQL> select * from student where name like '%an%';
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+Prashant          332 Bihar                              848207         89
+
+SQL> select * from student where name like '%an%'||like '%AN%';
+select * from student where name like '%an%'||like '%AN%'
+                                              *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from student where name like '%an%'||like '%AN%';
+select * from student where name like '%an%'||like '%AN%'
+                                              *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from student where name like '%an%'|| like '%AN%';
+select * from student where name like '%an%'|| like '%AN%'
+                                               *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from student where name like '%AN%';
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+RAVIKANT          336 Gaya                               789654         95
+SUSHANT           321 patna                              432123         78
+
+SQL> update student set name=lower(name);
+
+8 rows updated.
+
+SQL> select * from student;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+shubham           345 Patna                              800001         98
+prabhat           331 Punjab                             152107         87
+avinash           701 MP                                 548978         89
+ravikant          336 Gaya                               789654         95
+aashish           310 patna                              800001         98
+aashutosh         702 patna                              879654         90
+sushant           321 patna                              432123         78
+prashant          332 Bihar                              848207         89
+
+8 rows selected.
+
+SQL> select * from student where name like '%AN%';
+
+no rows selected
+
+SQL> select * from student where name like '%an%';
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+ravikant          336 Gaya                               789654         95
+sushant           321 patna                              432123         78
+prashant          332 Bihar                              848207         89
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from student where name not like '%an%';
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+shubham           345 Patna                              800001         98
+prabhat           331 Punjab                             152107         87
+avinash           701 MP                                 548978         89
+aashish           310 patna                              800001         98
+aashutosh         702 patna                              879654         90
+
+SQL> select * from student where name like '%an%'|| 'aa%';
+
+no rows selected
+
+SQL> select * from student where name like '%an%'|| like 'aa%';
+select * from student where name like '%an%'|| like 'aa%'
+                                               *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from student where name like '%an%'or like 'aa%';
+select * from student where name like '%an%'or like 'aa%'
+                                               *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from student where name like '%an%' or like 'aa%';
+select * from student where name like '%an%' or like 'aa%'
+                                                *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from student where name like '%an%' or 'aa%';
+select * from student where name like '%an%' or 'aa%'
+                                                    *
+ERROR at line 1:
+ORA-00920: invalid relational operator
+
+
+SQL> select * from student where name like 'aa%';
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+aashish           310 patna                              800001         98
+aashutosh         702 patna                              879654         90
+
+SQL> select * from student where name like '%an%' or 'aa%';
+select * from student where name like '%an%' or 'aa%'
+                                                    *
+ERROR at line 1:
+ORA-00920: invalid relational operator
+
+
+SQL> select name||'is a good boy from student where name like '%an%';
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> select name||'is a good boy' from student where name like '%an%';
+
+NAME||'ISAGOODBOY'
+-----------------------
+ravikantis a good boy
+sushantis a good boy
+prashantis a good boy
+
+SQL> select name||' is a good boy' from student where name like '%an%';
+
+NAME||'ISAGOODBOY'
+------------------------
+ravikant is a good boy
+sushant is a good boy
+prashant is a good boy
+
+SQL> select * from student where name like '%an%' or 'aa%'||'is a good';
+select * from student where name like '%an%' or 'aa%'||'is a good'
+                                                                 *
+ERROR at line 1:
+ORA-00920: invalid relational operator
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+TESTSTU2                       TABLE
+
+10 rows selected.

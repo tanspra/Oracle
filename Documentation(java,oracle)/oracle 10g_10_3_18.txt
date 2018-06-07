@@ -1,0 +1,698 @@
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select job,avg(sal) from emp group by job;
+
+JOB         AVG(SAL)
+--------- ----------
+CLERK         1037.5
+SALESMAN        1400
+PRESIDENT       5000
+MANAGER   2758.33333
+ANALYST         3000
+
+SQL> select job,avg(sal) from emp group by job order by;
+select job,avg(sal) from emp group by job order by
+                                                 *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select job,avg(sal) from emp group by job order by sal;
+select job,avg(sal) from emp group by job order by sal
+                                                   *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select job,avg(sal) from emp group by job order by job;
+
+JOB         AVG(SAL)
+--------- ----------
+ANALYST         3000
+CLERK         1037.5
+MANAGER   2758.33333
+PRESIDENT       5000
+SALESMAN        1400
+
+SQL> select job,avg(sal) from emp group by job having avg(sal)>(select min(avg(sal)) from emp group by job );
+
+JOB         AVG(SAL)
+--------- ----------
+SALESMAN        1400
+PRESIDENT       5000
+MANAGER   2758.33333
+ANALYST         3000
+
+SQL> select job,avg(sal) from emp group by job having avg(sal)>(select avg(sal) from emp where job='SALESMAN');
+
+JOB         AVG(SAL)
+--------- ----------
+PRESIDENT       5000
+MANAGER   2758.33333
+ANALYST         3000
+
+SQL> select deptno,count(*) from emp;
+select deptno,count(*) from emp
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select deptno,count(*) from emp group by deptno;
+
+    DEPTNO   COUNT(*)
+---------- ----------
+        30          6
+        20          5
+        10          3
+
+SQL> select deptno,count(*) from emp group by deptno having count(*)=(select max(count(*)) from emp group by deptno);
+
+    DEPTNO   COUNT(*)
+---------- ----------
+        30          6
+
+SQL> select deptno,count(*) from emp group by deptno having count(*)=(select max(count(*)) from emp group by deptno);
+
+    DEPTNO   COUNT(*)
+---------- ----------
+        30          6
+
+SQL> select ename,mgr from emp ;
+
+ENAME             MGR
+---------- ----------
+SMITH            7902
+ALLEN            7698
+WARD             7698
+JONES            7839
+MARTIN           7698
+BLAKE            7839
+CLARK            7839
+SCOTT            7566
+KING
+TURNER           7698
+ADAMS            7788
+JAMES            7698
+FORD             7566
+MILLER           7782
+
+14 rows selected.
+
+SQL> select deptno,min(sal) from emp group by deptno;
+
+    DEPTNO   MIN(SAL)
+---------- ----------
+        30        950
+        20        800
+        10       1300
+
+SQL> select deptno,min(sal) from emp group by deptno having min(sal)>(select min(sal) from emp where deptno=20);
+
+    DEPTNO   MIN(SAL)
+---------- ----------
+        30        950
+        10       1300
+
+SQL> select ename,mgr from emp where mgr=(select empno from emp where ename='BLAKE');
+
+ENAME             MGR
+---------- ----------
+ALLEN            7698
+WARD             7698
+MARTIN           7698
+TURNER           7698
+JAMES            7698
+
+SQL> select * from emp where mgr=(select empno from emp where ename='BLAKE');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select * from emp where deptno=(select deptno from emp where ename='SMITH');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+SQL> select * from emp group by deptno;
+select * from emp group by deptno
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select deptno,max(sal) from emp group by deptno;
+
+    DEPTNO   MAX(SAL)
+---------- ----------
+        30       2850
+        20       3000
+        10       5000
+
+SQL> select * from emp where empno=(select empno from emp group by deptno having sal=max(sal));
+select * from emp where empno=(select empno from emp group by deptno having sal=max(sal))
+                                                                            *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select * from emp where sal in(select max(sal) from emp group by deptno);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+
+SQL> select * fromemp where rownum=1;
+select * fromemp where rownum=1
+         *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select * from emp where rownum=1;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+
+SQL> select * from emp where rownum=2;
+
+no rows selected
+
+SQL> select * from emp where rownum>=2;
+
+no rows selected
+
+SQL> select * from emp where rownum<=2;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+
+SQL> select * from emp where rownum<=3;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+
+SQL> select * from emp where rownum<=4;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+
+SQL> select * from emp where rownum<=5;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+
+SQL> select * from emp where rownum<5;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+
+SQL> select * from emp where rownum>=1;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select max(sal) from emp;
+
+  MAX(SAL)
+----------
+      5000
+
+SQL> select max(sal) from emp where rownum=1;
+
+  MAX(SAL)
+----------
+       800
+
+SQL> select max(sal) from emp where rownum<=2;
+
+  MAX(SAL)
+----------
+      1600
+
+SQL> select max(sal) from emp where rownum<=5;
+
+  MAX(SAL)
+----------
+      2975
+
+SQL> select * from(select sal from emp order by sal desc);
+
+       SAL
+----------
+      5000
+      3000
+      3000
+      2975
+      2850
+      2450
+      1600
+      1500
+      1300
+      1250
+      1250
+      1100
+       950
+       800
+
+14 rows selected.
+
+SQL> select * from(select sal from emp order by sal desc) where rownum=1;
+
+       SAL
+----------
+      5000
+
+SQL> select * from(select sal from emp order by sal desc) where rownum>=1;
+
+       SAL
+----------
+      5000
+      3000
+      3000
+      2975
+      2850
+      2450
+      1600
+      1500
+      1300
+      1250
+      1250
+      1100
+       950
+       800
+
+14 rows selected.
+
+SQL> select * from(select sal from emp order by sal desc) where rownum>1;
+
+no rows selected
+
+SQL> select * from(select sal from emp order by sal desc) where rownum>=2;
+
+no rows selected
+
+SQL> select * from(select sal from emp order by sal desc) where rownum<=2;
+
+       SAL
+----------
+      5000
+      3000
+
+SQL> select * from(select sal from emp order by sal desc) where rownum<=2 and rownum>=1;
+
+       SAL
+----------
+      5000
+      3000
+
+SQL> select * from(select sal from emp order by sal desc) where rownum<=2 and rownum>1;
+
+no rows selected
+
+SQL> select * from(select sal from emp order by sal desc) where rownum<=21;
+
+       SAL
+----------
+      5000
+      3000
+      3000
+      2975
+      2850
+      2450
+      1600
+      1500
+      1300
+      1250
+      1250
+      1100
+       950
+       800
+
+14 rows selected.
+
+SQL> select * from(select sal from emp order by sal desc) where rownum<5;
+
+       SAL
+----------
+      5000
+      3000
+      3000
+      2975
+
+SQL> select * from(select sal from emp order by sal desc) where rownum<=5;
+
+       SAL
+----------
+      5000
+      3000
+      3000
+      2975
+      2850
+
+SQL> select * from(select * from emp order by sal desc) where rownum<=5;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+
+SQL> select sal from(select * from emp order by sal desc) where rownum<=5;
+
+       SAL
+----------
+      5000
+      3000
+      3000
+      2975
+      2850
+
+SQL> select sal from(select * from emp where rownum<=5 order by sal desc) where rownum<=5;
+
+       SAL
+----------
+      2975
+      1600
+      1250
+      1250
+       800
+
+SQL> select sal from(select * from emp where rownum<=5 order by sal desc) where rownum<=5;
+
+       SAL
+----------
+      2975
+      1600
+      1250
+      1250
+       800
+
+SQL> select * from emp where rownum<=5 order by sal desc
+  2  ;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+
+SQL> select ename,sal from emp;
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+
+14 rows selected.
+
+SQL> /
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+
+14 rows selected.
+
+SQL> \
+SP2-0042: unknown command "\" - rest of line ignored.
+SQL> /
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+
+14 rows selected.
+
+SQL> /
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+
+14 rows selected.
+
+SQL> select ename,sal from emp group by sal;
+select ename,sal from emp group by sal
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select ename,sal from emp order by sal;
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+JAMES             950
+ADAMS            1100
+WARD             1250
+MARTIN           1250
+MILLER           1300
+TURNER           1500
+ALLEN            1600
+CLARK            2450
+BLAKE            2850
+JONES            2975
+SCOTT            3000
+FORD             3000
+KING             5000
+
+14 rows selected.
+
+SQL> select ename,sal from emp order by sal desc;
+
+ENAME             SAL
+---------- ----------
+KING             5000
+FORD             3000
+SCOTT            3000
+JONES            2975
+BLAKE            2850
+CLARK            2450
+ALLEN            1600
+TURNER           1500
+MILLER           1300
+WARD             1250
+MARTIN           1250
+ADAMS            1100
+JAMES             950
+SMITH             800
+
+14 rows selected.
+
+SQL> select ename,sal(select * from emp order by sal desc);
+select ename,sal(select * from emp order by sal desc)
+                 *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select ename,sal from(select * from emp order by sal desc);
+
+ENAME             SAL
+---------- ----------
+KING             5000
+FORD             3000
+SCOTT            3000
+JONES            2975
+BLAKE            2850
+CLARK            2450
+ALLEN            1600
+TURNER           1500
+MILLER           1300
+WARD             1250
+MARTIN           1250
+ADAMS            1100
+JAMES             950
+SMITH             800
+
+14 rows selected.
+
+SQL> select ename,sal from(select * from emp order by sal desc) where sal!=5000 and rownum<=2 ;
+
+ENAME             SAL
+---------- ----------
+SCOTT            3000
+FORD             3000
+
+SQL> select ename,sal from(select * from emp order by sal desc) where sal!=5000 and rownum<2 ;
+
+ENAME             SAL
+---------- ----------
+SCOTT            3000
+
+SQL> select ename,sal from(select * from emp order by sal desc) where sal!=5000 and rownum>1 ;
+
+no rows selected
+
+SQL> select ename,sal from(select * from emp order by sal desc) where sal!=5000 and rownum>=1 ;
+
+ENAME             SAL
+---------- ----------
+FORD             3000
+SCOTT            3000
+JONES            2975
+BLAKE            2850
+CLARK            2450
+ALLEN            1600
+TURNER           1500
+MILLER           1300
+WARD             1250
+MARTIN           1250
+ADAMS            1100
+JAMES             950
+SMITH             800
+
+13 rows selected.
+
+SQL> select ename,sal from(select * from emp order by sal desc) where sal!=5000 and rownum=1 ;
+
+ENAME             SAL
+---------- ----------
+SCOTT            3000

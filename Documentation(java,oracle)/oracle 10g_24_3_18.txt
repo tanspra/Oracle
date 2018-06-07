@@ -1,0 +1,2067 @@
+
+SQL> set line 100;
+SQL> set pagesize 100;
+SQL> help set;
+
+ SET
+ ---
+
+ Sets a system variable to alter the SQL*Plus environment settings
+ for your current session. For example, to:
+     -   set the display width for data
+     -   customize HTML formatting
+     -   enable or disable printing of column headings
+     -   set the number of lines per page
+ In iSQL*Plus, you can also use the Preferences screen to set
+ system variables.
+
+ SET system_variable value
+
+ where system_variable and value represent one of the following clauses:
+
+   APPI[NFO]{OFF|ON|text}                   NUM[WIDTH] {10|n}
+   ARRAY[SIZE] {15|n}                       PAGES[IZE] {14|n}
+   AUTO[COMMIT] {OFF|ON|IMM[EDIATE]|n}      PAU[SE] {OFF|ON|text}
+   AUTOP[RINT] {OFF|ON}                     RECSEP {WR[APPED]|EA[CH]|OFF}
+   AUTORECOVERY {OFF|ON}                    RECSEPCHAR {_|c}
+   AUTOT[RACE] {OFF|ON|TRACE[ONLY]}         SERVEROUT[PUT] {ON|OFF}
+     [EXP[LAIN]] [STAT[ISTICS]]               [SIZE {n | UNLIMITED}] [FOR[MAT]
+   BLO[CKTERMINATOR] {.|c|ON|OFF}             {WRA[PPED] |
+   CMDS[EP] {;|c|OFF|ON}                       WOR[D_WRAPPED] |
+   COLSEP {_|text}                             TRU[NCATED]}]
+   CON[CAT] {.|c|ON|OFF}                   *SHIFT[INOUT] {VIS[IBLE] |
+   COPYC[OMMIT] {0|n}                         INV[ISIBLE]}
+   COPYTYPECHECK {ON|OFF}                  *SHOW[MODE] {OFF|ON}
+   DEF[INE] {&|c|ON|OFF}                   *SQLBL[ANKLINES] {OFF|ON}
+   DESCRIBE [DEPTH {1|n|ALL}]               SQLC[ASE] {MIX[ED] |
+     [LINENUM {OFF|ON}] [INDENT {OFF|ON}]     LO[WER] | UP[PER]}
+   ECHO {OFF|ON}                           *SQLCO[NTINUE] {> | text}
+  *EDITF[ILE] file_name[.ext]              *SQLN[UMBER] {ON|OFF}
+   EMB[EDDED] {OFF|ON}                      SQLPLUSCOMPAT[IBILITY] {x.y[.z]}
+   ESC[APE] {\|c|OFF|ON}                   *SQLPRE[FIX] {#|c}
+   FEED[BACK] {6|n|ON|OFF}                 *SQLP[ROMPT] {SQL>|text}
+   FLAGGER {OFF|ENTRY|INTERMED[IATE]|FULL}  SQLT[ERMINATOR] {;|c|ON|OFF}
+  *FLU[SH] {ON|OFF}                        *SUF[FIX] {SQL|text}
+   HEA[DING] {ON|OFF}                      *TAB {ON|OFF}
+   HEADS[EP] {||c|ON|OFF}                  *TERM[OUT] {ON|OFF}
+   INSTANCE [instance_path|LOCAL]          *TI[ME] {OFF|ON}
+   LIN[ESIZE] {80|n} ({150|n} iSQL*Plus)    TIMI[NG] {OFF|ON}
+   LOBOF[FSET] {1|n}                       *TRIM[OUT] {ON|OFF}
+   LOGSOURCE [pathname]                    *TRIMS[POOL] {OFF|ON}
+   LONG {80|n}                              UND[ERLINE] {-|c|ON|OFF}
+   LONGC[HUNKSIZE] {80|n}                   VER[IFY] {ON|OFF}
+   MARK[UP] HTML [OFF|ON]                   WRA[P] {ON|OFF}
+     [HEAD text] [BODY text] [TABLE text]   XQUERY {BASEURI text|
+     [ENTMAP {ON|OFF}]                        ORDERING{UNORDERED|
+     [SPOOL {OFF|ON}]                                  ORDERED|DEFAULT}|
+     [PRE[FORMAT] {OFF|ON}]                   NODE{BYVALUE|BYREFERENCE|
+   NEWP[AGE] {1|n|NONE}                            DEFAULT}|
+   NULL text                                  CONTEXT text}
+   NUMF[ORMAT] format
+
+
+ An asterisk (*) indicates the SET option is not supported in iSQL*Plus.
+
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select * from emp minus select * from emp where rownum=(select count(*)-2 from emp) ;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select * from emp minus select * from emp where rownum<=(select count(*)-2 from emp) ;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+SQL> select * from emp minus select * from emp where rownum<=(select count(*)from emp)-2 ;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+SQL> select * from emp minus select * from emp where rownum<=((select count(*)from emp)-2) ;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+SQL> select * from(select rownum r,emp.* from emp)where r in(1,2);
+
+         R      EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+         1       7369 SMITH      CLERK           7902 17-DEC-80       4800                    20
+         2       7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+
+SQL> select * from(select rownum r,emp.* from emp)where r in(1,9);
+
+         R      EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+         1       7369 SMITH      CLERK           7902 17-DEC-80       4800                    20
+         9       7839 KING       PRESIDENT            17-NOV-81       5000                    10
+
+SQL> select * from(select rownum r,emp.* from emp)where r in(1 to 9);
+select * from(select rownum r,emp.* from emp)where r in(1 to 9)
+                                                          *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select * from(select rownum r,emp.* from emp)where r in(1,select count(*));
+select * from(select rownum r,emp.* from emp)where r in(1,select count(*))
+                                                          *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from(select rownum r,emp.* from emp)where r in(1,select count(*)from emp);
+select * from(select rownum r,emp.* from emp)where r in(1,select count(*)from emp)
+                                                          *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from(select rownum r,emp.* from emp)where r in(1,select 2 from emp where rownum=1);
+select * from(select rownum r,emp.* from emp)where r in(1,select 2 from emp where rownum=1)
+                                                          *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from(select rownum r,emp.* from emp)where r in(1,14);
+
+         R      EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+         1       7369 SMITH      CLERK           7902 17-DEC-80       4800                    20
+        14       7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+SQL> select * from (select rownum frok emp);
+select * from (select rownum frok emp)
+                                  *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select * from (select rownum from emp);
+
+    ROWNUM
+----------
+         1
+         2
+         3
+         4
+         5
+         6
+         7
+         8
+         9
+        10
+        11
+        12
+        13
+        14
+
+14 rows selected.
+
+SQL> select * from (select rownum,emp.* from emp);
+
+    ROWNUM      EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+         1       7369 SMITH      CLERK           7902 17-DEC-80       4800                    20
+         2       7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+         3       7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+         4       7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+         5       7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+         6       7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+         7       7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+         8       7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+         9       7839 KING       PRESIDENT            17-NOV-81       5000                    10
+        10       7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+        11       7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+        12       7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+        13       7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+        14       7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> insert into emp(ename,sal)values('pk',3000);
+insert into emp(ename,sal)values('pk',3000)
+*
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."EMP"."EMPNO")
+
+
+SQL> insert into emp values(8800,'pk','ceo',3000);
+insert into emp values(8800,'pk','ceo',3000)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into emp(empno,ename,job,sal) values(8800,'pk','ceo',3000);
+
+1 row created.
+
+SQL> select * from (select rownum,emp.* from emp);
+
+    ROWNUM      EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+         1       7369 SMITH      CLERK           7902 17-DEC-80       4800                    20
+         2       7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+         3       7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+         4       7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+         5       7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+         6       7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+         7       7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+         8       7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+         9       7839 KING       PRESIDENT            17-NOV-81       5000                    10
+        10       7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+        11       7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+        12       7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+        13       7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+        14       7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+        15       8800 pk         ceo                                  3000
+
+15 rows selected.
+
+SQL> select 8 from (select rownum r,ename,sal from emp);
+
+         8
+----------
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+
+15 rows selected.
+
+SQL> select * from (select rownum r,ename,sal from emp);
+
+         R ENAME             SAL
+---------- ---------- ----------
+         1 SMITH            4800
+         2 ALLEN            1600
+         3 WARD             1250
+         4 JONES            2975
+         5 MARTIN           1250
+         6 BLAKE            2850
+         7 CLARK            2450
+         8 SCOTT            3000
+         9 KING             5000
+        10 TURNER           1500
+        11 ADAMS            1100
+        12 JAMES             950
+        13 FORD             3000
+        14 MILLER           1300
+        15 pk               3000
+
+15 rows selected.
+
+SQL> select * from (select rownum r,ename,sal from emp order by sal desc);
+
+         R ENAME             SAL
+---------- ---------- ----------
+         9 KING             5000
+         1 SMITH            4800
+        15 pk               3000
+        13 FORD             3000
+         8 SCOTT            3000
+         4 JONES            2975
+         6 BLAKE            2850
+         7 CLARK            2450
+         2 ALLEN            1600
+        10 TURNER           1500
+        14 MILLER           1300
+         3 WARD             1250
+         5 MARTIN           1250
+        11 ADAMS            1100
+        12 JAMES             950
+
+15 rows selected.
+
+SQL> select * from (select rownum r,ename,sal from (select * from emp order by sal desc));
+
+         R ENAME             SAL
+---------- ---------- ----------
+         1 KING             5000
+         2 SMITH            4800
+         3 pk               3000
+         4 FORD             3000
+         5 SCOTT            3000
+         6 JONES            2975
+         7 BLAKE            2850
+         8 CLARK            2450
+         9 ALLEN            1600
+        10 TURNER           1500
+        11 MILLER           1300
+        12 WARD             1250
+        13 MARTIN           1250
+        14 ADAMS            1100
+        15 JAMES             950
+
+15 rows selected.
+###################################################################################################################################################
+
+SQL> select * from SEQ;
+
+no rows selected
+
+SQL> create sequence start;
+create sequence start
+                *
+ERROR at line 1:
+ORA-02277: invalid sequence name
+
+
+SQL> create sequence s1;
+
+Sequence created.
+
+SQL> select * from SEQ;
+
+SEQUENCE_NAME                   MIN_VALUE  MAX_VALUE INCREMENT_BY C O CACHE_SIZE LAST_NUMBER
+------------------------------ ---------- ---------- ------------ - - ---------- -----------
+S1                                      1 1.0000E+27            1 N N         20           1
+
+SQL> select * from seq;
+
+SEQUENCE_NAME                   MIN_VALUE  MAX_VALUE INCREMENT_BY C O CACHE_SIZE LAST_NUMBER
+------------------------------ ---------- ---------- ------------ - - ---------- -----------
+S1                                      1 1.0000E+27            1 N N         20           1
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEMO1                          TABLE
+FAIL                           TABLE
+TEST1                          TABLE
+COLLEGE                        TABLE
+SCHOOL                         TABLE
+UNIVERSITY                     TABLE
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+TESTSTU2                       TABLE
+ACCOUNTS                       TABLE
+
+17 rows selected.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEMO1                          TABLE
+FAIL                           TABLE
+TEST1                          TABLE
+COLLEGE                        TABLE
+SCHOOL                         TABLE
+UNIVERSITY                     TABLE
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+TESTSTU2                       TABLE
+ACCOUNTS                       TABLE
+STUDENT_MARKS                  TABLE
+STUDENTMARK                    TABLE
+
+19 rows selected.
+
+SQL> drop student_marks
+  2  ;
+drop student_marks
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop table student_marks;
+
+Table dropped.
+
+SQL> drop table studentmark;
+
+Table dropped.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEMO1                          TABLE
+FAIL                           TABLE
+TEST1                          TABLE
+COLLEGE                        TABLE
+SCHOOL                         TABLE
+UNIVERSITY                     TABLE
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+TESTSTU2                       TABLE
+ACCOUNTS                       TABLE
+BIN$+x+mX1F+QAmFi2IL+XIPBg==$0 TABLE
+BIN$q2HJe7PPR4aYY0rLn72H5g==$0 TABLE
+
+19 rows selected.
+
+SQL> purge recyclebin;
+
+Recyclebin purged.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEMO1                          TABLE
+FAIL                           TABLE
+TEST1                          TABLE
+COLLEGE                        TABLE
+SCHOOL                         TABLE
+UNIVERSITY                     TABLE
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+TESTSTU2                       TABLE
+ACCOUNTS                       TABLE
+
+17 rows selected.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEMO1                          TABLE
+FAIL                           TABLE
+TEST1                          TABLE
+COLLEGE                        TABLE
+SCHOOL                         TABLE
+UNIVERSITY                     TABLE
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+TESTSTU2                       TABLE
+ACCOUNTS                       TABLE
+
+17 rows selected.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+      8800 pk         ceo                                  3000
+
+15 rows selected.
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> alter table emp add dname varchar(20);
+
+Table altered.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+      8800 pk         ceo                                  3000
+
+15 rows selected.
+
+SQL> update emp e set dname=(select dname from dept d where d.deptno=e.deptno);
+
+15 rows updated.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+
+15 rows selected.
+*************************************************************************************************************
+
+SQL> create table employee(ename varchar2(20),sal number(4));
+
+Table created.
+
+SQL> insert into employee values('&ename',&salary);
+Enter value for ename: abc
+Enter value for salary: 100
+old   1: insert into employee values('&ename',&salary)
+new   1: insert into employee values('abc ',100)
+
+1 row created.
+
+SQL> /
+Enter value for ename: xyz
+Enter value for salary: 150
+old   1: insert into employee values('&ename',&salary)
+new   1: insert into employee values('xyz',150)
+
+1 row created.
+
+SQL> /
+Enter value for ename: murali
+Enter value for salary: 200
+old   1: insert into employee values('&ename',&salary)
+new   1: insert into employee values('murali',200)
+
+1 row created.
+
+SQL> /
+Enter value for ename: pqr
+Enter value for salary: 300
+old   1: insert into employee values('&ename',&salary)
+new   1: insert into employee values('pqr ',300)
+
+1 row created.
+
+SQL> set verify 0ff;
+SP2-0265: verify must be set ON or OFF
+SQL> set verify on;
+SQL> set verify off;
+SQL> /
+Enter value for ename: pk
+Enter value for salary: 500
+
+1 row created.
+
+SQL> select 8 from employee;
+
+         8
+----------
+         8
+         8
+         8
+         8
+         8
+
+SQL> select * from employee;
+
+ENAME                       SAL
+-------------------- ----------
+abc                         100
+xyz                         150
+murali                      200
+pqr                         300
+pk                          500
+
+SQL> rename employee to test_employee;
+
+Table renamed.
+
+SQL> select * from test_employee;
+
+ENAME                       SAL
+-------------------- ----------
+abc                         100
+xyz                         150
+murali                      200
+pqr                         300
+pk                          500
+
+SQL> rename test_employee to test_emp;
+
+Table renamed.
+
+SQL> select * from test_emp te where 2=(select
+  2
+SQL>
+SQL> /
+select * from test_emp te where 2=(select
+                                   *
+ERROR at line 1:
+ORA-00921: unexpected end of SQL command
+
+
+SQL> select count(*0 from emp;
+select count(*0 from emp
+              *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select count(*) from emp;
+
+  COUNT(*)
+----------
+        15
+
+SQL> select count(*) from emp WHERE ename='pk';
+
+  COUNT(*)
+----------
+         1
+
+SQL> select count(*) from emp WHERE ename='pk'or ename='smith';
+
+  COUNT(*)
+----------
+         1
+
+SQL> select count(*) from emp WHERE ename='pk'and ename='smith';
+
+  COUNT(*)
+----------
+         0
+
+SQL> select count(*) from emp WHERE ename='pk'xor ename='smith';
+select count(*) from emp WHERE ename='pk'xor ename='smith'
+                                         *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select count(*) from emp WHERE ename='pk' or ename='smith';
+
+  COUNT(*)
+----------
+         1
+
+SQL> select * from test_emp;
+
+ENAME                       SAL
+-------------------- ----------
+abc                         100
+xyz                         150
+murali                      200
+pqr                         300
+pk                          500
+
+SQL> select * from test_emp te  where 2=(select count(*) from test_emp te1 where te1.sal>=te.sal);
+
+ENAME                       SAL
+-------------------- ----------
+pqr                         300
+
+SQL> select * from test_emp te  where 2=(select count(*) from test_emp te1 where te1.sal>te.sal);
+
+ENAME                       SAL
+-------------------- ----------
+murali                      200
+
+SQL> select * from test_emp te  where 1=(select count(*) from test_emp te1 where te1.sal>te.sal);
+
+ENAME                       SAL
+-------------------- ----------
+pqr                         300
+
+SQL> select * from test_emp te  where 1=(select count(*) from test_emp te1 where te1.sal>=te.sal);
+
+ENAME                       SAL
+-------------------- ----------
+pk                          500
+
+SQL> select * from test_emp te  where 5=(select count(*) from test_emp te1 where te1.sal>=te.sal);
+
+ENAME                       SAL
+-------------------- ----------
+abc                         100
+
+SQL> select * from test_emp te  where &n=(select count(*) from test_emp te1 where te1.sal>=te.sal);
+Enter value for n: 1
+
+ENAME                       SAL
+-------------------- ----------
+pk                          500
+
+SQL> /
+Enter value for n: 2
+
+ENAME                       SAL
+-------------------- ----------
+pqr                         300
+
+SQL> /
+Enter value for n: 3
+
+ENAME                       SAL
+-------------------- ----------
+murali                      200
+
+SQL> /
+Enter value for n: 4
+
+ENAME                       SAL
+-------------------- ----------
+xyz                         150
+
+SQL> /
+Enter value for n: 5
+
+ENAME                       SAL
+-------------------- ----------
+abc                         100
+
+SQL> /
+Enter value for n: 6
+
+no rows selected
+
+SQL> /
+Enter value for n: 12234
+
+no rows selected
+
+SQL> select * from emp e where 1=(select count(*) from emp e2 where e2.sal>=e.sal);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+
+SQL> select count(*) from emp e2 where e2.sal>=e.sal;
+select count(*) from emp e2 where e2.sal>=e.sal
+                                          *
+ERROR at line 1:
+ORA-00904: "E"."SAL": invalid identifier
+
+
+SQL> select count(*) from emp e2;
+
+  COUNT(*)
+----------
+        15
+
+SQL> insert into test_emp values ('pras',300);
+
+1 row created.
+
+SQL> select * from test-emp e1 where 3=(select count(*) from test_emp e2 where e1.sal>=e2.sal);
+select * from test-emp e1 where 3=(select count(*) from test_emp e2 where e1.sal>=e2.sal)
+                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from test_emp e1 where 3=(select count(*) from test_emp e2 where e1.sal>=e2.sal);
+
+ENAME                       SAL
+-------------------- ----------
+murali                      200
+
+SQL> select * from test_emp e1 where 3=(select count(*) from test_emp e2 where e1.sal>e2.sal);
+
+ENAME                       SAL
+-------------------- ----------
+pqr                         300
+pras                        300
+
+SQL> select * from test_emp e1 where 3=(select count(*) from test_emp e2 where e2.sal>e1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+murali                      200
+
+SQL> select * from test_emp e1 where 2=(select count(*) from test_emp e2 where e2.sal>e1.sal);
+
+no rows selected
+
+SQL> select * from test_emp e1 where 2=(select count(distinct(sal)) from test_emp e2 where e2.sal>e1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+murali                      200
+
+SQL> select * from test_emp e1 where 3=(select count(distinct(sal)) from test_emp e2 where e2.sal>e1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+xyz                         150
+
+SQL> selet * from test_emp;
+SP2-0734: unknown command beginning "selet * fr..." - rest of line ignored.
+SQL> select * from test_emp;
+
+ENAME                       SAL
+-------------------- ----------
+abc                         100
+xyz                         150
+murali                      200
+pqr                         300
+pk                          500
+pras                        300
+
+6 rows selected.
+
+SQL> select * from test_emp e1 where 3=(select count(*) from test_emp e2 where e1.sal>=e2.sal);
+
+ENAME                       SAL
+-------------------- ----------
+murali                      200
+
+SQL> select * from test_emp e1 where 3=(select count(*) from test_emp e2 where e2.sal>=e1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+pqr                         300
+pras                        300
+
+SQL> select * from test_emp e1 where 3=(select count(*) from test_emp e2 where e2.sal>e1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+murali                      200
+
+SQL> select * from test_emp e1 where 2=(select count(*) from test_emp e2 where e2.sal>e1.sal);
+
+no rows selected
+
+SQL> select * from test_emp e1 where 2=(select count(distinct(sal)) from test_emp e2 where e2.sal>e1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+murali                      200
+
+SQL> select * from test_emp e1 where 2=(select count(*) from test_emp e2 where e2.sal>e1.sal);
+
+no rows selected
+
+SQL> select * from test_emp e1 where 2=(select count(distinct(sal)) from test_emp e2 where e2.sal>e1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+murali                      200
+
+SQL> select distinct(sal) from emp;
+
+       SAL
+----------
+      2450
+      5000
+      1300
+      1250
+      2850
+      4800
+      2975
+      1100
+      3000
+      1600
+      1500
+       950
+
+12 rows selected.
+
+SQL> select distinct(sal) from test_emp;
+
+       SAL
+----------
+       100
+       500
+       300
+       200
+       150
+
+SQL> select * from test_emp e1 where 1=(select count(distinct(sal)) from test_emp e2 where e2.sal>e1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+pqr                         300
+pras                        300
+
+SQL> select * from test_emp e1 where 0=(select count(distinct(sal)) from test_emp e2 where e2.sal>e1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+pk                          500
+
+SQL> select * from test_emp e1 where 2=(select count(distinct(sal)) from test_emp e2 where e2.sal>=e1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+pqr                         300
+pras                        300
+############################################################################################################################################################
+
+SQL> select * from test_emp te where (2-1)=(select count(distinct(sal)) from test_emp te1 where te.sal=te1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+abc                         100
+xyz                         150
+murali                      200
+pqr                         300
+pk                          500
+pras                        300
+
+6 rows selected.
+
+SQL> select * from test_emp te where 2-1=(select count(distinct(sal)) from test_emp te1 where te.sal=te1.sal);
+
+ENAME                       SAL
+-------------------- ----------
+abc                         100
+xyz                         150
+murali                      200
+pqr                         300
+pk                          500
+pras                        300
+
+6 rows selected.
+
+SQL> select * from test_emp te where 2-1=(select count(distinct(sal)) from test_emp te1 where te1.sal>=te.sal);
+
+ENAME                       SAL
+-------------------- ----------
+pk                          500
+
+SQL> select * from test_emp te where 2-1=(select count(distinct(sal)) from test_emp te1 where te1.sal=te.sal);
+
+ENAME                       SAL
+-------------------- ----------
+abc                         100
+xyz                         150
+murali                      200
+pqr                         300
+pk                          500
+pras                        300
+
+6 rows selected.
+
+SQL> select * from test_emp te where 2-1=(select count(distinct(sal)) from test_emp te1 where te1.sal>te.sal);
+
+ENAME                       SAL
+-------------------- ----------
+pqr                         300
+pras                        300
+
+SQL> select * from emp e where exist(select * from dept where deptno=e.deptno);
+select * from emp e where exist(select * from dept where deptno=e.deptno)
+                                *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from emp e where exist(select * from dept d where d.deptno=e.deptno);
+select * from emp e where exist(select * from dept d where d.deptno=e.deptno)
+                                *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from emp e where exists(select * from dept d where d.deptno=e.deptno);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+
+14 rows selected.
+
+SQL> select * from emp where sal>all(select sal from emp where job='clerk');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+
+15 rows selected.
+
+SQL> select * from emp where sal>all(select sal from emp where job='clerk')order by sal desc;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      8800 pk         ceo                                  3000
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+
+15 rows selected.
+
+SQL> select * from emp where sal>all(select sal from emp where job='CLERK')order by sal desc;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+
+SQL> select max(sal) from emp group by job order by sal;
+select max(sal) from emp group by job order by sal
+                                               *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select max(sal) from emp group by job;
+
+  MAX(SAL)
+----------
+      4800
+      1600
+      5000
+      2975
+      3000
+      3000
+
+6 rows selected.
+
+SQL> select job,max(sal) from emp group by job;
+
+JOB         MAX(SAL)
+--------- ----------
+CLERK           4800
+SALESMAN        1600
+PRESIDENT       5000
+MANAGER         2975
+ceo             3000
+ANALYST         3000
+
+6 rows selected.
+
+SQL> select * from emp where sal>any(select sal from emp where job='CLERK')order by sal desc;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      8800 pk         ceo                                  3000
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+
+14 rows selected.
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select 8 from emp where deptno not in(10,20);
+
+         8
+----------
+         8
+         8
+         8
+         8
+         8
+         8
+
+6 rows selected.
+
+SQL> select * from dept where deptno not in(10,20);
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select * from dept where deptno <> any(10,20);
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select * from dept where deptno <> all(10,20);
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select * from dept where deptno in (10,20);
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+
+SQL> select * from dept where deptno =all (10,20);
+
+no rows selected
+
+SQL> select * from dept where deptno =all(10,20);
+
+no rows selected
+
+SQL> select * from dept where deptno >=all(10,20);
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select * from dept where deptno =all(10,20);
+
+no rows selected
+
+SQL> select * from dept where deptno =any(10,20);
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+
+SQL> select * from dept where deptno <>any(10,20);
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select * from dept where deptno <>all(10,20);
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select * from seq;
+
+SEQUENCE_NAME                   MIN_VALUE  MAX_VALUE INCREMENT_BY C O CACHE_SIZE LAST_NUMBER
+------------------------------ ---------- ---------- ------------ - - ---------- -----------
+S1                                      1 1.0000E+27            1 N N         20           1
+
+SQL> create sequence order start with 10 minval 8 maxval 20 increment by 2;
+create sequence order start with 10 minval 8 maxval 20 increment by 2
+                *
+ERROR at line 1:
+ORA-02277: invalid sequence name
+
+
+SQL> create sequence order start with 10 minval 8 maxval 20 increment by 2;
+create sequence order start with 10 minval 8 maxval 20 increment by 2
+                *
+ERROR at line 1:
+ORA-02277: invalid sequence name
+
+
+SQL> create sequence booking_order start with 10 minval 8 maxval 20 increment by 2;
+create sequence booking_order start with 10 minval 8 maxval 20 increment by 2
+                                            *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> create sequence booking_order start with 10 increment by 2 minval 8 maxval 20;
+create sequence booking_order start with 10 increment by 2 minval 8 maxval 20
+                                                           *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> create sequence if;
+
+Sequence created.
+
+SQL> select * from seq;
+
+SEQUENCE_NAME                   MIN_VALUE  MAX_VALUE INCREMENT_BY C O CACHE_SIZE LAST_NUMBER
+------------------------------ ---------- ---------- ------------ - - ---------- -----------
+S1                                      1 1.0000E+27            1 N N         20           1
+IF                                      1 1.0000E+27            1 N N         20           1
+
+SQL> create sequence group;
+create sequence group
+                *
+ERROR at line 1:
+ORA-02277: invalid sequence name
+
+
+SQL> create sequence s1;
+create sequence s1
+                *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> drop sequence s1;
+
+Sequence dropped.
+
+SQL>
+SQL>
+SQL> drop sequence if;
+
+Sequence dropped.
+
+SQL> create sequence rollno start with 1 incrment by 1 maxvalue 10;
+create sequence rollno start with 1 incrment by 1 maxvalue 10
+                                    *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> create sequence rollno start with 1 increment by 1 maxvalue 10;
+
+Sequence created.
+
+SQL> select rollno.currval from dual;
+select rollno.currval from dual
+       *
+ERROR at line 1:
+ORA-08002: sequence ROLLNO.CURRVAL is not yet defined in this session
+
+
+SQL> select rollno.nextval from dual;
+
+   NEXTVAL
+----------
+         1
+
+SQL> /
+
+   NEXTVAL
+----------
+         2
+
+SQL> /
+
+   NEXTVAL
+----------
+         3
+
+SQL> /
+
+   NEXTVAL
+----------
+         7
+
+SQL> /
+
+   NEXTVAL
+----------
+         8
+
+SQL> /
+
+   NEXTVAL
+----------
+         9
+
+SQL> /
+
+   NEXTVAL
+----------
+        10
+
+SQL> /
+select rollno.nextval from dual
+*
+ERROR at line 1:
+ORA-08004: sequence ROLLNO.NEXTVAL exceeds MAXVALUE and cannot be instantiated
+
+
+SQL> /
+select rollno.nextval from dual
+*
+ERROR at line 1:
+ORA-08004: sequence ROLLNO.NEXTVAL exceeds MAXVALUE and cannot be instantiated
+
+
+SQL> select s1.currval from dual;
+select s1.currval from dual
+       *
+ERROR at line 1:
+ORA-02289: sequence does not exist
+
+
+SQL> select rollno.currval from dual;
+
+   CURRVAL
+----------
+        10
+
+SQL> create sequence circularloop start with 1 increment by 5 max value 100 cycle;
+create sequence circularloop start with 1 increment by 5 max value 100 cycle
+                                                         *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> create sequence circularloop start with 1 increment by 5 maxvalue 100 cycle;
+
+Sequence created.
+
+SQL> select circularloop.nextval from dual;
+
+   NEXTVAL
+----------
+         1
+
+SQL> /
+
+   NEXTVAL
+----------
+         6
+
+SQL> /
+
+   NEXTVAL
+----------
+        11
+
+SQL> /
+
+   NEXTVAL
+----------
+        16
+
+SQL> /
+
+   NEXTVAL
+----------
+        21
+
+SQL> /
+
+   NEXTVAL
+----------
+        26
+
+SQL> /
+
+   NEXTVAL
+----------
+        31
+
+SQL> ///
+
+   NEXTVAL
+----------
+        36
+
+SQL> /
+
+   NEXTVAL
+----------
+        41
+
+SQL> /
+
+   NEXTVAL
+----------
+        46
+
+SQL> /
+
+   NEXTVAL
+----------
+        51
+
+SQL> /
+
+   NEXTVAL
+----------
+        56
+
+SQL> /
+
+   NEXTVAL
+----------
+        61
+
+SQL> /
+
+   NEXTVAL
+----------
+        66
+
+SQL> ///
+
+   NEXTVAL
+----------
+        71
+
+SQL> /
+
+   NEXTVAL
+----------
+        76
+
+SQL> /
+
+   NEXTVAL
+----------
+        81
+
+SQL> /
+
+   NEXTVAL
+----------
+        86
+
+SQL> /
+
+   NEXTVAL
+----------
+        91
+
+SQL> /
+
+   NEXTVAL
+----------
+        96
+
+SQL> /
+
+   NEXTVAL
+----------
+         1
+
+SQL> /
+
+   NEXTVAL
+----------
+         6
+
+SQL> /
+
+   NEXTVAL
+----------
+        11
+
+SQL> /
+
+   NEXTVAL
+----------
+        16
+
+SQL> /
+
+   NEXTVAL
+----------
+        21
+
+SQL> /
+
+   NEXTVAL
+----------
+        26
+
+SQL> //
+
+   NEXTVAL
+----------
+        31
+
+SQL> /
+
+   NEXTVAL
+----------
+        36
+
+SQL> /
+
+   NEXTVAL
+----------
+        41
+
+SQL> ///
+
+   NEXTVAL
+----------
+        46
+
+SQL> /
+
+   NEXTVAL
+----------
+        51
+
+SQL>
+SQL> ///
+
+   NEXTVAL
+----------
+        56
+
+SQL> /
+
+   NEXTVAL
+----------
+        61
+
+SQL> /
+
+   NEXTVAL
+----------
+        66
+
+SQL> /
+
+   NEXTVAL
+----------
+        71
+
+SQL> /
+
+   NEXTVAL
+----------
+        76
+
+SQL> /////
+
+   NEXTVAL
+----------
+        81
+
+SQL> //
+
+   NEXTVAL
+----------
+        86
+
+SQL> /
+
+   NEXTVAL
+----------
+        91
+
+SQL> /
+
+   NEXTVAL
+----------
+        96
+
+SQL> /
+
+   NEXTVAL
+----------
+         1
+
+SQL> ////
+
+   NEXTVAL
+----------
+         6
+
+SQL> /
+
+   NEXTVAL
+----------
+        11
+
+SQL> //
+
+   NEXTVAL
+----------
+        16
+
+SQL> /
+
+   NEXTVAL
+----------
+        21
+
+SQL> /////
+
+   NEXTVAL
+----------
+        26
+
+SQL> //
+
+   NEXTVAL
+----------
+        31
+
+SQL> /
+
+   NEXTVAL
+----------
+        36
+
+SQL> /
+
+   NEXTVAL
+----------
+        41
+
+SQL> /
+
+   NEXTVAL
+----------
+        46
+
+SQL> /
+
+   NEXTVAL
+----------
+        51
+
+SQL> /
+
+   NEXTVAL
+----------
+        56
+
+SQL> /
+
+   NEXTVAL
+----------
+        61
+
+SQL> /
+
+   NEXTVAL
+----------
+        66
+
+SQL> /
+
+   NEXTVAL
+----------
+        71
+
+SQL> /
+
+   NEXTVAL
+----------
+        76
+
+SQL>
+SQL> ///
+
+   NEXTVAL
+----------
+        81
+
+SQL>
+SQL> /
+
+   NEXTVAL
+----------
+        86
+
+SQL> /
+
+   NEXTVAL
+----------
+        91
+
+SQL> /
+
+   NEXTVAL
+----------
+        96
+
+SQL>
+SQL> /
+
+   NEXTVAL
+----------
+         1
+
+SQL> ///
+
+   NEXTVAL
+----------
+         6
+
+SQL> /
+
+   NEXTVAL
+----------
+        11
+
+SQL> select circularloop.currval from dual;
+
+   CURRVAL
+----------
+        11
+
+SQL> select 8 ffrom seq;
+select 8 ffrom seq
+               *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select circularloop.currval from dual;
+
+   CURRVAL
+----------
+        11
+
+SQL> select circularloop.nextval from dual;
+
+   NEXTVAL
+----------
+        16
+
+SQL> /
+
+   NEXTVAL
+----------
+        21
+
+SQL>
+SQL> select circularloop.currval from dual;
+
+   CURRVAL
+----------
+        21
+
+SQL> create sequence revseq start with 10 increment by -2;
+create sequence revseq start with 10 increment by -2
+*
+ERROR at line 1:
+ORA-04008: START WITH cannot be more than MAXVALUE
+
+
+SQL> create sequence revseq start with 10 increment by -2 maxvalue 20;
+
+Sequence created.
+
+SQL> select * from seq;
+
+SEQUENCE_NAME                   MIN_VALUE  MAX_VALUE INCREMENT_BY C O CACHE_SIZE LAST_NUMBER
+------------------------------ ---------- ---------- ------------ - - ---------- -----------
+ROLLNO                                  1         10            1 N N         20          11
+CIRCULARLOOP                            1        100            5 Y N         20         101
+REVSEQ                         -1.000E+26         20           -2 N N         20          10
+
+SQL> create sequence test start with 10;
+create sequence test start with 10
+                *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create sequence emp start with 10;
+create sequence emp start with 10
+                *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create sequence testseq start with 10;
+
+Sequence created.
+
+SQL> select 8 from seq;
+
+         8
+----------
+         8
+         8
+         8
+         8
+
+SQL> select * from seq;
+
+SEQUENCE_NAME                   MIN_VALUE  MAX_VALUE INCREMENT_BY C O CACHE_SIZE LAST_NUMBER
+------------------------------ ---------- ---------- ------------ - - ---------- -----------
+ROLLNO                                  1         10            1 N N         20          11
+CIRCULARLOOP                            1        100            5 Y N         20         101
+REVSEQ                         -1.000E+26         20           -2 N N         20          10
+TESTSEQ                                 1 1.0000E+27            1 N N         20          10
+
+SQL> drop sequence testseq;
+
+Sequence dropped.
+
+SQL> create testseq start with 10 increment by -2;
+create testseq start with 10 increment by -2
+       *
+ERROR at line 1:
+ORA-00901: invalid CREATE command
+
+
+SQL> create testseq start with 10 increment by 2;
+create testseq start with 10 increment by 2
+       *
+ERROR at line 1:
+ORA-00901: invalid CREATE command
+
+
+SQL> create testseq start with 10;
+create testseq start with 10
+       *
+ERROR at line 1:
+ORA-00901: invalid CREATE command
+
+
+SQL> create sequence testseq start with 10 increment by 2;
+
+Sequence created.
+
+SQL> create sequence testseq start with 10 increment by -2;
+create sequence testseq start with 10 increment by -2
+                *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> drop sequence testseq;
+
+Sequence dropped.
+
+SQL> create sequence testseq start with 10 increment by -2;
+create sequence testseq start with 10 increment by -2
+*
+ERROR at line 1:
+ORA-04008: START WITH cannot be more than MAXVALUE
+
+
+SQL> create sequence testseq start with 10 increment by 2;
+
+Sequence created.
+
+SQL> alter sequence testseq increment by -2;
+
+Sequence altered.
+
+SQL> select testseq.nextval from dual;
+
+   NEXTVAL
+----------
+         6
+
+SQL> /
+
+   NEXTVAL
+----------
+         4
+
+SQL> /
+
+   NEXTVAL
+----------
+         2
+
+SQL> /
+select testseq.nextval from dual
+*
+ERROR at line 1:
+ORA-08004: sequence TESTSEQ.NEXTVAL goes below MINVALUE and cannot be instantiated
+
+
+SQL> /
+select testseq.nextval from dual
+*
+ERROR at line 1:
+ORA-08004: sequence TESTSEQ.NEXTVAL goes below MINVALUE and cannot be instantiated
+
+
+SQL> /
+select testseq.nextval from dual
+*
+ERROR at line 1:
+ORA-08004: sequence TESTSEQ.NEXTVAL goes below MINVALUE and cannot be instantiated
+
+
+SQL> select * from seq
+  2  ;
+
+SEQUENCE_NAME                   MIN_VALUE  MAX_VALUE INCREMENT_BY C O CACHE_SIZE LAST_NUMBER
+------------------------------ ---------- ---------- ------------ - - ---------- -----------
+ROLLNO                                  1         10            1 N N         20          11
+CIRCULARLOOP                            1        100            5 Y N         20         101
+REVSEQ                         -1.000E+26         20           -2 N N         20          10
+TESTSEQ                                 1 1.0000E+27           -2 N N         20           0
+
+SQL> create sequence testseq2;
+
+Sequence created.
+
+SQL> select * from seq;
+
+SEQUENCE_NAME                   MIN_VALUE  MAX_VALUE INCREMENT_BY C O CACHE_SIZE LAST_NUMBER
+------------------------------ ---------- ---------- ------------ - - ---------- -----------
+ROLLNO                                  1         10            1 N N         20          11
+CIRCULARLOOP                            1        100            5 Y N         20         101
+REVSEQ                         -1.000E+26         20           -2 N N         20          10
+TESTSEQ                                 1 1.0000E+27           -2 N N         20           0
+TESTSEQ2                                1 1.0000E+27            1 N N         20           1
+
+SQL> drop sequence testseq2;
+
+Sequence dropped.
+
+SQL> create sequence odrno start with 5 increment by -2;
+create sequence odrno start with 5 increment by -2
+*
+ERROR at line 1:
+ORA-04008: START WITH cannot be more than MAXVALUE
+
+
+SQL> select * from seq;
+
+SEQUENCE_NAME                   MIN_VALUE  MAX_VALUE INCREMENT_BY C O CACHE_SIZE LAST_NUMBER
+------------------------------ ---------- ---------- ------------ - - ---------- -----------
+ROLLNO                                  1         10            1 N N         20          11
+CIRCULARLOOP                            1        100            5 Y N         20         101
+REVSEQ                         -1.000E+26         20           -2 N N         20          10
+TESTSEQ                                 1 1.0000E+27           -2 N N         20           0

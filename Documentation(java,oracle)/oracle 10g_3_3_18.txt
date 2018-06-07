@@ -1,0 +1,1883 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Sat Mar 3 14:07:18 2018
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+Enter user-name: scott
+Enter password:
+
+Connected to:
+Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production
+
+SQL> select * from tab
+  2  ;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEMO1                          TABLE
+FAIL                           TABLE
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TESTSTU2                       TABLE
+
+12 rows selected.
+
+SQL> set pagesize 100;
+SQL> set linesize 100;
+SQL> select ename,loc,d.deptno,sal from emp e,dept d where e.deptno=d.deptno and loc='CHICAGO';
+
+ENAME      LOC               DEPTNO        SAL
+---------- ------------- ---------- ----------
+ALLEN      CHICAGO               30       1600
+WARD       CHICAGO               30       1250
+MARTIN     CHICAGO               30       1250
+BLAKE      CHICAGO               30       2850
+TURNER     CHICAGO               30       1500
+JAMES      CHICAGO               30        950
+
+6 rows selected.
+
+SQL> select ename,loc,d.deptno,sal from emp e,dept d where e.deptno=d.deptno or loc='CHICAGO';
+
+ENAME      LOC               DEPTNO        SAL
+---------- ------------- ---------- ----------
+CLARK      NEW YORK              10       2450
+KING       NEW YORK              10       5000
+MILLER     NEW YORK              10       1300
+SMITH      DALLAS                20        800
+JONES      DALLAS                20       2975
+SCOTT      DALLAS                20       3000
+ADAMS      DALLAS                20       1100
+FORD       DALLAS                20       3000
+SMITH      CHICAGO               30        800
+ALLEN      CHICAGO               30       1600
+WARD       CHICAGO               30       1250
+JONES      CHICAGO               30       2975
+MARTIN     CHICAGO               30       1250
+BLAKE      CHICAGO               30       2850
+CLARK      CHICAGO               30       2450
+SCOTT      CHICAGO               30       3000
+KING       CHICAGO               30       5000
+TURNER     CHICAGO               30       1500
+ADAMS      CHICAGO               30       1100
+JAMES      CHICAGO               30        950
+FORD       CHICAGO               30       3000
+MILLER     CHICAGO               30       1300
+
+22 rows selected.
+
+SQL> select ename,loc,d.deptno dept,e.deptno emp,sal from emp e,dept d where e.deptno=d.deptno or loc='CHICAGO';
+
+ENAME      LOC                 DEPT        EMP        SAL
+---------- ------------- ---------- ---------- ----------
+CLARK      NEW YORK              10         10       2450
+KING       NEW YORK              10         10       5000
+MILLER     NEW YORK              10         10       1300
+SMITH      DALLAS                20         20        800
+JONES      DALLAS                20         20       2975
+SCOTT      DALLAS                20         20       3000
+ADAMS      DALLAS                20         20       1100
+FORD       DALLAS                20         20       3000
+SMITH      CHICAGO               30         20        800
+ALLEN      CHICAGO               30         30       1600
+WARD       CHICAGO               30         30       1250
+JONES      CHICAGO               30         20       2975
+MARTIN     CHICAGO               30         30       1250
+BLAKE      CHICAGO               30         30       2850
+CLARK      CHICAGO               30         10       2450
+SCOTT      CHICAGO               30         20       3000
+KING       CHICAGO               30         10       5000
+TURNER     CHICAGO               30         30       1500
+ADAMS      CHICAGO               30         20       1100
+JAMES      CHICAGO               30         30        950
+FORD       CHICAGO               30         20       3000
+MILLER     CHICAGO               30         10       1300
+
+22 rows selected.
+
+SQL> select ename,loc,d.deptno dept,e.deptno emp,sal from emp e,dept d where e.deptno=d.deptno not loc='CHICAGO';
+select ename,loc,d.deptno dept,e.deptno emp,sal from emp e,dept d where e.deptno=d.deptno not loc='CHICAGO'
+                                                                                          *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select ename,loc,d.deptno dept,e.deptno emp,sal from emp e,dept d where e.deptno=d.deptno ! loc='CHICAGO';
+select ename,loc,d.deptno dept,e.deptno emp,sal from emp e,dept d where e.deptno=d.deptno ! loc='CHICAGO'
+                                                                                          *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select ename,loc,d.deptno dept,e.deptno emp,sal from emp e,dept d where e.deptno=d.deptno and loc='CHICAGO';
+
+ENAME      LOC                 DEPT        EMP        SAL
+---------- ------------- ---------- ---------- ----------
+ALLEN      CHICAGO               30         30       1600
+WARD       CHICAGO               30         30       1250
+MARTIN     CHICAGO               30         30       1250
+BLAKE      CHICAGO               30         30       2850
+TURNER     CHICAGO               30         30       1500
+JAMES      CHICAGO               30         30        950
+
+6 rows selected.
+
+SQL> select ename,loc,d.deptno dept,e.deptno emp,sal from emp e,dept d where e.deptno=d.deptno and loc!='CHICAGO';
+
+ENAME      LOC                 DEPT        EMP        SAL
+---------- ------------- ---------- ---------- ----------
+SMITH      DALLAS                20         20        800
+JONES      DALLAS                20         20       2975
+CLARK      NEW YORK              10         10       2450
+SCOTT      DALLAS                20         20       3000
+KING       NEW YORK              10         10       5000
+ADAMS      DALLAS                20         20       1100
+FORD       DALLAS                20         20       3000
+MILLER     NEW YORK              10         10       1300
+
+8 rows selected.
+
+SQL> select 8 from emp;
+
+         8
+----------
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+
+14 rows selected.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select e1.empno,e1.ename,e1.mgr,e2.ename Manager Name from emp e1,empe2 where e1.mg2=e2.empno;
+select e1.empno,e1.ename,e1.mgr,e2.ename Manager Name from emp e1,empe2 where e1.mg2=e2.empno
+                                                 *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select e1.empno,e1.ename,e1.mgr,e2.ename "Manager Name" from emp e1,empe2 where e1.mg2=e2.empno;
+select e1.empno,e1.ename,e1.mgr,e2.ename "Manager Name" from emp e1,empe2 where e1.mg2=e2.empno
+                                                                    *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select e1.empno,e1.ename,e1.mgr,e2.ename "Manager Name" from emp e1,emp e2 where e1.mg2=e2.empno;
+select e1.empno,e1.ename,e1.mgr,e2.ename "Manager Name" from emp e1,emp e2 where e1.mg2=e2.empno
+                                                                                 *
+ERROR at line 1:
+ORA-00904: "E1"."MG2": invalid identifier
+
+
+SQL> select e1.empno,e1.ename,e1.mgr,e2.ename "Manager Name" from emp e1,emp e2 where e1.mgr=e2.empno;
+
+     EMPNO ENAME             MGR Manager Na
+---------- ---------- ---------- ----------
+      7369 SMITH            7902 FORD
+      7499 ALLEN            7698 BLAKE
+      7521 WARD             7698 BLAKE
+      7566 JONES            7839 KING
+      7654 MARTIN           7698 BLAKE
+      7698 BLAKE            7839 KING
+      7782 CLARK            7839 KING
+      7788 SCOTT            7566 JONES
+      7844 TURNER           7698 BLAKE
+      7876 ADAMS            7788 SCOTT
+      7900 JAMES            7698 BLAKE
+      7902 FORD             7566 JONES
+      7934 MILLER           7782 CLARK
+
+13 rows selected.
+
+SQL> select e1.empno,e1.ename,e1.mgr,e2.ename "Manager" from emp e1,emp e2 where e1.mgr=e2.empno;
+
+     EMPNO ENAME             MGR Manager
+---------- ---------- ---------- ----------
+      7369 SMITH            7902 FORD
+      7499 ALLEN            7698 BLAKE
+      7521 WARD             7698 BLAKE
+      7566 JONES            7839 KING
+      7654 MARTIN           7698 BLAKE
+      7698 BLAKE            7839 KING
+      7782 CLARK            7839 KING
+      7788 SCOTT            7566 JONES
+      7844 TURNER           7698 BLAKE
+      7876 ADAMS            7788 SCOTT
+      7900 JAMES            7698 BLAKE
+      7902 FORD             7566 JONES
+      7934 MILLER           7782 CLARK
+
+13 rows selected.
+
+SQL> select e1.empno,e1.ename,e1.mgr,e2.ename "Manager",e1.sal workersal,e2.sal managersal from emp e1,emp e2 where e1.mgr=e2.empno;
+
+     EMPNO ENAME             MGR Manager     WORKERSAL MANAGERSAL
+---------- ---------- ---------- ---------- ---------- ----------
+      7369 SMITH            7902 FORD              800       3000
+      7499 ALLEN            7698 BLAKE            1600       2850
+      7521 WARD             7698 BLAKE            1250       2850
+      7566 JONES            7839 KING             2975       5000
+      7654 MARTIN           7698 BLAKE            1250       2850
+      7698 BLAKE            7839 KING             2850       5000
+      7782 CLARK            7839 KING             2450       5000
+      7788 SCOTT            7566 JONES            3000       2975
+      7844 TURNER           7698 BLAKE            1500       2850
+      7876 ADAMS            7788 SCOTT            1100       3000
+      7900 JAMES            7698 BLAKE             950       2850
+      7902 FORD             7566 JONES            3000       2975
+      7934 MILLER           7782 CLARK            1300       2450
+
+13 rows selected.
+
+SQL> select e1.empno,e1.ename,e1.mgr,e2.ename "Manager",e1.sal workersal,e2.sal managersal from emp e1,emp e2 where e1.mgr=e2.empno and workersal>managersal;
+select e1.empno,e1.ename,e1.mgr,e2.ename "Manager",e1.sal workersal,e2.sal managersal from emp e1,emp e2 where e1.mgr=e2.empno and workersal>managersal
+                                                                                                                                             *
+ERROR at line 1:
+ORA-00904: "MANAGERSAL": invalid identifier
+
+
+SQL> select e1.empno,e1.ename,e1.mgr,e2.ename "Manager",e1.sal workersal,e2.sal managersal from emp e1,emp e2 where e1.mgr=e2.empno and e1.sal>e2.sal;
+
+     EMPNO ENAME             MGR Manager     WORKERSAL MANAGERSAL
+---------- ---------- ---------- ---------- ---------- ----------
+      7788 SCOTT            7566 JONES            3000       2975
+      7902 FORD             7566 JONES            3000       2975
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEMO1                          TABLE
+FAIL                           TABLE
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+STUDENTCOPY                    TABLE
+STUDENTLIST                    TABLE
+TEST                           TABLE
+TESTSTU                        TABLE
+TESTSTU2                       TABLE
+
+12 rows selected.
+
+SQL> select  * from fail;
+
+        ID
+----------
+        10
+        20
+        30
+
+SQL> select  * from test;
+
+no rows selected
+
+SQL> select  * from teststu;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+SHUBHAM           345 Patna                              800001         98
+PRABHAT           331 Punjab                             152107         87
+AVINASH           701 MP                                 548978         89
+RAVIKANT          336 Gaya                               789654         95
+AASHISH           310 patna                              800001         98
+AASHUTOSH         702 patna                              879654         90
+SUSHANT           321 patna                              432123         78
+Prashant          332 Bihar                              848207         89
+
+8 rows selected.
+
+SQL> select  * from teststu2;
+
+NAME             ROLL    PERCENT
+---------- ---------- ----------
+shubham           345         98
+prabhat           331         45
+avinash           701         65
+ravikant          336
+aashish           310
+aashutosh         702
+sushant           321
+prashant          332         78
+
+8 rows selected.
+
+SQL> select  * from salgrade;
+
+     GRADE      LOSAL      HISAL
+---------- ---------- ----------
+         1        700       1200
+         2       1201       1400
+         3       1401       2000
+         4       2001       3000
+         5       3001       9999
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal;
+
+ENAME           GRADE
+---------- ----------
+SMITH               1
+JAMES               1
+ADAMS               1
+WARD                2
+MARTIN              2
+MILLER              2
+TURNER              3
+ALLEN               3
+CLARK               4
+BLAKE               4
+JONES               4
+KING                5
+
+12 rows selected.
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal or grade=1;
+
+ENAME           GRADE
+---------- ----------
+SMITH               1
+ALLEN               1
+WARD                1
+JONES               1
+MARTIN              1
+BLAKE               1
+CLARK               1
+SCOTT               1
+KING                1
+TURNER              1
+ADAMS               1
+JAMES               1
+FORD                1
+MILLER              1
+WARD                2
+MARTIN              2
+MILLER              2
+ALLEN               3
+TURNER              3
+JONES               4
+BLAKE               4
+CLARK               4
+KING                5
+
+23 rows selected.
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal and grade=1;
+
+ENAME           GRADE
+---------- ----------
+SMITH               1
+ADAMS               1
+JAMES               1
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal and grade between 1 and3;
+select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal and grade between 1 and3
+                                                                                                   *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal and grade between 1 and3 ;
+select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal and grade between 1 and3
+                                                                                                   *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal and grade between 1 and 3 ;
+
+ENAME           GRADE
+---------- ----------
+SMITH               1
+JAMES               1
+ADAMS               1
+WARD                2
+MARTIN              2
+MILLER              2
+TURNER              3
+ALLEN               3
+
+8 rows selected.
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal and grade not between 1 and 3 ;
+
+ENAME           GRADE
+---------- ----------
+CLARK               4
+BLAKE               4
+JONES               4
+KING                5
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal and grade between 1 and 3 ;
+
+ENAME           GRADE
+---------- ----------
+SMITH               1
+JAMES               1
+ADAMS               1
+WARD                2
+MARTIN              2
+MILLER              2
+TURNER              3
+ALLEN               3
+
+8 rows selected.
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal and grade between 1 and 3 and ename='smith' ;
+
+no rows selected
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal and grade between 1 and 3 and ename='SMITH';
+
+ENAME           GRADE
+---------- ----------
+SMITH               1
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<s.hisal and grade between 1 and 3;
+
+ENAME           GRADE
+---------- ----------
+SMITH               1
+JAMES               1
+ADAMS               1
+WARD                2
+MARTIN              2
+MILLER              2
+TURNER              3
+ALLEN               3
+
+8 rows selected.
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and e.sal<hisal and grade between 1 and 3;
+
+ENAME           GRADE
+---------- ----------
+SMITH               1
+JAMES               1
+ADAMS               1
+WARD                2
+MARTIN              2
+MILLER              2
+TURNER              3
+ALLEN               3
+
+8 rows selected.
+
+SQL> select ename,grade from emp e,salgrade s where e.sal>s.losal and sal<hisal and grade between 1 and 3;
+
+ENAME           GRADE
+---------- ----------
+SMITH               1
+JAMES               1
+ADAMS               1
+WARD                2
+MARTIN              2
+MILLER              2
+TURNER              3
+ALLEN               3
+
+8 rows selected.
+
+SQL> select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3;
+
+ENAME           GRADE
+---------- ----------
+SMITH               1
+JAMES               1
+ADAMS               1
+WARD                2
+MARTIN              2
+MILLER              2
+TURNER              3
+ALLEN               3
+
+8 rows selected.
+
+SQL> select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3 and ename like %a5;
+select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3 and ename like %a5
+                                                                                                                *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3 and ename like %a%;
+select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3 and ename like %a%
+                                                                                                                *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3 and ename like '%a%';
+
+no rows selected
+
+SQL> select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3 and ename like '%A%';
+
+ENAME           GRADE
+---------- ----------
+ALLEN               3
+WARD                2
+MARTIN              2
+ADAMS               1
+JAMES               1
+
+SQL> select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3 and ename like '%A%' and ename like '_a%';
+
+no rows selected
+
+SQL> select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3 and ename like '_a%';
+
+no rows selected
+
+SQL> select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3;
+
+ENAME           GRADE
+---------- ----------
+SMITH               1
+JAMES               1
+ADAMS               1
+WARD                2
+MARTIN              2
+MILLER              2
+TURNER              3
+ALLEN               3
+
+8 rows selected.
+
+SQL> select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3 and ename like '_A%';
+
+ENAME           GRADE
+---------- ----------
+WARD                2
+MARTIN              2
+JAMES               1
+
+SQL> select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3 and ename like '_a%';
+
+no rows selected
+
+SQL> select ename,grade from emp e,salgrade s where sal>losal and sal<hisal and grade between 1 and 3 and ename like '_a%';
+
+no rows selected
+
+SQL> select * from EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> set pagesize 1000;
+SQL> set linesize 1000
+SQL> SELECT * FROM EMP,DEPT;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ---------- -------------- -------------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20         10 ACCOUNTING     NEW YORK
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30         10 ACCOUNTING     NEW YORK
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30         10 ACCOUNTING     NEW YORK
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20         10 ACCOUNTING     NEW YORK
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30         10 ACCOUNTING     NEW YORK
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30         10 ACCOUNTING     NEW YORK
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10         10 ACCOUNTING     NEW YORK
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20         10 ACCOUNTING     NEW YORK
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10         10 ACCOUNTING     NEW YORK
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30         10 ACCOUNTING     NEW YORK
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20         10 ACCOUNTING     NEW YORK
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30         10 ACCOUNTING     NEW YORK
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20         10 ACCOUNTING     NEW YORK
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10         10 ACCOUNTING     NEW YORK
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20         20 RESEARCH       DALLAS
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30         20 RESEARCH       DALLAS
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30         20 RESEARCH       DALLAS
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20         20 RESEARCH       DALLAS
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30         20 RESEARCH       DALLAS
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30         20 RESEARCH       DALLAS
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10         20 RESEARCH       DALLAS
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20         20 RESEARCH       DALLAS
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10         20 RESEARCH       DALLAS
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30         20 RESEARCH       DALLAS
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20         20 RESEARCH       DALLAS
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30         20 RESEARCH       DALLAS
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20         20 RESEARCH       DALLAS
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10         20 RESEARCH       DALLAS
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20         30 SALES          CHICAGO
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30         30 SALES          CHICAGO
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30         30 SALES          CHICAGO
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20         30 SALES          CHICAGO
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30         30 SALES          CHICAGO
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30         30 SALES          CHICAGO
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10         30 SALES          CHICAGO
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20         30 SALES          CHICAGO
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10         30 SALES          CHICAGO
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30         30 SALES          CHICAGO
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20         30 SALES          CHICAGO
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30         30 SALES          CHICAGO
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20         30 SALES          CHICAGO
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10         30 SALES          CHICAGO
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20         40 OPERATIONS     BOSTON
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30         40 OPERATIONS     BOSTON
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30         40 OPERATIONS     BOSTON
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20         40 OPERATIONS     BOSTON
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30         40 OPERATIONS     BOSTON
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30         40 OPERATIONS     BOSTON
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10         40 OPERATIONS     BOSTON
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20         40 OPERATIONS     BOSTON
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10         40 OPERATIONS     BOSTON
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30         40 OPERATIONS     BOSTON
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20         40 OPERATIONS     BOSTON
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30         40 OPERATIONS     BOSTON
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20         40 OPERATIONS     BOSTON
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10         40 OPERATIONS     BOSTON
+
+56 rows selected.
+
+SQL> select * from emp e,dept d where e.deptno(+)=d.deptno;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ---------- -------------- -------------
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10         10 ACCOUNTING     NEW YORK
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10         10 ACCOUNTING     NEW YORK
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10         10 ACCOUNTING     NEW YORK
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20         20 RESEARCH       DALLAS
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20         20 RESEARCH       DALLAS
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20         20 RESEARCH       DALLAS
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20         20 RESEARCH       DALLAS
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20         20 RESEARCH       DALLAS
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30         30 SALES          CHICAGO
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30         30 SALES          CHICAGO
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30         30 SALES          CHICAGO
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30         30 SALES          CHICAGO
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30         30 SALES          CHICAGO
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30         30 SALES          CHICAGO
+                                                                                              40 OPERATIONS BOSTON
+
+15 rows selected.
+
+SQL> select * from emp e,dept d where e.deptno=(+)d.deptno;
+select * from emp e,dept d where e.deptno=(+)d.deptno
+                                            *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from emp e,dept d where e.deptno(+)=d.deptno;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ---------- -------------- -------------
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10         10 ACCOUNTING     NEW YORK
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10         10 ACCOUNTING     NEW YORK
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10         10 ACCOUNTING     NEW YORK
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20         20 RESEARCH       DALLAS
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20         20 RESEARCH       DALLAS
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20         20 RESEARCH       DALLAS
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20         20 RESEARCH       DALLAS
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20         20 RESEARCH       DALLAS
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30         30 SALES          CHICAGO
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30         30 SALES          CHICAGO
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30         30 SALES          CHICAGO
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30         30 SALES          CHICAGO
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30         30 SALES          CHICAGO
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30         30 SALES          CHICAGO
+                                                                                              40 OPERATIONS BOSTON
+
+15 rows selected.
+
+SQL> select * from emp e,dept d where e.deptno=(+)d.deptno;
+select * from emp e,dept d where e.deptno=(+)d.deptno
+                                            *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from emp e,dept d where e.deptno=d.deptno(+);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ---------- -------------- -------------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20         20 RESEARCH       DALLAS
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30         30 SALES          CHICAGO
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30         30 SALES          CHICAGO
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20         20 RESEARCH       DALLAS
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30         30 SALES          CHICAGO
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30         30 SALES          CHICAGO
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10         10 ACCOUNTING     NEW YORK
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20         20 RESEARCH       DALLAS
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10         10 ACCOUNTING     NEW YORK
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30         30 SALES          CHICAGO
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20         20 RESEARCH       DALLAS
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30         30 SALES          CHICAGO
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20         20 RESEARCH       DALLAS
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10         10 ACCOUNTING     NEW YORK
+
+14 rows selected.
+
+SQL> select * from emp e,dept d where e.deptno(+)=d.deptno union select * from emp e,dept d where e.deptno=d.deptno(+);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO     DEPTNO DNAME          LOC
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ---------- -------------- -------------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20         20 RESEARCH       DALLAS
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30         30 SALES          CHICAGO
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30         30 SALES          CHICAGO
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20         20 RESEARCH       DALLAS
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30         30 SALES          CHICAGO
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30         30 SALES          CHICAGO
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10         10 ACCOUNTING     NEW YORK
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20         20 RESEARCH       DALLAS
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10         10 ACCOUNTING     NEW YORK
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30         30 SALES          CHICAGO
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20         20 RESEARCH       DALLAS
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30         30 SALES          CHICAGO
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20         20 RESEARCH       DALLAS
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10         10 ACCOUNTING     NEW YORK
+                                                                                              40 OPERATIONS BOSTON
+
+15 rows selected.
+
+SQL> select * from school;
+
+no rows selected
+
+SQL> insert into school values (&roll,'&name');
+Enter value for roll: 1
+Enter value for name: pk
+old   1: insert into school values (&roll,'&name')
+new   1: insert into school values (1,'pk')
+
+1 row created.
+
+SQL> /
+Enter value for roll: 2
+Enter value for name: ravi
+old   1: insert into school values (&roll,'&name')
+new   1: insert into school values (2,'ravi')
+
+1 row created.
+
+SQL> //
+Enter value for roll: 3
+Enter value for name: avi
+old   1: insert into school values (&roll,'&name')
+new   1: insert into school values (3,'avi')
+
+1 row created.
+
+SQL> /
+Enter value for roll: 4
+Enter value for name: ashish
+old   1: insert into school values (&roll,'&name')
+new   1: insert into school values (4,'ashish')
+
+1 row created.
+
+SQL> /
+Enter value for roll: 5
+Enter value for name: shubham
+old   1: insert into school values (&roll,'&name')
+new   1: insert into school values (5,'shubham')
+
+1 row created.
+
+SQL> /
+Enter value for roll: 6
+Enter value for name: raman
+old   1: insert into school values (&roll,'&name')
+new   1: insert into school values (6,'raman')
+
+1 row created.
+
+SQL> /
+Enter value for roll: 7
+Enter value for name: sachin
+old   1: insert into school values (&roll,'&name')
+new   1: insert into school values (7,'sachin')
+
+1 row created.
+
+SQL> create table college(regno number(2),name varchar2(10));
+
+Table created.
+
+SQL> insert into college values (&regno,'&name');
+Enter value for regno: 3
+Enter value for name: taimur
+old   1: insert into college values (&regno,'&name')
+new   1: insert into college values (3,'taimur')
+
+1 row created.
+
+SQL> /
+Enter value for regno: 5
+Enter value for name: shubham
+old   1: insert into college values (&regno,'&name')
+new   1: insert into college values (5,'shubham')
+
+1 row created.
+
+SQL> /
+Enter value for regno: 6
+Enter value for name: prabhat
+old   1: insert into college values (&regno,'&name')
+new   1: insert into college values (6,'prabhat')
+
+1 row created.
+
+SQL> /
+Enter value for regno: 8
+Enter value for name: ankit
+old   1: insert into college values (&regno,'&name')
+new   1: insert into college values (8,'ankit')
+
+1 row created.
+
+SQL> /
+Enter value for regno: 7
+Enter value for name: avinash
+old   1: insert into college values (&regno,'&name')
+new   1: insert into college values (7,'avinash')
+
+1 row created.
+
+SQL> select * fro school;
+select * fro school
+         *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select * from school;
+
+    ROLLNO NAME
+---------- ----------
+         1 pk
+         2 ravi
+         3 avi
+         4 ashish
+         5 shubham
+         6 raman
+         7 sachin
+
+7 rows selected.
+
+SQL> select * from college
+  2
+SQL>
+SQL> /
+
+     REGNO NAME
+---------- ----------
+         3 taimur
+         5 shubham
+         6 prabhat
+         8 ankit
+         7 avinash
+
+SQL> select * from school,college;
+
+    ROLLNO NAME            REGNO NAME
+---------- ---------- ---------- ----------
+         1 pk                  3 taimur
+         2 ravi                3 taimur
+         3 avi                 3 taimur
+         4 ashish              3 taimur
+         5 shubham             3 taimur
+         6 raman               3 taimur
+         7 sachin              3 taimur
+         1 pk                  5 shubham
+         2 ravi                5 shubham
+         3 avi                 5 shubham
+         4 ashish              5 shubham
+         5 shubham             5 shubham
+         6 raman               5 shubham
+         7 sachin              5 shubham
+         1 pk                  6 prabhat
+         2 ravi                6 prabhat
+         3 avi                 6 prabhat
+         4 ashish              6 prabhat
+         5 shubham             6 prabhat
+         6 raman               6 prabhat
+         7 sachin              6 prabhat
+         1 pk                  8 ankit
+         2 ravi                8 ankit
+         3 avi                 8 ankit
+         4 ashish              8 ankit
+         5 shubham             8 ankit
+         6 raman               8 ankit
+         7 sachin              8 ankit
+         1 pk                  7 avinash
+         2 ravi                7 avinash
+         3 avi                 7 avinash
+         4 ashish              7 avinash
+         5 shubham             7 avinash
+         6 raman               7 avinash
+         7 sachin              7 avinash
+
+35 rows selected.
+
+SQL> select count(*) from school;
+
+  COUNT(*)
+----------
+         7
+
+SQL> select count(*) from college;
+
+  COUNT(*)
+----------
+         5
+
+SQL> select * from school s,college c where s.rollnoo=c.regno;
+select * from school s,college c where s.rollnoo=c.regno
+                                       *
+ERROR at line 1:
+ORA-00904: "S"."ROLLNOO": invalid identifier
+
+
+SQL> select * from school s,college c where s.rollno=c.regno;
+
+    ROLLNO NAME            REGNO NAME
+---------- ---------- ---------- ----------
+         3 avi                 3 taimur
+         5 shubham             5 shubham
+         6 raman               6 prabhat
+         7 sachin              7 avinash
+
+SQL> select * from school join college ;
+select * from school join college
+                                 *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> select * from school join college;
+select * from school join college
+                                *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> select * from school s join college c on s.rollno=c.regno ;
+
+    ROLLNO NAME            REGNO NAME
+---------- ---------- ---------- ----------
+         3 avi                 3 taimur
+         5 shubham             5 shubham
+         6 raman               6 prabhat
+         7 sachin              7 avinash
+
+SQL> select * from school s left join college c on s.rollno=c.regno ;
+
+    ROLLNO NAME            REGNO NAME
+---------- ---------- ---------- ----------
+         3 avi                 3 taimur
+         5 shubham             5 shubham
+         6 raman               6 prabhat
+         7 sachin              7 avinash
+         1 pk
+         2 ravi
+         4 ashish
+
+7 rows selected.
+
+SQL> select * from school s right    join college c on s.rollno=c.regno ;
+
+    ROLLNO NAME            REGNO NAME
+---------- ---------- ---------- ----------
+         3 avi                 3 taimur
+         5 shubham             5 shubham
+         6 raman               6 prabhat
+         7 sachin              7 avinash
+                               8 ankit
+
+SQL> select * from school s full join college c on s.rollno=c.regno ;
+
+    ROLLNO NAME            REGNO NAME
+---------- ---------- ---------- ----------
+         3 avi                 3 taimur
+         5 shubham             5 shubham
+         6 raman               6 prabhat
+         7 sachin              7 avinash
+         1 pk
+         2 ravi
+         4 ashish
+                               8 ankit
+
+8 rows selected.
+
+SQL> select * from school s full join college c on s.rollno=c.regno  where s.roll is null;
+select * from school s full join college c on s.rollno=c.regno  where s.roll is null
+                                                                      *
+ERROR at line 1:
+ORA-00904: "S"."ROLL": invalid identifier
+
+
+SQL> select * from school s full join college c on s.rollno=c.regno  where s.rollno is null;
+
+    ROLLNO NAME            REGNO NAME
+---------- ---------- ---------- ----------
+                               8 ankit
+
+SQL> select * from school s full join college c on s.rollno=c.regno  where c.regno is null;
+
+    ROLLNO NAME            REGNO NAME
+---------- ---------- ---------- ----------
+         1 pk
+         2 ravi
+         4 ashish
+
+SQL> select * from school s left join college c on s.rollno=c.regno  where c.regno is null;
+
+    ROLLNO NAME            REGNO NAME
+---------- ---------- ---------- ----------
+         1 pk
+         2 ravi
+         4 ashish
+
+SQL> select * from school s right join college c on s.rollno=c.regno  where c.regno is null;
+
+no rows selected
+
+SQL> select * from university;
+
+   UNIROLL NAME
+---------- ----------
+         1 prabhat
+         3 ankit
+         4 avanish
+         7 manish
+         8 chandan
+         9 ravikant
+
+6 rows selected.
+
+SQL> select * from school,college,university;
+
+    ROLLNO NAME            REGNO NAME          UNIROLL NAME
+---------- ---------- ---------- ---------- ---------- ----------
+         1 pk                  3 taimur              1 prabhat
+         2 ravi                3 taimur              1 prabhat
+         3 avi                 3 taimur              1 prabhat
+         4 ashish              3 taimur              1 prabhat
+         5 shubham             3 taimur              1 prabhat
+         6 raman               3 taimur              1 prabhat
+         7 sachin              3 taimur              1 prabhat
+         1 pk                  3 taimur              3 ankit
+         2 ravi                3 taimur              3 ankit
+         3 avi                 3 taimur              3 ankit
+         4 ashish              3 taimur              3 ankit
+         5 shubham             3 taimur              3 ankit
+         6 raman               3 taimur              3 ankit
+         7 sachin              3 taimur              3 ankit
+         1 pk                  3 taimur              4 avanish
+         2 ravi                3 taimur              4 avanish
+         3 avi                 3 taimur              4 avanish
+         4 ashish              3 taimur              4 avanish
+         5 shubham             3 taimur              4 avanish
+         6 raman               3 taimur              4 avanish
+         7 sachin              3 taimur              4 avanish
+         1 pk                  3 taimur              7 manish
+         2 ravi                3 taimur              7 manish
+         3 avi                 3 taimur              7 manish
+         4 ashish              3 taimur              7 manish
+         5 shubham             3 taimur              7 manish
+         6 raman               3 taimur              7 manish
+         7 sachin              3 taimur              7 manish
+         1 pk                  3 taimur              8 chandan
+         2 ravi                3 taimur              8 chandan
+         3 avi                 3 taimur              8 chandan
+         4 ashish              3 taimur              8 chandan
+         5 shubham             3 taimur              8 chandan
+         6 raman               3 taimur              8 chandan
+         7 sachin              3 taimur              8 chandan
+         1 pk                  3 taimur              9 ravikant
+         2 ravi                3 taimur              9 ravikant
+         3 avi                 3 taimur              9 ravikant
+         4 ashish              3 taimur              9 ravikant
+         5 shubham             3 taimur              9 ravikant
+         6 raman               3 taimur              9 ravikant
+         7 sachin              3 taimur              9 ravikant
+         1 pk                  5 shubham             1 prabhat
+         2 ravi                5 shubham             1 prabhat
+         3 avi                 5 shubham             1 prabhat
+         4 ashish              5 shubham             1 prabhat
+         5 shubham             5 shubham             1 prabhat
+         6 raman               5 shubham             1 prabhat
+         7 sachin              5 shubham             1 prabhat
+         1 pk                  5 shubham             3 ankit
+         2 ravi                5 shubham             3 ankit
+         3 avi                 5 shubham             3 ankit
+         4 ashish              5 shubham             3 ankit
+         5 shubham             5 shubham             3 ankit
+         6 raman               5 shubham             3 ankit
+         7 sachin              5 shubham             3 ankit
+         1 pk                  5 shubham             4 avanish
+         2 ravi                5 shubham             4 avanish
+         3 avi                 5 shubham             4 avanish
+         4 ashish              5 shubham             4 avanish
+         5 shubham             5 shubham             4 avanish
+         6 raman               5 shubham             4 avanish
+         7 sachin              5 shubham             4 avanish
+         1 pk                  5 shubham             7 manish
+         2 ravi                5 shubham             7 manish
+         3 avi                 5 shubham             7 manish
+         4 ashish              5 shubham             7 manish
+         5 shubham             5 shubham             7 manish
+         6 raman               5 shubham             7 manish
+         7 sachin              5 shubham             7 manish
+         1 pk                  5 shubham             8 chandan
+         2 ravi                5 shubham             8 chandan
+         3 avi                 5 shubham             8 chandan
+         4 ashish              5 shubham             8 chandan
+         5 shubham             5 shubham             8 chandan
+         6 raman               5 shubham             8 chandan
+         7 sachin              5 shubham             8 chandan
+         1 pk                  5 shubham             9 ravikant
+         2 ravi                5 shubham             9 ravikant
+         3 avi                 5 shubham             9 ravikant
+         4 ashish              5 shubham             9 ravikant
+         5 shubham             5 shubham             9 ravikant
+         6 raman               5 shubham             9 ravikant
+         7 sachin              5 shubham             9 ravikant
+         1 pk                  6 prabhat             1 prabhat
+         2 ravi                6 prabhat             1 prabhat
+         3 avi                 6 prabhat             1 prabhat
+         4 ashish              6 prabhat             1 prabhat
+         5 shubham             6 prabhat             1 prabhat
+         6 raman               6 prabhat             1 prabhat
+         7 sachin              6 prabhat             1 prabhat
+         1 pk                  6 prabhat             3 ankit
+         2 ravi                6 prabhat             3 ankit
+         3 avi                 6 prabhat             3 ankit
+         4 ashish              6 prabhat             3 ankit
+         5 shubham             6 prabhat             3 ankit
+         6 raman               6 prabhat             3 ankit
+         7 sachin              6 prabhat             3 ankit
+         1 pk                  6 prabhat             4 avanish
+         2 ravi                6 prabhat             4 avanish
+         3 avi                 6 prabhat             4 avanish
+         4 ashish              6 prabhat             4 avanish
+         5 shubham             6 prabhat             4 avanish
+         6 raman               6 prabhat             4 avanish
+         7 sachin              6 prabhat             4 avanish
+         1 pk                  6 prabhat             7 manish
+         2 ravi                6 prabhat             7 manish
+         3 avi                 6 prabhat             7 manish
+         4 ashish              6 prabhat             7 manish
+         5 shubham             6 prabhat             7 manish
+         6 raman               6 prabhat             7 manish
+         7 sachin              6 prabhat             7 manish
+         1 pk                  6 prabhat             8 chandan
+         2 ravi                6 prabhat             8 chandan
+         3 avi                 6 prabhat             8 chandan
+         4 ashish              6 prabhat             8 chandan
+         5 shubham             6 prabhat             8 chandan
+         6 raman               6 prabhat             8 chandan
+         7 sachin              6 prabhat             8 chandan
+         1 pk                  6 prabhat             9 ravikant
+         2 ravi                6 prabhat             9 ravikant
+         3 avi                 6 prabhat             9 ravikant
+         4 ashish              6 prabhat             9 ravikant
+         5 shubham             6 prabhat             9 ravikant
+         6 raman               6 prabhat             9 ravikant
+         7 sachin              6 prabhat             9 ravikant
+         1 pk                  8 ankit               1 prabhat
+         2 ravi                8 ankit               1 prabhat
+         3 avi                 8 ankit               1 prabhat
+         4 ashish              8 ankit               1 prabhat
+         5 shubham             8 ankit               1 prabhat
+         6 raman               8 ankit               1 prabhat
+         7 sachin              8 ankit               1 prabhat
+         1 pk                  8 ankit               3 ankit
+         2 ravi                8 ankit               3 ankit
+         3 avi                 8 ankit               3 ankit
+         4 ashish              8 ankit               3 ankit
+         5 shubham             8 ankit               3 ankit
+         6 raman               8 ankit               3 ankit
+         7 sachin              8 ankit               3 ankit
+         1 pk                  8 ankit               4 avanish
+         2 ravi                8 ankit               4 avanish
+         3 avi                 8 ankit               4 avanish
+         4 ashish              8 ankit               4 avanish
+         5 shubham             8 ankit               4 avanish
+         6 raman               8 ankit               4 avanish
+         7 sachin              8 ankit               4 avanish
+         1 pk                  8 ankit               7 manish
+         2 ravi                8 ankit               7 manish
+         3 avi                 8 ankit               7 manish
+         4 ashish              8 ankit               7 manish
+         5 shubham             8 ankit               7 manish
+         6 raman               8 ankit               7 manish
+         7 sachin              8 ankit               7 manish
+         1 pk                  8 ankit               8 chandan
+         2 ravi                8 ankit               8 chandan
+         3 avi                 8 ankit               8 chandan
+         4 ashish              8 ankit               8 chandan
+         5 shubham             8 ankit               8 chandan
+         6 raman               8 ankit               8 chandan
+         7 sachin              8 ankit               8 chandan
+         1 pk                  8 ankit               9 ravikant
+         2 ravi                8 ankit               9 ravikant
+         3 avi                 8 ankit               9 ravikant
+         4 ashish              8 ankit               9 ravikant
+         5 shubham             8 ankit               9 ravikant
+         6 raman               8 ankit               9 ravikant
+         7 sachin              8 ankit               9 ravikant
+         1 pk                  7 avinash             1 prabhat
+         2 ravi                7 avinash             1 prabhat
+         3 avi                 7 avinash             1 prabhat
+         4 ashish              7 avinash             1 prabhat
+         5 shubham             7 avinash             1 prabhat
+         6 raman               7 avinash             1 prabhat
+         7 sachin              7 avinash             1 prabhat
+         1 pk                  7 avinash             3 ankit
+         2 ravi                7 avinash             3 ankit
+         3 avi                 7 avinash             3 ankit
+         4 ashish              7 avinash             3 ankit
+         5 shubham             7 avinash             3 ankit
+         6 raman               7 avinash             3 ankit
+         7 sachin              7 avinash             3 ankit
+         1 pk                  7 avinash             4 avanish
+         2 ravi                7 avinash             4 avanish
+         3 avi                 7 avinash             4 avanish
+         4 ashish              7 avinash             4 avanish
+         5 shubham             7 avinash             4 avanish
+         6 raman               7 avinash             4 avanish
+         7 sachin              7 avinash             4 avanish
+         1 pk                  7 avinash             7 manish
+         2 ravi                7 avinash             7 manish
+         3 avi                 7 avinash             7 manish
+         4 ashish              7 avinash             7 manish
+         5 shubham             7 avinash             7 manish
+         6 raman               7 avinash             7 manish
+         7 sachin              7 avinash             7 manish
+         1 pk                  7 avinash             8 chandan
+         2 ravi                7 avinash             8 chandan
+         3 avi                 7 avinash             8 chandan
+         4 ashish              7 avinash             8 chandan
+         5 shubham             7 avinash             8 chandan
+         6 raman               7 avinash             8 chandan
+         7 sachin              7 avinash             8 chandan
+         1 pk                  7 avinash             9 ravikant
+         2 ravi                7 avinash             9 ravikant
+         3 avi                 7 avinash             9 ravikant
+         4 ashish              7 avinash             9 ravikant
+         5 shubham             7 avinash             9 ravikant
+         6 raman               7 avinash             9 ravikant
+         7 sachin              7 avinash             9 ravikant
+
+210 rows selected.
+
+SQL> select * from school s,college c,university u where rollno=regno and regno=uniroll ;
+
+    ROLLNO NAME            REGNO NAME          UNIROLL NAME
+---------- ---------- ---------- ---------- ---------- ----------
+         3 avi                 3 taimur              3 ankit
+         7 sachin              7 avinash             7 manish
+
+SQL> desc emp;
+ Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ EMPNO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     NOT NULL NUMBER(4)
+ ENAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              VARCHAR2(10)
+ JOB                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                VARCHAR2(9)
+ MGR                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                NUMBER(4)
+ HIREDATE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           DATE
+ SAL                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                NUMBER(7,2)
+ COMM                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               NUMBER(7,2)
+ DEPTNO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             NUMBER(2)
+
+SQL> set line 50;
+SQL> desc emp;
+ Name                    Null?    Type
+ ----------------------- -------- ----------------
+ EMPNO                   NOT NULL NUMBER(4)
+ ENAME                            VARCHAR2(10)
+ JOB                              VARCHAR2(9)
+ MGR                              NUMBER(4)
+ HIREDATE                         DATE
+ SAL                              NUMBER(7,2)
+ COMM                             NUMBER(7,2)
+ DEPTNO                           NUMBER(2)
+
+SQL> set line 5;
+SQL> desc emp;
+ Name              Null?    Type
+ ----------------- -------- ------------
+ EMPNO             NOT NULL NUMBER(4)
+ ENAME                      VARCHAR2(10)
+ JOB                        VARCHAR2(9)
+ MGR                        NUMBER(4)
+ HIREDATE                   DATE
+ SAL                        NUMBER(7,2)
+ COMM                       NUMBER(7,2)
+ DEPTNO                     NUMBER(2)
+
+SQL> set linesize 5;
+SQL> desc emp;
+ Name              Null?    Type
+ ----------------- -------- ------------
+ EMPNO             NOT NULL NUMBER(4)
+ ENAME                      VARCHAR2(10)
+ JOB                        VARCHAR2(9)
+ MGR                        NUMBER(4)
+ HIREDATE                   DATE
+ SAL                        NUMBER(7,2)
+ COMM                       NUMBER(7,2)
+ DEPTNO                     NUMBER(2)
+
+SQL> select * from emp;
+SP2-0253: data item 1 ("EMPNO") will not fit on line
+SQL> select * from emp;
+SP2-0253: data item 1 ("EMPNO") will not fit on line
+SQL> set line 100;
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> desc user_constraints;
+ Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ OWNER                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     NOT NULL VARCHAR2(30)
+ CONSTRAINT_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           NOT NULL VARCHAR2(30)
+ CONSTRAINT_TYPE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    VARCHAR2(1)
+ TABLE_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                NOT NULL VARCHAR2(30)
+ SEARCH_CONDITION                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   LONG
+ R_OWNER                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            VARCHAR2(30)
+ R_CONSTRAINT_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  VARCHAR2(30)
+ DELETE_RULE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        VARCHAR2(9)
+ STATUS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             VARCHAR2(8)
+ DEFERRABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         VARCHAR2(14)
+ DEFERRED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           VARCHAR2(9)
+ VALIDATED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          VARCHAR2(13)
+ GENERATED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          VARCHAR2(14)
+ BAD                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                VARCHAR2(3)
+ RELY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               VARCHAR2(4)
+ LAST_CHANGE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        DATE
+ INDEX_OWNER                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        VARCHAR2(30)
+ INDEX_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         VARCHAR2(30)
+ INVALID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            VARCHAR2(7)
+ VIEW_RELATED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       VARCHAR2(14)
+
+SQL> select * from user_constraints;
+
+OWNER                          CONSTRAINT_NAME                C TABLE_NAME                     SEARCH_CONDITION                                                                 R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS   DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN INDEX_OWNER                    INDEX_NAME                     INVALID VIEW_RELATED
+------------------------------ ------------------------------ - ------------------------------ -------------------------------------------------------------------------------- ------------------------------ ------------------------------ --------- -------- -------------- --------- ------------- -------------- --- ---- --------- ------------------------------ ------------------------------ ------- --------------
+SCOTT                          FK_DEPTNO                      R EMP                                                                                                     SCOTT                          PK_DEPT                        NO ACTION ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME       03-FEB-18
+SCOTT                          PK_DEPT                        P DEPT                                                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME            03-FEB-18 SCOTT                     PK_DEPT
+SCOTT                          PK_EMP                         P EMP                                                                                                                                                                     ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME            03-FEB-18 SCOTT                     PK_EMP
+
+SQL> set line 10;
+SQL> select * from user_constraints;
+
+OWNER
+----------
+CONSTRAINT
+----------
+C
+-
+TABLE_NAME
+----------
+SEARCH_CON
+----------
+R_OWNER
+----------
+R_CONSTRAI
+----------
+DELETE_RU
+---------
+STATUS
+--------
+DEFERRABLE
+----------
+DEFERRED
+---------
+VALIDATED
+----------
+GENERATED
+----------
+BAD RELY
+--- ----
+LAST_CHAN
+---------
+INDEX_OWNE
+----------
+INDEX_NAME
+----------
+INVALID
+-------
+VIEW_RELAT
+----------
+SCOTT
+FK_DEPTNO
+R
+EMP
+
+SCOTT
+PK_DEPT
+NO ACTION
+ENABLED
+NOT DEFERR
+ABLE
+IMMEDIATE
+VALIDATED
+USER NAME
+
+03-FEB-18
+
+
+
+
+
+SCOTT
+PK_DEPT
+P
+DEPT
+
+
+
+
+ENABLED
+NOT DEFERR
+ABLE
+IMMEDIATE
+VALIDATED
+USER NAME
+
+03-FEB-18
+SCOTT
+PK_DEPT
+
+
+
+SCOTT
+PK_EMP
+P
+EMP
+
+
+
+
+ENABLED
+NOT DEFERR
+ABLE
+IMMEDIATE
+VALIDATED
+USER NAME
+
+03-FEB-18
+SCOTT
+PK_EMP
+
+
+
+
+SQL> set linesize 10;
+SQL> select * from user_constraints;
+
+OWNER
+----------
+CONSTRAINT
+----------
+C
+-
+TABLE_NAME
+----------
+SEARCH_CON
+----------
+R_OWNER
+----------
+R_CONSTRAI
+----------
+DELETE_RU
+---------
+STATUS
+--------
+DEFERRABLE
+----------
+DEFERRED
+---------
+VALIDATED
+----------
+GENERATED
+----------
+BAD RELY
+--- ----
+LAST_CHAN
+---------
+INDEX_OWNE
+----------
+INDEX_NAME
+----------
+INVALID
+-------
+VIEW_RELAT
+----------
+SCOTT
+FK_DEPTNO
+R
+EMP
+
+SCOTT
+PK_DEPT
+NO ACTION
+ENABLED
+NOT DEFERR
+ABLE
+IMMEDIATE
+VALIDATED
+USER NAME
+
+03-FEB-18
+
+
+
+
+
+SCOTT
+PK_DEPT
+P
+DEPT
+
+
+
+
+ENABLED
+NOT DEFERR
+ABLE
+IMMEDIATE
+VALIDATED
+USER NAME
+
+03-FEB-18
+SCOTT
+PK_DEPT
+
+
+
+SCOTT
+PK_EMP
+P
+EMP
+
+
+
+
+ENABLED
+NOT DEFERR
+ABLE
+IMMEDIATE
+VALIDATED
+USER NAME
+
+03-FEB-18
+SCOTT
+PK_EMP
+
+
+
+
+SQL> set line 100;
+SQL> select * from user_constraints;
+
+OWNER                          CONSTRAINT_NAME                C TABLE_NAME
+------------------------------ ------------------------------ - ------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS   DEFERRABLE
+------------------------------ ------------------------------ --------- -------- --------------
+DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN INDEX_OWNER
+--------- ------------- -------------- --- ---- --------- ------------------------------
+INDEX_NAME                     INVALID VIEW_RELATED
+------------------------------ ------- --------------
+SCOTT                          FK_DEPTNO                      R EMP
+
+SCOTT                          PK_DEPT                        NO ACTION ENABLED  NOT DEFERRABLE
+IMMEDIATE VALIDATED     USER NAME               03-FEB-18
+
+
+SCOTT                          PK_DEPT                        P DEPT
+
+                                                                        ENABLED  NOT DEFERRABLE
+IMMEDIATE VALIDATED     USER NAME               03-FEB-18 SCOTT
+PK_DEPT
+
+SCOTT                          PK_EMP                         P EMP
+
+                                                                        ENABLED  NOT DEFERRABLE
+IMMEDIATE VALIDATED     USER NAME               03-FEB-18 SCOTT
+PK_EMP
+
+
+SQL> set linesize 100;
+SQL> select * from user_constraints;
+
+OWNER                          CONSTRAINT_NAME                C TABLE_NAME
+------------------------------ ------------------------------ - ------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS   DEFERRABLE
+------------------------------ ------------------------------ --------- -------- --------------
+DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN INDEX_OWNER
+--------- ------------- -------------- --- ---- --------- ------------------------------
+INDEX_NAME                     INVALID VIEW_RELATED
+------------------------------ ------- --------------
+SCOTT                          FK_DEPTNO                      R EMP
+
+SCOTT                          PK_DEPT                        NO ACTION ENABLED  NOT DEFERRABLE
+IMMEDIATE VALIDATED     USER NAME               03-FEB-18
+
+
+SCOTT                          PK_DEPT                        P DEPT
+
+                                                                        ENABLED  NOT DEFERRABLE
+IMMEDIATE VALIDATED     USER NAME               03-FEB-18 SCOTT
+PK_DEPT
+
+SCOTT                          PK_EMP                         P EMP
+
+                                                                        ENABLED  NOT DEFERRABLE
+IMMEDIATE VALIDATED     USER NAME               03-FEB-18 SCOTT
+PK_EMP
+
+
+SQL> set line 500;
+SQL> select * from user_constraints;
+
+OWNER                          CONSTRAINT_NAME                C TABLE_NAME                     SEARCH_CONDITION                                                                 R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS   DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN INDEX_OWNER                    INDEX_NAME                     INVALID VIEW_RELATED
+------------------------------ ------------------------------ - ------------------------------ -------------------------------------------------------------------------------- ------------------------------ ------------------------------ --------- -------- -------------- --------- ------------- -------------- --- ---- --------- ------------------------------ ------------------------------ ------- --------------
+SCOTT                          FK_DEPTNO                      R EMP                                                                                                     SCOTT                          PK_DEPT                        NO ACTION ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME       03-FEB-18
+SCOTT                          PK_DEPT                        P DEPT                                                                                                                                                                    ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME            03-FEB-18 SCOTT                     PK_DEPT
+SCOTT                          PK_EMP                         P EMP                                                                                                                                                                     ENABLED  NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME            03-FEB-18 SCOTT                     PK_EMP
+
+SQL> select constraint_name,constraint_type from user_constraints where table_name='TEST';
+
+no rows selected
+
+SQL> select constraint_name,constraint_type from user_constraints where table_name='emp';
+
+no rows selected
+
+SQL> select constraint_name,constraint_type from user_constraints where table_name='EMP';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+PK_EMP                         P
+FK_DEPTNO                      R
+
+SQL> desc user_constraints;
+ Name                                                                                                                                                                                                                                                                                  Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ OWNER                                                                                                                                                                                                                                                                                 NOT NULL VARCHAR2(30)
+ CONSTRAINT_NAME                                                                                                                                                                                                                                                                       NOT NULL VARCHAR2(30)
+ CONSTRAINT_TYPE                                                                                                                                                                                                                                                                                VARCHAR2(1)
+ TABLE_NAME                                                                                                                                                                                                                                                                            NOT NULL VARCHAR2(30)
+ SEARCH_CONDITION                                                                                                                                                                                                                                                                               LONG
+ R_OWNER                                                                                                                                                                                                                                                                                        VARCHAR2(30)
+ R_CONSTRAINT_NAME                                                                                                                                                                                                                                                                              VARCHAR2(30)
+ DELETE_RULE                                                                                                                                                                                                                                                                                    VARCHAR2(9)
+ STATUS                                                                                                                                                                                                                                                                                         VARCHAR2(8)
+ DEFERRABLE                                                                                                                                                                                                                                                                                     VARCHAR2(14)
+ DEFERRED                                                                                                                                                                                                                                                                                       VARCHAR2(9)
+ VALIDATED                                                                                                                                                                                                                                                                                      VARCHAR2(13)
+ GENERATED                                                                                                                                                                                                                                                                                      VARCHAR2(14)
+ BAD                                                                                                                                                                                                                                                                                            VARCHAR2(3)
+ RELY                                                                                                                                                                                                                                                                                           VARCHAR2(4)
+ LAST_CHANGE                                                                                                                                                                                                                                                                                    DATE
+ INDEX_OWNER                                                                                                                                                                                                                                                                                    VARCHAR2(30)
+ INDEX_NAME                                                                                                                                                                                                                                                                                     VARCHAR2(30)
+ INVALID                                                                                                                                                                                                                                                                                        VARCHAR2(7)
+ VIEW_RELATED                                                                                                                                                                                                                                                                                   VARCHAR2(14)
+
+SQL> desc user_cons_columns;
+ Name                                                                                                                                                                                                                                                                                  Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ OWNER                                                                                                                                                                                                                                                                                 NOT NULL VARCHAR2(30)
+ CONSTRAINT_NAME                                                                                                                                                                                                                                                                       NOT NULL VARCHAR2(30)
+ TABLE_NAME                                                                                                                                                                                                                                                                            NOT NULL VARCHAR2(30)
+ COLUMN_NAME                                                                                                                                                                                                                                                                                    VARCHAR2(4000)
+ POSITION                                                                                                                                                                                                                                                                                       NUMBER
+
+SQL> select constraint_name,column_name from user_cons_columns where table_name="EMP";
+select constraint_name,column_name from user_cons_columns where table_name="EMP"
+                                                                           *
+ERROR at line 1:
+ORA-00904: "EMP": invalid identifier
+
+
+SQL> select constraint_name,column_name from user_cons_columns where table_name='EMP';
+
+CONSTRAINT_NAME
+------------------------------
+COLUMN_NAME
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+FK_DEPTNO
+DEPTNO
+
+PK_EMP
+EMPNO
+
+
+SQL> set pagesize 100;
+SQL> select constraint_name,column_name from user_cons_columns where table_name='EMP';
+
+CONSTRAINT_NAME
+------------------------------
+COLUMN_NAME
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+FK_DEPTNO
+DEPTNO
+
+PK_EMP
+EMPNO
+
+
+SQL> set line 100;
+SQL> select constraint_name,column_name from user_cons_columns where table_name='EMP';
+
+CONSTRAINT_NAME
+------------------------------
+COLUMN_NAME
+----------------------------------------------------------------------------------------------------
+FK_DEPTNO
+DEPTNO
+
+PK_EMP
+EMPNO
+
+
+SQL> set linesize 100;
+SQL> select constraint_name,column_name from user_cons_columns where table_name='EMP';
+
+CONSTRAINT_NAME
+------------------------------
+COLUMN_NAME
+----------------------------------------------------------------------------------------------------
+FK_DEPTNO
+DEPTNO
+
+PK_EMP
+EMPNO

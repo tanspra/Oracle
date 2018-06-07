@@ -1,0 +1,119 @@
+
+12:44:08 SQL> select systimestamp from dual;
+
+SYSTIMESTAMP
+---------------------------------------------------------------------------
+12-MAY-18 12.44.54.948000 +05:30
+
+12:44:54 SQL> drop table test;
+
+Table dropped.
+
+12:46:18 SQL> create table test(sno number(10),name varchar2(10));
+
+Table created.
+
+12:46:48 SQL> insert into test values(&sno,'&name');
+Enter value for sno: 1
+Enter value for name: prashant
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(1,'prashant')
+
+1 row created.
+
+12:47:20 SQL> /
+Enter value for sno: 2
+Enter value for name: ravikant
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(2,'ravikant')
+
+1 row created.
+
+12:47:25 SQL> /
+Enter value for sno: 3
+Enter value for name: prabhat
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(3,'prabhat')
+
+1 row created.
+
+12:47:31 SQL> /
+Enter value for sno: 4
+Enter value for name: shubham
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(4,'shubham')
+
+1 row created.
+
+12:47:36 SQL> select * from test;
+
+       SNO NAME
+---------- ----------
+         1 prashant
+         2 ravikant
+         3 prabhat
+         4 shubham
+
+12:47:43 SQL> commit;
+
+Commit complete.
+
+12:47:52 SQL> delete * from test;
+delete * from test
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+12:48:09 SQL> delete from test;
+
+4 rows deleted.
+
+12:48:14 SQL> select * from test;
+
+no rows selected
+
+12:48:23 SQL> select * from test as of timestamp to_timestamp('12:47:36','HH:MI:SS');
+select * from test as of timestamp to_timestamp('12:47:36','HH:MI:SS')
+              *
+ERROR at line 1:
+ORA-01466: unable to read data - table definition has changed
+
+
+12:49:29 SQL> select * from test as of timestamp to_timestamp('12-MAY-18 12:47:36','DD-MON-YY HH:MI:SS');
+
+no rows selected
+
+12:50:31 SQL> select * from test as of timestamp to_timestamp('12-MAY-18 12:48:09','DD-MON-YY HH:MI:SS');
+
+       SNO NAME
+---------- ----------
+         1 prashant
+         2 ravikant
+         3 prabhat
+         4 shubham
+
+12:50:50 SQL> select * from test as of timestamp to_timestamp('12-MAY-18 12:48:00','DD-MON-YY HH:MI:SS');
+
+       SNO NAME
+---------- ----------
+         1 prashant
+         2 ravikant
+         3 prabhat
+         4 shubham
+
+12:50:59 SQL> select * from test as of timestamp to_timestamp('12-MAY-18 12:45:00','DD-MON-YY HH:MI:SS');
+select * from test as of timestamp to_timestamp('12-MAY-18 12:45:00','DD-MON-YY HH:MI:SS')
+              *
+ERROR at line 1:
+ORA-01466: unable to read data - table definition has changed
+
+
+12:51:05 SQL> select * from test as of timestamp to_timestamp('12-MAY-18 12:48:00','DD-MON-YY HH:MI:SS');
+
+       SNO NAME
+---------- ----------
+         1 prashant
+         2 ravikant
+         3 prabhat
+         4 shubham

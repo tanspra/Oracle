@@ -1,0 +1,702 @@
+
+SQL> create or replace view as select * from xyz;
+create or replace view as select * from xyz
+                       *
+ERROR at line 1:
+ORA-00999: invalid view name
+
+
+SQL> create or replace view tableNotCreated  as select * from xyz;
+create or replace view tableNotCreated  as select * from xyz
+                                                         *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> create or replace force view tableNotCreated as select * from xyz;
+
+Warning: View created with compilation errors.
+
+SQL> select * from tableNotCreated;
+select * from tableNotCreated
+              *
+ERROR at line 1:
+ORA-04063: view "SCOTT.TABLENOTCREATED" has errors
+
+
+SQL> create table xyz as select ename,sal from emp;
+
+Table created.
+
+SQL> select * from tableNotCreated;
+
+ENAME             SAL
+---------- ----------
+SMITH            4800
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+pk               3000
+sunny
+Ravikant
+
+17 rows selected.
+
+SQL> select * from xyz;
+
+ENAME             SAL
+---------- ----------
+SMITH            4800
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+pk               3000
+sunny
+Ravikant
+
+17 rows selected.
+
+SQL> create or replace view readOnlyView as select * from dept;
+
+View created.
+
+SQL> create or replace view readOnlyView as select * from dept with read only;
+
+View created.
+
+SQL> create or replace view withCheckOption as select * from student with check option;
+
+View created.
+
+SQL> select * from WithCHECkoption;
+
+NAME             ROLL ADDRESS                               PIN      MARKS
+---------- ---------- ------------------------------ ---------- ----------
+shubham           345 Patna                              800001         98
+prabhat           331 Punjab                             152107         87
+avinash           701 MP                                 548978         89
+ravikant          336 Gaya                               789654         95
+aashish             0 patna                              800001         98
+aashutosh         702 patna                              879654         90
+sushant           321 patna                              432123         78
+prashant          332 Bihar                              848207         89
+
+8 rows selected.
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+         3 Ravikant                                                                30
+         1 s_mith                                                                  10
+         4 p*r*shant                                                               40
+         5 oracle_12c                                                              20
+
+20 rows selected.
+
+
+SQL> select * from emp where ename like 's_%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+         2 sunny                                                                   40
+         1 s_mith                                                                  10
+
+SQL> select * from emp where ename like 's/_%';
+
+no rows selected
+
+SQL> select * from emp where ename like 's_%' escape '_';
+
+no rows selected
+
+SQL> select * from emp where ename like 's>_%' escape '>';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+         1 s_mith                                                                  10
+
+SQL> select * from emp where ename like 'p/*r/*%' escape '/';
+select * from emp where ename like 'p/*r/*%' escape '/'
+                                   *
+ERROR at line 1:
+ORA-01424: missing or illegal character following the escape character
+
+
+SQL> select * from emp where ename like 'p>*r>*%' escape '>';
+select * from emp where ename like 'p>*r>*%' escape '>'
+                                   *
+ERROR at line 1:
+ORA-01424: missing or illegal character following the escape character
+
+
+SQL> select * from emp where ename like 'p' escape '>';
+
+no rows selected
+
+SQL> select * from emp where ename like 'p';
+
+no rows selected
+
+SQL> select * from emp where ename like 'p%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      8800 pk         ceo                                  3000
+         4 p*r*shant                                                               40
+
+SQL> select * from emp where ename like 'p*%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+         4 p*r*shant                                                               40
+
+SQL> select * from emp where regexp_like(ename,'p*');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+         3 Ravikant                                                                30
+         1 s_mith                                                                  10
+         4 p*r*shant                                                               40
+         5 oracle_12c                                                              20
+
+20 rows selected.
+
+SQL> select * from emp where regexp_like(ename,'p');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      8800 pk         ceo                                  3000
+         4 p*r*shant                                                               40
+
+SQL> select * from emp where regexp_like(ename,'i');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+         3 Ravikant                                                                30
+         1 s_mith                                                                  10
+
+SQL> select * from emp where regexp_like(ename,'i','i');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+         3 Ravikant                                                                30
+         1 s_mith                                                                  10
+
+6 rows selected.
+
+SQL> select * from emp where regexp_like(ename,'^i','i');
+
+no rows selected
+
+SQL> select * from emp where regexp_like(ename,'^s','i');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+         2 sunny                                                                   40
+         1 s_mith                                                                  10
+
+SQL> select * from emp where regexp_like(ename,'^s|^b','i');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+         2 sunny                                                                   40
+         1 s_mith                                                                  10
+
+SQL> select * from emp where regexp_like(ename,'s$|n$','i');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+
+SQL> select * from emp where regexp_like(ename,'s_','i');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+         1 s_mith                                                                  10
+
+SQL> select * from emp where regexp_like(ename,'p*','i');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+         3 Ravikant                                                                30
+         1 s_mith                                                                  10
+         4 p*r*shant                                                               40
+         5 oracle_12c                                                              20
+
+20 rows selected.
+
+SQL> select * from emp where regexp_like(ename,'p/*','i');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      8800 pk         ceo                                  3000
+         4 p*r*shant                                                               40
+
+SQL> select * from emp where regexp_like(ename,'^.[mla]','i');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+         3 Ravikant                                                                30
+
+8 rows selected.
+
+SQL> select * from emp where regexp_like(ename,'^.[m,l,a]','i');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+         3 Ravikant                                                                30
+
+8 rows selected.
+
+SQL> select * from emp where regexp_like(ename,'^.[^m,l,a]','i');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+         1 s_mith                                                                  10
+         4 p*r*shant                                                               40
+         5 oracle_12c                                                              20
+
+12 rows selected.
+
+SQL> select * from mobile;
+
+PHNO
+--------------------
+123.456.789.1234
+321.214.562
+789.456.123.89
+987.125.45
+456.789.125.12345
+
+SQL> select * from mobile where regexp_like(phno,'\d{3}.\d{3}.\d{3}$');
+
+PHNO
+--------------------
+321.214.562
+
+SQL> select * from mobile where regexp_like(phno,'.');
+
+PHNO
+--------------------
+123.456.789.1234
+321.214.562
+789.456.123.89
+987.125.45
+456.789.125.12345
+
+SQL> select * from mobile where regexp_like(phno,'\d{3}.\d{3}.\d{3}');
+
+PHNO
+--------------------
+123.456.789.1234
+321.214.562
+789.456.123.89
+456.789.125.12345
+
+SQL> select * from pattern;
+
+NAME
+--------------------
+aaaabcc
+aabbbbc
+aacc
+a
+b
+c
+
+6 rows selected.
+
+SQL> select * from pattern where regexp_like(name,'');
+
+no rows selected
+
+SQL> select * from pattern where regexp_like(name,'aa+b*c+');
+
+NAME
+--------------------
+aaaabcc
+aabbbbc
+aacc
+
+SQL> select * from pattern where regexp_like(name,'[a]{2,}[b]{0,}[c]{1,}');
+
+NAME
+--------------------
+aaaabcc
+aabbbbc
+aacc
+
+SQL> select * from emp where regexp_like(ename,'\*');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+         4 p*r*shant                                                               40
+
+SQL> select * from emp where regexp_like(ename,'*');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+         3 Ravikant                                                                30
+         1 s_mith                                                                  10
+         4 p*r*shant                                                               40
+         5 oracle_12c                                                              20
+
+20 rows selected.
+
+SQL> select * from emp where regexp_like(ename,'.');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+         3 Ravikant                                                                30
+         1 s_mith                                                                  10
+         4 p*r*shant                                                               40
+         5 oracle_12c                                                              20
+
+20 rows selected.
+
+SQL> select * from emp where regexp_like(ename,'/.');
+
+no rows selected
+
+SQL> select * from emp where regexp_like(ename,'/*');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+         3 Ravikant                                                                30
+         1 s_mith                                                                  10
+         4 p*r*shant                                                               40
+         5 oracle_12c                                                              20
+
+20 rows selected.
+
+SQL> select * from emp where regexp_like(ename,'\*');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+         4 p*r*shant                                                               40
+
+SQL> select * from emp where regexp_like(ename,'^p.');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      8800 pk         ceo                                  3000
+         4 p*r*shant                                                               40
+
+SQL> select * from emp where regexp_like(ename,'^p.');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      8800 pk         ceo                                  3000
+         4 p*r*shant                                                               40
+
+SQL> select * from mobile;
+
+PHNO
+--------------------
+123.456.789.1234
+321.214.562
+789.456.123.89
+987.125.45
+456.789.125.12345
+
+SQL> insert into mobile values(123@456@789@1234);
+insert into mobile values(123@456@789@1234)
+                             *
+ERROR at line 1:
+ORA-00917: missing comma
+
+
+SQL> insert into mobile values('123@456@789@1234');
+
+1 row created.
+
+SQL> select * from mobile where regexp_like(phno,'[[:digit:]].[[:digit:]].[[:digit:]]$');
+
+PHNO
+--------------------
+321.214.562
+456.789.125.12345
+
+SQL> select * from mobile;
+
+PHNO
+--------------------
+123.456.789.1234
+321.214.562
+789.456.123.89
+987.125.45
+456.789.125.12345
+123@456@789@1234
+
+6 rows selected.
+
+SQL> select * from mobile where regexp_like(phno,'[[:digit:]].[[:digit:]].[[:digit:]]');
+
+PHNO
+--------------------
+123.456.789.1234
+321.214.562
+789.456.123.89
+987.125.45
+456.789.125.12345
+123@456@789@1234
+
+6 rows selected.
+
+SQL> insert into mobile values('123v123v123');
+
+1 row created.
+
+SQL> select * from mobile where regexp_like(phno,'\d{3}.\d{3}.\d{3}');
+
+PHNO
+--------------------
+123.456.789.1234
+321.214.562
+789.456.123.89
+456.789.125.12345
+123@456@789@1234
+123v123v123
+
+6 rows selected.
+
+SQL> select * from mobile where regexp_like(phno,'\d{3}.\d{3}.\d{3}$');
+
+PHNO
+--------------------
+321.214.562
+123v123v123
+
+SQL> select * from mobile where regexp_like(phno,'\d{3}\.\d{3}\.\d{3}$');
+
+PHNO
+--------------------
+321.214.562
+
+SQL> insert into mobile values('123@456@789@1234');
+
+1 row created.
+
+SQL> select * from mobile where regexp_like(phno,'[[:digit:]].[[:digit:]].[[:digit:]]$');
+
+PHNO
+--------------------
+321.214.562
+456.789.125.12345
+
+SQL> select * from mobile;
+
+PHNO
+--------------------
+123.456.789.1234
+321.214.562
+789.456.123.89
+987.125.45
+456.789.125.12345
+123@456@789@1234
+
+6 rows selected.
+
+SQL> select * from mobile where regexp_like(phno,'[[:digit:]].[[:digit:]].[[:digit:]]');
+
+PHNO
+--------------------
+123.456.789.1234
+321.214.562
+789.456.123.89
+987.125.45
+456.789.125.12345
+123@456@789@1234
+
+6 rows selected.
+
+SQL> insert into mobile values('123v123v123');
+
+1 row created.
+
+SQL> select * from mobile where regexp_like(phno,'\d{3}.\d{3}.\d{3}');
+
+PHNO
+--------------------
+123.456.789.1234
+321.214.562
+789.456.123.89
+456.789.125.12345
+123@456@789@1234
+123v123v123
+
+6 rows selected.
+
+SQL> select * from mobile where regexp_like(phno,'\d{3}.\d{3}.\d{3}$');
+
+PHNO
+--------------------
+321.214.562
+123v123v123
+
+SQL> select * from mobile where regexp_like(phno,'\d{3}\.\d{3}\.\d{3}$');
+
+PHNO
+--------------------
+321.214.562
+
+SQL> select * from mail where regexp_instr(email,'@')!=0 and regexp_instr(email,' ')=0;
+
+EMAIL
+--------------------
+tanspra@gmail.com
+ravi@gmail.com
+pk.pk.@gmail.com
+suraj@gmailcom

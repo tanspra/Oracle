@@ -1,0 +1,1835 @@
+
+SQL> create view empName as select ename from emp;
+
+View created.
+
+SQL> select * from empName;
+
+ENAME
+----------
+SMITH
+ALLEN
+WARD
+JONES
+MARTIN
+BLAKE
+CLARK
+SCOTT
+KING
+TURNER
+ADAMS
+JAMES
+FORD
+MILLER
+pk
+sunny
+
+16 rows selected.
+
+SQL> create view empJob is select job from emp;
+create view empJob is select job from emp
+                   *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> show error;
+No errors.
+SQL> create view empJob is select job from emp where ename='SMITH';
+create view empJob is select job from emp where ename='SMITH'
+                   *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> select * from user_views;
+
+VIEW_NAME                      TEXT_LENGTH TEXT                                                                     TYPE_TEXT_LENGTH TYPE_TEXT
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              OID_TEXT_LENGTH OID_TEXT
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       VIEW_TYPE_OWNER                VIEW_TYPE                      SUPERVIEW_NAME
+------------------------------ ----------- -------------------------------------------------------------------------------- ---------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------- --------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ------------------------------ ------
+------------------------ ------------------------------
+GETDATA                                 84 select "EMPNO","ENAME","JOB","MGR","HIREDATE","SAL","COMM","DEPTNO","DNAME" from
+EMPNAME                                 21 select ename from emp
+
+SQL> create view empJob as select job from emp;
+
+View created.
+
+SQL> select * from empJob;
+
+JOB
+---------
+CLERK
+SALESMAN
+SALESMAN
+MANAGER
+SALESMAN
+MANAGER
+MANAGER
+ANALYST
+PRESIDENT
+SALESMAN
+CLERK
+CLERK
+ANALYST
+CLERK
+ceo
+
+
+16 rows selected.
+
+SQL> select * from empJob where ename='SMITH';
+select * from empJob where ename='SMITH'
+                           *
+ERROR at line 1:
+ORA-00904: "ENAME": invalid identifier
+
+
+SQL> select * from empJob where job='clerk';
+
+no rows selected
+
+SQL> select * from empJob where job='CLERK';
+
+JOB
+---------
+CLERK
+CLERK
+CLERK
+CLERK
+
+SQL> insert into empJob(empno,ename,deptno)values(3,'Ravikant',40);
+insert into empJob(empno,ename,deptno)values(3,'Ravikant',40)
+                               *
+ERROR at line 1:
+ORA-00904: "DEPTNO": invalid identifier
+
+
+SQL> insert into empJob(empno,ename,dept)values(3,'Ravikant',40);
+insert into empJob(empno,ename,dept)values(3,'Ravikant',40)
+                               *
+ERROR at line 1:
+ORA-00904: "DEPT": invalid identifier
+
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+
+16 rows selected.
+
+SQL> insert into empJob(empno,ename,deptno)values(3,'Ravikant',40);
+insert into empJob(empno,ename,deptno)values(3,'Ravikant',40)
+                               *
+ERROR at line 1:
+ORA-00904: "DEPTNO": invalid identifier
+
+
+SQL> insert into empJob(empno,ename)values(3,'Ravikant');
+insert into empJob(empno,ename)values(3,'Ravikant')
+                         *
+ERROR at line 1:
+ORA-00904: "ENAME": invalid identifier
+
+
+SQL> creat view empData as select * from emp;
+SP2-0734: unknown command beginning "creat view..." - rest of line ignored.
+SQL> create view empData as select * from emp;
+
+View created.
+
+SQL> select * from empData
+  2  ;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+
+16 rows selected.
+
+SQL> select * from empdata;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+
+16 rows selected.
+
+SQL> insert into empdata(empno,ename,deptno)values(3,'Ravikant',30);
+
+1 row created.
+
+SQL> insert into empJob(job) values('cpt');
+insert into empJob(job) values('cpt')
+*
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."EMP"."EMPNO")
+
+
+SQL> insert into empJob(empno,job) values(11,'cpt');
+insert into empJob(empno,job) values(11,'cpt')
+                   *
+ERROR at line 1:
+ORA-00904: "EMPNO": invalid identifier
+
+
+
+16:54:12 SQL> select * from user_tab_cols where table_name='STUDENT';
+
+TABLE_NAME                     COLUMN_NAME
+------------------------------ ------------------------------
+DATA_TYPE
+----------------------------------------------------------------------------------------------------
+DAT DATA_TYPE_OWNER                DATA_LENGTH DATA_PRECISION DATA_SCALE N  COLUMN_ID DEFAULT_LENGTH
+--- ------------------------------ ----------- -------------- ---------- - ---------- --------------
+DATA_DEFAULT                                                                     NUM_DISTINCT
+-------------------------------------------------------------------------------- ------------
+LOW_VALUE
+----------------------------------------------------------------
+HIGH_VALUE                                                          DENSITY  NUM_NULLS NUM_BUCKETS
+---------------------------------------------------------------- ---------- ---------- -----------
+LAST_ANAL SAMPLE_SIZE CHARACTER_SET_NAME                           CHAR_COL_DECL_LENGTH GLO USE
+--------- ----------- -------------------------------------------- -------------------- --- ---
+AVG_COL_LEN CHAR_LENGTH C V80 DAT HID VIR SEGMENT_COLUMN_ID INTERNAL_COLUMN_ID HISTOGRAM
+----------- ----------- - --- --- --- --- ----------------- ------------------ ---------------
+QUALIFIED_COL_NAME
+----------------------------------------------------------------------------------------------------
+STUDENT                        NAME
+VARCHAR2
+                                            10                           Y          1
+                                                                                            8
+61617368697368
+73757368616E74                                                         .125          0           1
+03-MAR-18           8 CHAR_CS                                                        10 YES NO
+          9          10 B NO  YES NO  NO                  1                  1 NONE
+NAME
+
+STUDENT                        ROLL
+NUMBER
+                                            22              3          0 Y          2
+                                                                                            7
+80
+C20803                                                                .0625          0           7
+03-MAR-18           8                                                                   YES NO
+          4           0   NO  YES NO  NO                  2                  2 FREQUENCY
+ROLL
+
+STUDENT                        ADDRESS
+VARCHAR2
+                                            30                           Y          3
+                                                                                            6
+4269686172
+7061746E61                                                       .166666667          0           1
+03-MAR-18           8 CHAR_CS                                                        30 YES NO
+          6          30 B NO  YES NO  NO                  3                  3 NONE
+ADDRESS
+
+STUDENT                        PIN
+NUMBER
+                                            22              6          0 Y          4
+                                                                                            7
+C3101608
+C3586137                                                         .142857143          0           1
+03-MAR-18           8                                                                   YES NO
+          5           0   NO  YES NO  NO                  4                  4 NONE
+PIN
+
+STUDENT                        MARKS
+NUMBER
+                                            22              5          2 Y          5
+                                                                                            6
+C14F
+C163                                                                  .0625          0           6
+03-MAR-18           8                                                                   YES NO
+          3           0   NO  YES NO  NO                  5                  5 FREQUENCY
+MARKS
+
+
+16:54:26 SQL> exec dbms_mviews.refresf('mv1');
+USER_STORED_SETTINGS
+Parameter settings for objects owned by the user
+
+USER_PLSQL_OBJECT_SETTINGS
+Compiler settings of stored objects owned by the user
+
+USER_ARGUMENTS
+Arguments in object accessible to the user
+
+USER_RESUMABLE
+Resumable session information for current user
+
+USER_ROLE_PRIVS
+Roles granted to current user
+
+USER_SYS_PRIVS
+System privileges granted to current user
+
+USER_SEQUENCES
+Description of the user's own SEQUENCEs
+
+USER_SYNONYMS
+The user's private synonyms
+
+USER_TABLES
+Description of the user's own relational tables
+
+USER_OBJECT_TABLES
+Description of the user's own object tables
+
+USER_ALL_TABLES
+Description of all object and relational tables owned by the user's
+
+USER_TAB_COLS
+Columns of user's tables, views and clusters
+
+USER_TAB_COLUMNS
+Columns of user's tables, views and clusters
+
+USER_NESTED_TABLE_COLS
+Columns of nested tables
+
+USER_TAB_COL_STATISTICS
+Columns of user's tables, views and clusters
+
+USER_TAB_HISTOGRAMS
+Histograms on columns of user's tables
+
+USER_TAB_COMMENTS
+Comments on the tables and views owned by the user
+
+USER_TAB_PRIVS
+Grants on objects for which the user is the owner, grantor or grantee
+
+USER_TAB_PRIVS_MADE
+All grants on objects owned by the user
+
+USER_TAB_PRIVS_RECD
+Grants on objects for which the user is the grantee
+
+USER_USERS
+Information about the current user
+
+USER_PROXIES
+Description of connections the user is allowed to proxy
+
+USER_VIEWS
+Description of the user's own views
+
+USER_CONSTRAINTS
+Constraint definitions on user's own tables
+
+USER_LOG_GROUPS
+Log group definitions on user's own tables
+
+USER_CLUSTER_HASH_EXPRESSIONS
+Hash functions for the user's hash clusters
+
+USER_CONS_COLUMNS
+Information about accessible columns in constraint definitions
+
+USER_LOG_GROUP_COLUMNS
+Information about columns in log group definitions
+
+USER_UPDATABLE_COLUMNS
+Description of updatable columns
+
+USER_LOBS
+Description of the user's own LOBs contained in the user's own tables
+
+USER_LIBRARIES
+Description of the user's own libraries
+
+USER_REFS
+Description of the user's own REF columns contained in the user's own tables
+
+USER_NESTED_TABLES
+Description of nested tables contained in the user's own tables
+
+USER_VARRAYS
+Description of varrays contained in the user's own tables
+
+USER_OBJ_COLATTRS
+Description of object columns and attributes contained in tables owned by the user
+
+USER_CONS_OBJ_COLUMNS
+List of types an object column or attribute is constrained to in the tables owned by the user
+
+USER_OPERATORS
+All user operators
+
+USER_OPBINDINGS
+All binding functions or methods on operators defined by the user
+
+USER_OPANCILLARY
+All ancillary opertors defined by user
+
+USER_OPARGUMENTS
+All operator arguments of operators defined by user
+
+USER_OPERATOR_COMMENTS
+Comments for user-defined operators
+
+USER_INDEXTYPES
+All user indextypes
+
+USER_INDEXTYPE_COMMENTS
+Comments for user-defined indextypes
+
+USER_INDEXTYPE_ARRAYTYPES
+All array types specified by the indextype
+
+USER_INDEXTYPE_OPERATORS
+All user indextype operators
+
+USER_UNUSED_COL_TABS
+User tables with unused columns
+
+USER_PARTIAL_DROP_TABS
+User tables with unused columns
+
+USER_ASSOCIATIONS
+All assocations defined by the user
+
+USER_USTATS
+All statistics on tables or indexes owned by the user
+
+USER_TAB_MODIFICATIONS
+Information regarding modifications to tables
+
+USER_SECONDARY_OBJECTS
+All secondary objects for domain indexes
+
+USER_SOURCE_TABLES
+Source tables available for Change Data Capture
+
+USER_PUBLISHED_COLUMNS
+Source columns available for Change Data Capture
+
+USER_SUBSCRIPTIONS
+Change Data Capture subscriptions
+
+USER_SUBSCRIBED_TABLES
+Change Data Capture subscribed tables
+
+USER_SUBSCRIBED_COLUMNS
+Change Data Capture subscribed columns
+
+USER_OBJ_AUDIT_OPTS
+Auditing options for user's own tables and views with atleast one option set
+
+USER_AUDIT_TRAIL
+Audit trail entries relevant to the user
+
+USER_AUDIT_SESSION
+All audit trail records concerning CONNECT and DISCONNECT
+
+USER_AUDIT_STATEMENT
+Audit trail records concerning  grant, revoke, audit, noaudit and alter system
+
+USER_AUDIT_OBJECT
+Audit trail records for statements concerning objects, specifically: table, cluster, view, index, sequence,  [public] database link, [public] synonym, procedure, trigger, rollback segment, tablespace, role, user
+
+USER_PART_TABLES
+
+
+USER_PART_INDEXES
+
+
+USER_PART_KEY_COLUMNS
+
+
+USER_TAB_PARTITIONS
+
+
+USER_IND_PARTITIONS
+
+
+USER_TAB_SUBPARTITIONS
+
+
+USER_IND_SUBPARTITIONS
+
+
+USER_PART_COL_STATISTICS
+
+
+USER_PART_HISTOGRAMS
+
+
+USER_SUBPART_COL_STATISTICS
+
+
+USER_SUBPART_HISTOGRAMS
+
+
+USER_SUBPART_KEY_COLUMNS
+
+
+USER_PART_LOBS
+
+
+USER_LOB_PARTITIONS
+
+
+USER_LOB_SUBPARTITIONS
+
+
+USER_SUBPARTITION_TEMPLATES
+
+
+USER_LOB_TEMPLATES
+
+
+USER_TAB_STATISTICS
+Optimizer statistics of the user's own tables
+
+USER_IND_STATISTICS
+Optimizer statistics for user's own indexes
+
+USER_TYPES
+Description of the user's own types
+
+USER_COLL_TYPES
+Description of the user's own named collection types
+
+USER_TYPE_ATTRS
+Description of attributes of the user's own types
+
+USER_TYPE_METHODS
+Description of methods of the user's own types
+
+USER_METHOD_PARAMS
+Description of method parameters of the user's own types
+
+USER_METHOD_RESULTS
+Description of method results of the user's own types
+
+USER_SQLJ_TYPES
+Description of the user's own types
+
+USER_TYPE_VERSIONS
+Description of each version of the user's types
+
+USER_PENDING_CONV_TABLES
+All user's tables which are not upgraded to the latest type version
+
+USER_SQLJ_TYPE_ATTRS
+Description of attributes of the user's own types
+
+USER_SQLJ_TYPE_METHODS
+Description of methods of the user's own types
+
+USER_DIMENSIONS
+Description of the dimension objects accessible to the DBA
+
+USER_DIM_LEVELS
+Description of dimension levels visible to DBA
+
+USER_DIM_LEVEL_KEY
+Representations of columns of a dimension level
+
+USER_DIM_ATTRIBUTES
+Representation of the relationship between a dimension level and
+ a functionally dependent column
+
+USER_DIM_HIERARCHIES
+Representation of a dimension hierarchy
+
+USER_DIM_CHILD_OF
+Representaion of a 1:n hierarchical relationship between a pair of levels in
+ a dimension
+
+USER_DIM_JOIN_KEY
+Representation of a join between two dimension tables.
+
+USER_SUMMARIES
+Description of the summaries created by the user
+
+USER_MVIEW_ANALYSIS
+Description of the materialized views created by the user
+
+USER_MVIEW_AGGREGATES
+Description of the materialized view aggregates created by the user
+
+USER_MVIEW_DETAIL_RELATIONS
+Description of the materialized view detail tables of the materialized
+views created by the user
+
+USER_MVIEW_KEYS
+Description of the columns that appear in the GROUP BY
+list of a materialized view  created by the user
+
+USER_MVIEW_JOINS
+Description of a join between two columns in the
+WHERE clause of a materialized view created by the user
+
+USER_MVIEW_COMMENTS
+Comments on materialized views owned by the user
+
+USER_REWRITE_EQUIVALENCES
+Description of all rewrite equivalence owned by the user
+
+USER_ADVISOR_TASKS
+
+
+USER_ADVISOR_TEMPLATES
+
+
+USER_ADVISOR_LOG
+
+
+USER_ADVISOR_PARAMETERS
+
+
+USER_ADVISOR_OBJECTS
+
+
+USER_ADVISOR_FINDINGS
+
+
+USER_ADVISOR_RECOMMENDATIONS
+
+
+USER_ADVISOR_ACTIONS
+
+
+USER_ADVISOR_RATIONALE
+
+
+USER_ADVISOR_DIRECTIVES
+
+
+USER_ADVISOR_JOURNAL
+
+
+USER_ADVISOR_SQLA_WK_MAP
+
+
+USER_ADVISOR_SQLA_WK_STMTS
+
+
+USER_ADVISOR_SQLA_REC_SUM
+
+
+USER_ADVISOR_SQLW_SUM
+
+
+USER_ADVISOR_SQLW_TEMPLATES
+
+
+USER_ADVISOR_SQLW_STMTS
+
+
+USER_ADVISOR_SQLW_TABLES
+
+
+USER_ADVISOR_SQLW_TABVOL
+
+
+USER_ADVISOR_SQLW_COLVOL
+
+
+USER_ADVISOR_SQLW_PARAMETERS
+
+
+USER_ADVISOR_SQLW_JOURNAL
+
+
+USER_TUNE_MVIEW
+tune_mview catalog view owned by the user
+
+USER_EXTERNAL_TABLES
+Description of the user's own external tables
+
+USER_EXTERNAL_LOCATIONS
+Description of the user's external tables locations
+
+USER_RECYCLEBIN
+User view of his recyclebin
+
+USER_ERRORS
+Current errors on stored objects owned by the user
+
+USER_SOURCE
+Source of stored objects accessible to the user
+
+USER_TRIGGERS
+Triggers owned by the user
+
+USER_INTERNAL_TRIGGERS
+Description of the internal triggers on the user's own tables
+
+USER_TRIGGER_COLS
+Column usage in user's triggers
+
+USER_DEPENDENCIES
+Dependencies to and from a users objects
+
+USER_OBJECT_SIZE
+Sizes, in bytes, of various pl/sql objects
+
+USER_JOBS
+All jobs owned by this user
+
+USER_WARNING_SETTINGS
+Warning Parameter settings for objects owned by the user
+
+USER_SEGMENTS
+Storage allocated for all database segments
+
+USER_EXTENTS
+Extents comprising segments owned by the user
+
+USER_FREE_SPACE
+Free extents in tablespaces accessible to the user
+
+USER_TABLESPACES
+Description of accessible tablespaces
+
+USER_TS
+
+
+USER_TS_QUOTAS
+Tablespace quotas for the user
+
+USER_TAB_STATS_HISTORY
+History of table statistics modifications
+
+USER_TRANSFORMATIONS
+
+
+USER_ATTRIBUTE_TRANSFORMATIONS
+
+
+USER_RULE_SETS
+Rule sets owned by the user
+
+USER_RULESETS
+Rulesets owned by the user: maintained for backward compatibility
+
+USER_RULES
+Rules owned by the user
+
+USER_RULE_SET_RULES
+Rules in user rule sets
+
+USER_EVALUATION_CONTEXTS
+rule evaluation contexts owned by user
+
+USER_EVALUATION_CONTEXT_TABLES
+tables in user rule evaluation contexts
+
+USER_EVALUATION_CONTEXT_VARS
+variables in user rule evaluation contexts
+
+USER_QUEUE_TABLES
+All queue tables created by the user
+
+USER_QUEUES
+All queues owned by the user
+
+USER_QUEUE_PUBLISHERS
+
+
+USER_QUEUE_SCHEDULES
+
+
+USER_AQ_AGENT_PRIVS
+
+
+USER_QUEUE_SUBSCRIBERS
+queue subscribers under a user'schema
+
+USER_RSRC_CONSUMER_GROUP_PRIVS
+Switch privileges for consumer groups for the user
+
+USER_RSRC_MANAGER_SYSTEM_PRIVS
+system privileges for the resource manager for the user
+
+USER_SNAPSHOTS
+Snapshots the user can look at
+
+USER_SNAPSHOT_LOGS
+All snapshot logs owned by the user
+
+USER_REFRESH
+All the refresh groups
+
+USER_REFRESH_CHILDREN
+All the objects in refresh groups, where the user owns the refresh group
+
+USER_REGISTERED_SNAPSHOTS
+Remote snapshots of local tables currently using logs owned by the user
+
+USER_MVIEWS
+All materialized views in the database
+
+USER_MVIEW_REFRESH_TIMES
+Materialized views and their last refresh times for each master table that the user can look at
+
+USER_MVIEW_LOGS
+All materialized view logs owned by the user
+
+USER_BASE_TABLE_MVIEWS
+All materialized views with log(s) owned by the user in the database
+
+USER_REGISTERED_MVIEWS
+Remote materialized views of local tables currently using logs owned by the user
+
+USER_SCHEDULER_PROGRAMS
+Scheduler programs owned by the current user
+
+USER_SCHEDULER_JOBS
+All scheduler jobs in the database
+
+USER_SCHEDULER_PROGRAM_ARGS
+All arguments of all scheduler programs in the database
+
+USER_SCHEDULER_JOB_ARGS
+All arguments with set values of all scheduler jobs in the database
+
+USER_SCHEDULER_JOB_LOG
+Logged information for all scheduler jobs
+
+USER_SCHEDULER_JOB_RUN_DETAILS
+The details of a job run
+
+USER_SCHEDULER_SCHEDULES
+Schedules belonging to the current user
+
+USER_SCHEDULER_CHAINS
+All scheduler chains owned by the current user
+
+USER_SCHEDULER_CHAIN_RULES
+All rules from scheduler chains owned by the current user
+
+USER_SCHEDULER_CHAIN_STEPS
+All steps of scheduler chains owned by the current user
+
+USER_SCHEDULER_RUNNING_CHAINS
+All steps of chains being run by jobs owned by the current user
+
+USER_POLICIES
+All row level security policies for synonyms, tables, or views owned by the user
+
+USER_POLICY_GROUPS
+All policy groups defined for any synonym, table, or view
+
+USER_POLICY_CONTEXTS
+All policy driving context defined for synonyms, tables, or views in current schema
+
+USER_SEC_RELEVANT_COLS
+Security Relevant columns of VPD policies for tables or views owned by the user
+
+USER_OUTLINES
+Stored outlines owned by the user
+
+USER_OUTLINE_HINTS
+Hints stored in outlines owned by the user
+
+USER_AUDIT_POLICIES
+All fine grained auditing policies for objects in user schema
+
+USER_AUDIT_POLICY_COLUMNS
+Users fine grained auditing policy columns in the database
+
+USER_DATAPUMP_JOBS
+Datapump jobs for current user
+
+USER_REGISTRY
+
+
+USER_AWS
+Analytic Workspaces owned by the user
+
+USER_AW_PS
+Pagespaces in Analytic Workspaces owned by the user
+
+USER_REPGROUP_PRIVILEGES
+Information about users who are registered for object group privileges
+
+USER_REPGROUP
+Replication information about the current user
+
+USER_REPCAT
+
+
+USER_REPSITES
+N-way replication information about the current user
+
+USER_REPSCHEMA
+N-way replication information about the current user
+
+USER_REPOBJECT
+Replication information about the current user's objects
+
+USER_REPCOLUMN
+Replicated columns for the current user's table in ascending order
+
+USER_REPPROP
+Propagation information about the current user's objects
+
+USER_REPKEY_COLUMNS
+Primary columns for a table using column-level replication
+
+USER_REPGENOBJECTS
+Objects generated for the current user to support replication
+
+USER_REPGENERATED
+Objects generated for the current user to support replication
+
+USER_REPCATLOG
+Information about the current user's asynchronous administration requests
+
+USER_REPDDL
+Arguments that do not fit in a single repcat log record
+
+USER_REPPRIORITY_GROUP
+Information about user's priority groups
+
+USER_REPPRIORITY
+Values and their corresponding priorities in user's priority groups
+
+USER_REPCOLUMN_GROUP
+All column groups of user's replicated tables
+
+USER_REPGROUPED_COLUMN
+Columns in the all column groups of user's replicated tables
+
+USER_REPCONFLICT
+
+
+USER_REPRESOLUTION_METHOD
+All conflict resolution methods accessible to the user
+
+USER_REPRESOLUTION
+Description of all conflict resolutions for user's replicated tables
+
+USER_REPRESOLUTION_STATISTICS
+Statistics for conflict resolutions for user's replicated tables
+
+USER_REPRESOL_STATS_CONTROL
+Information about statistics collection for conflict resolutions for user's replicated tables
+
+USER_REPPARAMETER_COLUMN
+All columns used for resolving conflicts in user's replicated tables
+
+USER_REPAUDIT_ATTRIBUTE
+Information about attributes automatically maintained for replication
+
+USER_REPAUDIT_COLUMN
+Information about columns in all shadow tables for user's replicated tables
+
+USER_REPFLAVORS
+Flavors current user created for replicated object groups
+
+USER_REPFLAVOR_OBJECTS
+Replicated user objects in flavors
+
+USER_REPFLAVOR_COLUMNS
+Replicated columns from current user's tables in flavors
+
+USER_FILE_GROUPS
+Details about file groups
+
+USER_FILE_GROUP_VERSIONS
+Details about file group versions
+
+USER_FILE_GROUP_EXPORT_INFO
+Details about export information of file group versions
+
+USER_FILE_GROUP_FILES
+Details about file group files
+
+USER_FILE_GROUP_TABLESPACES
+Details about the transportable tablespaces in the file group repository
+
+USER_FILE_GROUP_TABLES
+Details about the tables in the file group repository
+
+USER_CHANGE_NOTIFICATION_REGS
+change notification registrations for current user
+
+USER_SQLTUNE_BINDS
+
+
+USER_SQLTUNE_STATISTICS
+
+
+USER_SQLTUNE_PLANS
+
+
+USER_SQLTUNE_RATIONALE_PLAN
+
+
+USER_SQLSET
+
+
+USER_SQLSET_STATEMENTS
+
+
+USER_SQLSET_REFERENCES
+
+
+USER_SQLSET_BINDS
+
+
+USER_SQLSET_PLANS
+
+
+USER_EPG_DAD_AUTHORIZATION
+DADs authorized to use the user's privileges
+
+USER_XML_TABLES
+Description of the user's own XMLType tables
+
+USER_XML_TAB_COLS
+Description of the user's own XMLType tables
+
+USER_XML_VIEWS
+Description of the user's own XMLType views
+
+USER_XML_VIEW_COLS
+Description of the user's own XMLType views
+
+USER_XML_SCHEMAS
+Description of XML Schemas registered by the user
+
+USER_XML_INDEXES
+Description of the user's own XMLType indexes
+
+USER_XML_COLUMN_NAMES
+
+
+USER_HISTOGRAMS
+Synonym for USER_TAB_HISTOGRAMS
+
+USER_SNAPSHOT_REFRESH_TIMES
+Synonym for USER_MVIEW_REFRESH_TIMES
+
+USER_SQLSET_DEFINITIONS
+Synonym for USER_SQLSET
+
+
+270 rows selected.
+
+USER_TABLESPACES
+Description of accessible tablespaces
+
+USER_TS
+
+
+USER_TS_QUOTAS
+Tablespace quotas for the user
+
+USER_TAB_STATS_HISTORY
+History of table statistics modifications
+
+USER_TRANSFORMATIONS
+
+
+USER_ATTRIBUTE_TRANSFORMATIONS
+
+
+USER_RULE_SETS
+Rule sets owned by the user
+
+USER_RULESETS
+Rulesets owned by the user: maintained for backward compatibility
+
+USER_RULES
+Rules owned by the user
+
+USER_RULE_SET_RULES
+Rules in user rule sets
+
+USER_EVALUATION_CONTEXTS
+rule evaluation contexts owned by user
+
+USER_EVALUATION_CONTEXT_TABLES
+tables in user rule evaluation contexts
+
+USER_EVALUATION_CONTEXT_VARS
+variables in user rule evaluation contexts
+
+USER_QUEUE_TABLES
+All queue tables created by the user
+
+USER_QUEUES
+All queues owned by the user
+
+USER_QUEUE_PUBLISHERS
+
+
+USER_QUEUE_SCHEDULES
+
+
+USER_AQ_AGENT_PRIVS
+
+
+USER_QUEUE_SUBSCRIBERS
+queue subscribers under a user'schema
+
+USER_RSRC_CONSUMER_GROUP_PRIVS
+Switch privileges for consumer groups for the user
+
+USER_RSRC_MANAGER_SYSTEM_PRIVS
+system privileges for the resource manager for the user
+
+USER_SNAPSHOTS
+Snapshots the user can look at
+
+USER_SNAPSHOT_LOGS
+All snapshot logs owned by the user
+
+USER_REFRESH
+All the refresh groups
+
+USER_REFRESH_CHILDREN
+All the objects in refresh groups, where the user owns the refresh group
+
+USER_REGISTERED_SNAPSHOTS
+Remote snapshots of local tables currently using logs owned by the user
+
+USER_MVIEWS
+All materialized views in the database
+
+USER_MVIEW_REFRESH_TIMES
+
+TABLE_NAME
+------------------------------
+COMMENTS
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Materialized views and their last refresh times for each master table that the user can look at
+
+USER_MVIEW_LOGS
+All materialized view logs owned by the user
+
+USER_BASE_TABLE_MVIEWS
+All materialized views with log(s) owned by the user in the database
+
+USER_REGISTERED_MVIEWS
+Remote materialized views of local tables currently using logs owned by the user
+
+USER_SCHEDULER_PROGRAMS
+Scheduler programs owned by the current user
+
+USER_SCHEDULER_JOBS
+All scheduler jobs in the database
+
+USER_SCHEDULER_PROGRAM_ARGS
+All arguments of all scheduler programs in the database
+
+USER_SCHEDULER_JOB_ARGS
+All arguments with set values of all scheduler jobs in the database
+
+USER_SCHEDULER_JOB_LOG
+Logged information for all scheduler jobs
+
+USER_SCHEDULER_JOB_RUN_DETAILS
+The details of a job run
+
+USER_SCHEDULER_SCHEDULES
+Schedules belonging to the current user
+
+USER_SCHEDULER_CHAINS
+All scheduler chains owned by the current user
+
+USER_SCHEDULER_CHAIN_RULES
+All rules from scheduler chains owned by the current user
+
+USER_SCHEDULER_CHAIN_STEPS
+All steps of scheduler chains owned by the current user
+
+USER_SCHEDULER_RUNNING_CHAINS
+All steps of chains being run by jobs owned by the current user
+
+USER_POLICIES
+All row level security policies for synonyms, tables, or views owned by the user
+
+USER_POLICY_GROUPS
+All policy groups defined for any synonym, table, or view
+
+USER_POLICY_CONTEXTS
+All policy driving context defined for synonyms, tables, or views in current schema
+
+USER_SEC_RELEVANT_COLS
+Security Relevant columns of VPD policies for tables or views owned by the user
+
+USER_OUTLINES
+Stored outlines owned by the user
+
+USER_OUTLINE_HINTS
+Hints stored in outlines owned by the user
+
+USER_AUDIT_POLICIES
+All fine grained auditing policies for objects in user schema
+
+USER_AUDIT_POLICY_COLUMNS
+Users fine grained auditing policy columns in the database
+
+USER_DATAPUMP_JOBS
+Datapump jobs for current user
+
+USER_REGISTRY
+
+
+USER_AWS
+Analytic Workspaces owned by the user
+
+USER_AW_PS
+Pagespaces in Analytic Workspaces owned by the user
+
+USER_REPGROUP_PRIVILEGES
+Information about users who are registered for object group privileges
+
+USER_REPGROUP
+Replication information about the current user
+
+USER_REPCAT
+
+
+USER_REPSITES
+N-way replication information about the current user
+
+USER_REPSCHEMA
+N-way replication information about the current user
+
+
+TABLE_NAME
+------------------------------
+COMMENTS
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+USER_REPOBJECT
+Replication information about the current user's objects
+
+USER_REPCOLUMN
+Replicated columns for the current user's table in ascending order
+
+USER_REPPROP
+Propagation information about the current user's objects
+
+USER_REPKEY_COLUMNS
+Primary columns for a table using column-level replication
+
+USER_REPGENOBJECTS
+Objects generated for the current user to support replication
+
+USER_REPGENERATED
+Objects generated for the current user to support replication
+
+USER_REPCATLOG
+Information about the current user's asynchronous administration requests
+
+USER_REPDDL
+Arguments that do not fit in a single repcat log record
+
+USER_REPPRIORITY_GROUP
+Information about user's priority groups
+
+USER_REPPRIORITY
+Values and their corresponding priorities in user's priority groups
+
+USER_REPCOLUMN_GROUP
+All column groups of user's replicated tables
+
+USER_REPGROUPED_COLUMN
+Columns in the all column groups of user's replicated tables
+
+USER_REPCONFLICT
+
+
+USER_REPRESOLUTION_METHOD
+All conflict resolution methods accessible to the user
+
+USER_REPRESOLUTION
+Description of all conflict resolutions for user's replicated tables
+
+USER_REPRESOLUTION_STATISTICS
+Statistics for conflict resolutions for user's replicated tables
+
+USER_REPRESOL_STATS_CONTROL
+Information about statistics collection for conflict resolutions for user's replicated tables
+
+USER_REPPARAMETER_COLUMN
+All columns used for resolving conflicts in user's replicated tables
+
+USER_REPAUDIT_ATTRIBUTE
+Information about attributes automatically maintained for replication
+
+USER_REPAUDIT_COLUMN
+Information about columns in all shadow tables for user's replicated tables
+
+USER_REPFLAVORS
+Flavors current user created for replicated object groups
+
+USER_REPFLAVOR_OBJECTS
+Replicated user objects in flavors
+
+USER_REPFLAVOR_COLUMNS
+Replicated columns from current user's tables in flavors
+
+USER_FILE_GROUPS
+Details about file groups
+
+USER_FILE_GROUP_VERSIONS
+Details about file group versions
+
+USER_FILE_GROUP_EXPORT_INFO
+Details about export information of file group versions
+
+USER_FILE_GROUP_FILES
+Details about file group files
+
+USER_FILE_GROUP_TABLESPACES
+Details about the transportable tablespaces in the file group repository
+
+USER_FILE_GROUP_TABLES
+Details about the tables in the file group repository
+
+USER_CHANGE_NOTIFICATION_REGS
+change notification registrations for current user
+
+USER_SQLTUNE_BINDS
+
+
+USER_SQLTUNE_STATISTICS
+
+
+TABLE_NAME
+------------------------------
+COMMENTS
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+USER_SQLTUNE_PLANS
+
+
+USER_SQLTUNE_RATIONALE_PLAN
+
+
+USER_SQLSET
+
+
+USER_SQLSET_STATEMENTS
+
+
+USER_SQLSET_REFERENCES
+
+
+USER_SQLSET_BINDS
+
+
+USER_SQLSET_PLANS
+
+
+USER_EPG_DAD_AUTHORIZATION
+DADs authorized to use the user's privileges
+
+USER_XML_TABLES
+Description of the user's own XMLType tables
+
+USER_XML_TAB_COLS
+Description of the user's own XMLType tables
+
+USER_XML_VIEWS
+Description of the user's own XMLType views
+
+USER_XML_VIEW_COLS
+Description of the user's own XMLType views
+
+USER_XML_SCHEMAS
+Description of XML Schemas registered by the user
+
+USER_XML_INDEXES
+Description of the user's own XMLType indexes
+
+USER_XML_COLUMN_NAMES
+
+
+USER_HISTOGRAMS
+Synonym for USER_TAB_HISTOGRAMS
+
+USER_SNAPSHOT_REFRESH_TIMES
+Synonym for USER_MVIEW_REFRESH_TIMES
+
+USER_SQLSET_DEFINITIONS
+Synonym for USER_SQLSET
+
+
+270 rows selected.
+
+SQL> select * from dict where table_name like '%COL%';
+
+TABLE_NAME
+------------------------------
+COMMENTS
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+USER_CLU_COLUMNS
+Mapping of table columns to cluster columns
+
+USER_COL_COMMENTS
+Comments on columns of user's tables and views
+
+ALL_COL_COMMENTS
+Comments on columns of accessible tables and views
+
+USER_COL_PRIVS
+Grants on columns for which the user is the owner, grantor or grantee
+
+ALL_COL_PRIVS
+Grants on columns for which the user is the grantor, grantee, owner,
+ or an enabled role or PUBLIC is the grantee
+
+USER_COL_PRIVS_MADE
+All grants on columns of objects owned by the user
+
+ALL_COL_PRIVS_MADE
+Grants on columns for which the user is owner or grantor
+
+USER_COL_PRIVS_RECD
+Grants on columns for which the user is the grantee
+
+ALL_COL_PRIVS_RECD
+Grants on columns for which the user, PUBLIC or enabled role is the grantee
+
+ALL_ENCRYPTED_COLUMNS
+Encryption information on all accessible columns
+
+USER_ENCRYPTED_COLUMNS
+Encryption information on columns of tables owned by the user
+
+USER_IND_COLUMNS
+COLUMNs comprising user's INDEXes and INDEXes on user's TABLES
+
+ALL_IND_COLUMNS
+COLUMNs comprising INDEXes on accessible TABLES
+
+USER_JOIN_IND_COLUMNS
+Join Index columns comprising the join conditions
+
+ALL_JOIN_IND_COLUMNS
+Join Index columns comprising the join conditions
+
+USER_TAB_COLS
+Columns of user's tables, views and clusters
+
+ALL_TAB_COLS
+Columns of user's tables, views and clusters
+
+USER_TAB_COLUMNS
+Columns of user's tables, views and clusters
+
+ALL_TAB_COLUMNS
+Columns of user's tables, views and clusters
+
+USER_NESTED_TABLE_COLS
+Columns of nested tables
+
+ALL_NESTED_TABLE_COLS
+Columns of nested tables
+
+USER_TAB_COL_STATISTICS
+Columns of user's tables, views and clusters
+
+ALL_TAB_COL_STATISTICS
+Columns of user's tables, views and clusters
+
+USER_CONS_COLUMNS
+Information about accessible columns in constraint definitions
+
+ALL_CONS_COLUMNS
+Information about accessible columns in constraint definitions
+
+USER_LOG_GROUP_COLUMNS
+Information about columns in log group definitions
+
+ALL_LOG_GROUP_COLUMNS
+Information about columns in log group definitions
+
+USER_UPDATABLE_COLUMNS
+Description of updatable columns
+
+ALL_UPDATABLE_COLUMNS
+Description of all updatable columns
+
+USER_OBJ_COLATTRS
+Description of object columns and attributes contained in tables owned by the user
+
+ALL_OBJ_COLATTRS
+Description of object columns and attributes contained in the tables accessible to the user
+
+USER_CONS_OBJ_COLUMNS
+
+TABLE_NAME
+------------------------------
+COMMENTS
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+List of types an object column or attribute is constrained to in the tables owned by the user
+
+ALL_CONS_OBJ_COLUMNS
+List of types an object column or attribute is constrained to in the tables accessible to the user
+
+USER_UNUSED_COL_TABS
+User tables with unused columns
+
+ALL_UNUSED_COL_TABS
+All tables with unused columns accessible to the user
+
+ALL_PUBLISHED_COLUMNS
+Source columns available for Change Data Capture
+
+USER_PUBLISHED_COLUMNS
+Source columns available for Change Data Capture
+
+ALL_SUBSCRIBED_COLUMNS
+Change Data Capture subscribed columns
+
+USER_SUBSCRIBED_COLUMNS
+Change Data Capture subscribed columns
+
+USER_PART_KEY_COLUMNS
+
+
+ALL_PART_KEY_COLUMNS
+
+
+USER_PART_COL_STATISTICS
+
+
+ALL_PART_COL_STATISTICS
+
+
+USER_SUBPART_COL_STATISTICS
+
+
+ALL_SUBPART_COL_STATISTICS
+
+
+USER_SUBPART_KEY_COLUMNS
+
+
+ALL_SUBPART_KEY_COLUMNS
+
+
+USER_COLL_TYPES
+Description of the user's own named collection types
+
+ALL_COLL_TYPES
+Description of named collection types accessible to the user
+
+USER_ADVISOR_SQLW_COLVOL
+
+
+USER_TRIGGER_COLS
+Column usage in user's triggers
+
+ALL_TRIGGER_COLS
+Column usage in user's triggers or in triggers on user's tables
+
+ALL_SEC_RELEVANT_COLS
+Security Relevant columns of all VPD policies for tables or views which the user has access
+
+USER_SEC_RELEVANT_COLS
+Security Relevant columns of VPD policies for tables or views owned by the user
+
+ALL_AUDIT_POLICY_COLUMNS
+All fine grained auditing policy columns in the database
+
+USER_AUDIT_POLICY_COLUMNS
+Users fine grained auditing policy columns in the database
+
+ALL_REPCOLUMN
+Replicated top-level columns (table) sorted alphabetically in ascending order
+
+USER_REPCOLUMN
+Replicated columns for the current user's table in ascending order
+
+USER_REPKEY_COLUMNS
+Primary columns for a table using column-level replication
+
+ALL_REPKEY_COLUMNS
+Primary columns for a table using column-level replication
+
+ALL_REPCOLUMN_GROUP
+All column groups of replicated tables which are accessible to the user
+
+USER_REPCOLUMN_GROUP
+All column groups of user's replicated tables
+
+ALL_REPGROUPED_COLUMN
+Columns in the all column groups of replicated tables which are accessible to the user
+
+
+TABLE_NAME
+------------------------------
+COMMENTS
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+USER_REPGROUPED_COLUMN
+Columns in the all column groups of user's replicated tables
+
+ALL_REPPARAMETER_COLUMN
+All columns used for resolving conflicts in replicated tables which are accessible to the user
+
+USER_REPPARAMETER_COLUMN
+All columns used for resolving conflicts in user's replicated tables
+
+ALL_REPAUDIT_COLUMN
+Information about columns in all shadow tables for replicated tables which are accessible to the user
+
+USER_REPAUDIT_COLUMN
+Information about columns in all shadow tables for user's replicated tables
+
+ALL_REPFLAVOR_COLUMNS
+Replicated columns in flavors
+
+USER_REPFLAVOR_COLUMNS
+Replicated columns from current user's tables in flavors
+
+ALL_APPLY_KEY_COLUMNS
+Alternative key columns for a STREAMS table visible to the current user
+
+ALL_APPLY_CONFLICT_COLUMNS
+Details about conflict resolution on tables visible to the current user
+
+ALL_APPLY_TABLE_COLUMNS
+Details about the columns of destination table object visible to the user
+
+ALL_XML_TAB_COLS
+Description of the all XMLType tables that the user has privileges on
+
+USER_XML_TAB_COLS
+Description of the user's own XMLType tables
+
+ALL_XML_VIEW_COLS
+Description of the all XMLType views that the user has privileges on
+
+USER_XML_VIEW_COLS
+Description of the user's own XMLType views
+
+USER_XML_COLUMN_NAMES
+
+
+COLUMN_PRIVILEGES
+Grants on columns for which the user is the grantor, grantee, owner, or
+ an enabled role or PUBLIC is the grantee
+
+DICT_COLUMNS
+Description of columns in data dictionary tables and views
+
+COLS
+Synonym for USER_TAB_COLUMNS
+
+
+81 rows selected.
+
+SQL> desc user_tab_columns;
+ Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ TABLE_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                NOT NULL VARCHAR2(30)
+ COLUMN_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               NOT NULL VARCHAR2(30)
+ DATA_TYPE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          VARCHAR2(106)
+ DATA_TYPE_MOD                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      VARCHAR2(3)
+ DATA_TYPE_OWNER                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    VARCHAR2(30)
+ DATA_LENGTH                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               NOT NULL NUMBER
+ DATA_PRECISION                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     NUMBER
+ DATA_SCALE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         NUMBER
+ NULLABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           VARCHAR2(1)
+ COLUMN_ID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          NUMBER
+ DEFAULT_LENGTH                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     NUMBER
+ DATA_DEFAULT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       LONG
+ NUM_DISTINCT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       NUMBER
+ LOW_VALUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          RAW(32)
+ HIGH_VALUE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         RAW(32)
+ DENSITY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            NUMBER
+ NUM_NULLS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          NUMBER
+ NUM_BUCKETS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        NUMBER
+ LAST_ANALYZED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      DATE
+ SAMPLE_SIZE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        NUMBER
+ CHARACTER_SET_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 VARCHAR2(44)
+ CHAR_COL_DECL_LENGTH                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               NUMBER
+ GLOBAL_STATS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       VARCHAR2(3)
+ USER_STATS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         VARCHAR2(3)
+ AVG_COL_LEN                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        NUMBER
+ CHAR_LENGTH                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        NUMBER
+ CHAR_USED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          VARCHAR2(1)
+ V80_FMT_IMAGE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      VARCHAR2(3)
+ DATA_UPGRADED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      VARCHAR2(3)
+ HISTOGRAM                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          VARCHAR2(15)
+
+SQL> select * from dict where table_name like '%cons%';
+
+no rows selected
+
+SQL> select * from dict where table_name like '%CONS%';
+
+TABLE_NAME
+------------------------------
+COMMENTS
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+USER_CONSTRAINTS
+Constraint definitions on user's own tables
+
+ALL_CONSTRAINTS
+Constraint definitions on accessible tables
+
+USER_CONS_COLUMNS
+Information about accessible columns in constraint definitions
+
+ALL_CONS_COLUMNS
+Information about accessible columns in constraint definitions
+
+USER_CONS_OBJ_COLUMNS
+List of types an object column or attribute is constrained to in the tables owned by the user
+
+ALL_CONS_OBJ_COLUMNS
+List of types an object column or attribute is constrained to in the tables accessible to the user
+
+USER_RSRC_CONSUMER_GROUP_PRIVS
+Switch privileges for consumer groups for the user
+
+ALL_STREAMS_MESSAGE_CONSUMERS
+Streams messaging consumers visible to the current user
+
+V$RSRC_CONSUMER_GROUP_CPU_MTH
+Synonym for V_$RSRC_CONSUMER_GROUP_CPU_MTH
+
+V$RSRC_CONSUMER_GROUP
+Synonym for V_$RSRC_CONSUMER_GROUP
+
+V$RSRC_CONS_GROUP_HISTORY
+Synonym for V_$RSRC_CONS_GROUP_HISTORY
+
+GV$RSRC_CONSUMER_GROUP_CPU_MTH
+Synonym for GV_$RSRC_CONSUME_GROUP_CPU_MTH
+
+GV$RSRC_CONSUMER_GROUP
+Synonym for GV_$RSRC_CONSUMER_GROUP
+
+GV$RSRC_CONS_GROUP_HISTORY
+Synonym for GV_$RSRC_CONS_GROUP_HISTORY
+
+
+14 rows selected.
+
+SQL> select * from dict where table_name like '%USER%CONS%';
+
+TABLE_NAME
+------------------------------
+COMMENTS
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+USER_CONSTRAINTS
+Constraint definitions on user's own tables
+
+USER_CONS_COLUMNS
+Information about accessible columns in constraint definitions
+
+USER_CONS_OBJ_COLUMNS
+List of types an object column or attribute is constrained to in the tables owned by the user
+
+USER_RSRC_CONSUMER_GROUP_PRIVS
+Switch privileges for consumer groups for the user
+
+
+SQL> desc user_constraints;
+ Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ OWNER                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     NOT NULL VARCHAR2(30)
+ CONSTRAINT_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           NOT NULL VARCHAR2(30)
+ CONSTRAINT_TYPE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    VARCHAR2(1)
+ TABLE_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                NOT NULL VARCHAR2(30)
+ SEARCH_CONDITION                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   LONG
+ R_OWNER                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            VARCHAR2(30)
+ R_CONSTRAINT_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  VARCHAR2(30)
+ DELETE_RULE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        VARCHAR2(9)
+ STATUS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             VARCHAR2(8)
+ DEFERRABLE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         VARCHAR2(14)
+ DEFERRED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           VARCHAR2(9)
+ VALIDATED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          VARCHAR2(13)
+ GENERATED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          VARCHAR2(14)
+ BAD                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                VARCHAR2(3)
+ RELY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               VARCHAR2(4)
+ LAST_CHANGE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        DATE
+ INDEX_OWNER                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        VARCHAR2(30)
+ INDEX_NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         VARCHAR2(30)
+ INVALID                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            VARCHAR2(7)
+ VIEW_RELATED                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       VARCHAR2(14)
+
+SQL> select constraint_name,constraint_type from user_constraints where table_name='STUDENT';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+SYS_C004072                    P
+
+SQL> desc user_cons_columns;
+ Name   	 	Null?   	 Type   
+OWNER  	 		NOT NULL 	VARCHAR2(30)
+CONSTRAINT_NAME  	NOT NULL	VARCHAR2(30)
+TABLE_NAME 		NOT NULL	VARCHAR2(30)
+ COLUMN_NAME                         	VARCHAR2(4000)
+ POSITION                               NUMBER
+
+SQL> select column_name,constraint_name from user_cons_columns where table_name='STUDENT';
+
+COLUMN_NAME	CONSTRAINT_NAME
+-----------------------------------
+ROLL		SYS_C004072
+
+
+
+SQL>

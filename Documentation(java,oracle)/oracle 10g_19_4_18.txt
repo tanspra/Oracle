@@ -1,0 +1,227 @@
+
+SQL> set pagesize 1000
+SQL> help set;
+
+ SET
+ ---
+
+ Sets a system variable to alter the SQL*Plus environment settings
+ for your current session. For example, to:
+     -   set the display width for data
+     -   customize HTML formatting
+     -   enable or disable printing of column headings
+     -   set the number of lines per page
+ In iSQL*Plus, you can also use the Preferences screen to set
+ system variables.
+
+ SET system_variable value
+
+ where system_variable and value represent one of the following clauses:
+
+   APPI[NFO]{OFF|ON|text}                   NUM[WIDTH] {10|n}
+   ARRAY[SIZE] {15|n}                       PAGES[IZE] {14|n}
+   AUTO[COMMIT] {OFF|ON|IMM[EDIATE]|n}      PAU[SE] {OFF|ON|text}
+   AUTOP[RINT] {OFF|ON}                     RECSEP {WR[APPED]|EA[CH]|OFF}
+   AUTORECOVERY {OFF|ON}                    RECSEPCHAR {_|c}
+   AUTOT[RACE] {OFF|ON|TRACE[ONLY]}         SERVEROUT[PUT] {ON|OFF}
+     [EXP[LAIN]] [STAT[ISTICS]]               [SIZE {n | UNLIMITED}] [FOR[MAT]
+   BLO[CKTERMINATOR] {.|c|ON|OFF}             {WRA[PPED] |
+   CMDS[EP] {;|c|OFF|ON}                       WOR[D_WRAPPED] |
+   COLSEP {_|text}                             TRU[NCATED]}]
+   CON[CAT] {.|c|ON|OFF}                   *SHIFT[INOUT] {VIS[IBLE] |
+   COPYC[OMMIT] {0|n}                         INV[ISIBLE]}
+   COPYTYPECHECK {ON|OFF}                  *SHOW[MODE] {OFF|ON}
+   DEF[INE] {&|c|ON|OFF}                   *SQLBL[ANKLINES] {OFF|ON}
+   DESCRIBE [DEPTH {1|n|ALL}]               SQLC[ASE] {MIX[ED] |
+     [LINENUM {OFF|ON}] [INDENT {OFF|ON}]     LO[WER] | UP[PER]}
+   ECHO {OFF|ON}                           *SQLCO[NTINUE] {> | text}
+  *EDITF[ILE] file_name[.ext]              *SQLN[UMBER] {ON|OFF}
+   EMB[EDDED] {OFF|ON}                      SQLPLUSCOMPAT[IBILITY] {x.y[.z]}
+   ESC[APE] {\|c|OFF|ON}                   *SQLPRE[FIX] {#|c}
+   FEED[BACK] {6|n|ON|OFF}                 *SQLP[ROMPT] {SQL>|text}
+   FLAGGER {OFF|ENTRY|INTERMED[IATE]|FULL}  SQLT[ERMINATOR] {;|c|ON|OFF}
+  *FLU[SH] {ON|OFF}                        *SUF[FIX] {SQL|text}
+   HEA[DING] {ON|OFF}                      *TAB {ON|OFF}
+   HEADS[EP] {||c|ON|OFF}                  *TERM[OUT] {ON|OFF}
+   INSTANCE [instance_path|LOCAL]          *TI[ME] {OFF|ON}
+   LIN[ESIZE] {80|n} ({150|n} iSQL*Plus)    TIMI[NG] {OFF|ON}
+   LOBOF[FSET] {1|n}                       *TRIM[OUT] {ON|OFF}
+   LOGSOURCE [pathname]                    *TRIMS[POOL] {OFF|ON}
+   LONG {80|n}                              UND[ERLINE] {-|c|ON|OFF}
+   LONGC[HUNKSIZE] {80|n}                   VER[IFY] {ON|OFF}
+   MARK[UP] HTML [OFF|ON]                   WRA[P] {ON|OFF}
+     [HEAD text] [BODY text] [TABLE text]   XQUERY {BASEURI text|
+     [ENTMAP {ON|OFF}]                        ORDERING{UNORDERED|
+     [SPOOL {OFF|ON}]                                  ORDERED|DEFAULT}|
+     [PRE[FORMAT] {OFF|ON}]                   NODE{BYVALUE|BYREFERENCE|
+   NEWP[AGE] {1|n|NONE}                            DEFAULT}|
+   NULL text                                  CONTEXT text}
+   NUMF[ORMAT] format
+
+
+ An asterisk (*) indicates the SET option is not supported in iSQL*Plus.
+
+
+SQL> set autotrace on explain;
+SQL>
+SQL>
+SQL>
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO DNAME
+---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800
+        20 RESEARCH
+
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30 SALES
+
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500
+        30 SALES
+
+      7566 JONES      MANAGER         7839 02-APR-81       2975
+        20 RESEARCH
+
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400
+        30 SALES
+
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850
+        30 SALES
+
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450
+        10 ACCOUNTING
+
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000
+        20 RESEARCH
+
+      7839 KING       PRESIDENT            17-NOV-81       5000
+        10 ACCOUNTING
+
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0
+        30 SALES
+
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100
+        20 RESEARCH
+
+      7900 JAMES      CLERK           7698 03-DEC-81        950
+        30 SALES
+
+      7902 FORD       ANALYST         7566 03-DEC-81       3000
+        20 RESEARCH
+
+      7934 MILLER     CLERK           7782 23-JAN-82       1300
+        10 ACCOUNTING
+
+      8800 pk         ceo                                  3000
+
+
+         2 sunny
+        40
+
+         3 Ravikant
+        30
+
+         1 s_mith
+        10
+
+         4 p*r*shant
+        40
+
+         5 oracle_12c
+        20
+
+
+20 rows selected.
+
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 3956160932
+
+--------------------------------------------------------------------------
+| Id  | Operation         | Name | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |      |    16 |   672 |     3   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS FULL| EMP  |    16 |   672 |     3   (0)| 00:00:01 |
+--------------------------------------------------------------------------
+
+SQL> set line 10000;
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+         3 Ravikant                                                                30
+         1 s_mith                                                                  10
+         4 p*r*shant                                                               40
+         5 oracle_12c                                                              20
+
+20 rows selected.
+
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 3956160932
+
+--------------------------------------------------------------------------
+| Id  | Operation         | Name | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |      |    16 |   672 |     3   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS FULL| EMP  |    16 |   672 |     3   (0)| 00:00:01 |
+--------------------------------------------------------------------------
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+         3 Ravikant                                                                30
+         1 s_mith                                                                  10
+         4 p*r*shant                                                               40
+         5 oracle_12c                                                              20
+
+20 rows selected.
+
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 3956160932
+
+--------------------------------------------------------------------------
+| Id  | Operation         | Name | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |      |    16 |   672 |     3   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS FULL| EMP  |    16 |   672 |     3   (0)| 00:00:01 |
+--------------------------------------------------------------------------

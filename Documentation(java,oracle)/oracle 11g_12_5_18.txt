@@ -1,0 +1,324 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Sat May 12 15:07:24 2018
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: scott
+Enter password:
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> select * from tab;
+
+TNAME                        TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+BONUS                          TABLE
+DEPT                           TABLE
+EMP                            TABLE
+SALGRADE                       TABLE
+
+SQL> select * from emp;   
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800
+        20
+
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30
+
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975
+        20
+
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400
+        30
+
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450
+        10
+
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000
+        20
+
+      7839 KING       PRESIDENT            17-NOV-81       5000
+        10
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0
+        30
+
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100
+        20
+
+      7900 JAMES      CLERK           7698 03-DEC-81        950
+        30
+
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7902 FORD       ANALYST         7566 03-DEC-81       3000
+        20
+
+      7934 MILLER     CLERK           7782 23-JAN-82       1300
+        10
+
+
+14 rows selected.
+
+SQL> set line 100;
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+SQL> select * from(select * from emp)pivot(sum(sal) for deptno in(10,20,30));
+
+     EMPNO ENAME      JOB              MGR HIREDATE        COMM         10         20         30
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ----------
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1400                             1250
+      7698 BLAKE      MANAGER         7839 01-MAY-81                                        2850
+      7934 MILLER     CLERK           7782 23-JAN-82                  1300
+      7521 WARD       SALESMAN        7698 22-FEB-81        500                             1250
+      7566 JONES      MANAGER         7839 02-APR-81                             2975
+      7844 TURNER     SALESMAN        7698 08-SEP-81          0                             1500
+      7900 JAMES      CLERK           7698 03-DEC-81                                         950
+      7839 KING       PRESIDENT            17-NOV-81                  5000
+      7876 ADAMS      CLERK           7788 23-MAY-87                             1100
+      7902 FORD       ANALYST         7566 03-DEC-81                             3000
+      7788 SCOTT      ANALYST         7566 19-APR-87                             3000
+      7782 CLARK      MANAGER         7839 09-JUN-81                  2450
+      7369 SMITH      CLERK           7902 17-DEC-80                              800
+      7499 ALLEN      SALESMAN        7698 20-FEB-81        300                             1600
+
+14 rows selected.
+
+SQL> select to_number('$90','$99') from dual;
+
+TO_NUMBER('$90','$99')
+----------------------
+                    90
+
+SQL> select to_number('@90','@99') from dual;
+select to_number('@90','@99') from dual
+                       *
+ERROR at line 1:
+ORA-01481: invalid number format model
+
+SQL*Plus: Release 11.2.0.1.0 Production on Sat May 12 15:22:11 2018
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: scott
+Enter password:
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> desc session;
+ERROR:
+ORA-00931: missing identifier
+
+
+SQL> desc nls_session_parameters;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PARAMETER                                          VARCHAR2(30)
+ VALUE                                              VARCHAR2(40)
+
+SQL> select *  nls_session_parameters;
+select *  nls_session_parameters
+          *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select * from  nls_session_parameters;
+
+PARAMETER                      VALUE
+------------------------------ ----------------------------------------
+NLS_LANGUAGE                   ENGLISH
+NLS_TERRITORY                  UNITED KINGDOM
+NLS_CURRENCY                   ú
+NLS_ISO_CURRENCY               UNITED KINGDOM
+NLS_NUMERIC_CHARACTERS         .,
+NLS_CALENDAR                   GREGORIAN
+NLS_DATE_FORMAT                DD-MON-RR
+NLS_DATE_LANGUAGE              ENGLISH
+NLS_SORT                       BINARY
+NLS_TIME_FORMAT                HH24.MI.SSXFF
+NLS_TIMESTAMP_FORMAT           DD-MON-RR HH24.MI.SSXFF
+
+PARAMETER                      VALUE
+------------------------------ ----------------------------------------
+NLS_TIME_TZ_FORMAT             HH24.MI.SSXFF TZR
+NLS_TIMESTAMP_TZ_FORMAT        DD-MON-RR HH24.MI.SSXFF TZR
+NLS_DUAL_CURRENCY              Ç
+NLS_COMP                       BINARY
+NLS_LENGTH_SEMANTICS           BYTE
+NLS_NCHAR_CONV_EXCP            FALSE
+
+17 rows selected.
+
+SQL> set pagesize 100;
+SQL> select * from  nls_session_parameters;
+
+PARAMETER                      VALUE
+------------------------------ ----------------------------------------
+NLS_LANGUAGE                   ENGLISH
+NLS_TERRITORY                  UNITED KINGDOM
+NLS_CURRENCY                   ú
+NLS_ISO_CURRENCY               UNITED KINGDOM
+NLS_NUMERIC_CHARACTERS         .,
+NLS_CALENDAR                   GREGORIAN
+NLS_DATE_FORMAT                DD-MON-RR
+NLS_DATE_LANGUAGE              ENGLISH
+NLS_SORT                       BINARY
+NLS_TIME_FORMAT                HH24.MI.SSXFF
+NLS_TIMESTAMP_FORMAT           DD-MON-RR HH24.MI.SSXFF
+NLS_TIME_TZ_FORMAT             HH24.MI.SSXFF TZR
+NLS_TIMESTAMP_TZ_FORMAT        DD-MON-RR HH24.MI.SSXFF TZR
+NLS_DUAL_CURRENCY              Ç
+NLS_COMP                       BINARY
+NLS_LENGTH_SEMANTICS           BYTE
+NLS_NCHAR_CONV_EXCP            FALSE
+
+17 rows selected.
+
+SQL> alter session set nls_currency='$';
+
+Session altered.
+
+SQL> select * from  nls_session_parameters;
+
+PARAMETER                      VALUE
+------------------------------ ----------------------------------------
+NLS_LANGUAGE                   ENGLISH
+NLS_TERRITORY                  UNITED KINGDOM
+NLS_CURRENCY                   $
+NLS_ISO_CURRENCY               UNITED KINGDOM
+NLS_NUMERIC_CHARACTERS         .,
+NLS_CALENDAR                   GREGORIAN
+NLS_DATE_FORMAT                DD-MON-RR
+NLS_DATE_LANGUAGE              ENGLISH
+NLS_SORT                       BINARY
+NLS_TIME_FORMAT                HH24.MI.SSXFF
+NLS_TIMESTAMP_FORMAT           DD-MON-RR HH24.MI.SSXFF
+NLS_TIME_TZ_FORMAT             HH24.MI.SSXFF TZR
+NLS_TIMESTAMP_TZ_FORMAT        DD-MON-RR HH24.MI.SSXFF TZR
+NLS_DUAL_CURRENCY              Ç
+NLS_COMP                       BINARY
+NLS_LENGTH_SEMANTICS           BYTE
+NLS_NCHAR_CONV_EXCP            FALSE
+
+17 rows selected.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select *,coalesce(comm,sal) from emp;
+select *,coalesce(comm,sal) from emp
+        *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select empno,ename,coalesce(comm,sal) from emp;
+
+     EMPNO ENAME      COALESCE(COMM,SAL)
+---------- ---------- ------------------
+      7369 SMITH                     800
+      7499 ALLEN                     300
+      7521 WARD                      500
+      7566 JONES                    2975
+      7654 MARTIN                   1400
+      7698 BLAKE                    2850
+      7782 CLARK                    2450
+      7788 SCOTT                    3000
+      7839 KING                     5000
+      7844 TURNER                      0
+      7876 ADAMS                    1100
+      7900 JAMES                     950
+      7902 FORD                     3000
+      7934 MILLER                   1300
+
+14 rows selected.
+
+SQL> select empno,ename,sal,comm,coalesce(comm,sal) from emp;
+
+     EMPNO ENAME             SAL       COMM COALESCE(COMM,SAL)
+---------- ---------- ---------- ---------- ------------------
+      7369 SMITH             800                           800
+      7499 ALLEN            1600        300                300
+      7521 WARD             1250        500                500
+      7566 JONES            2975                          2975
+      7654 MARTIN           1250       1400               1400
+      7698 BLAKE            2850                          2850
+      7782 CLARK            2450                          2450
+      7788 SCOTT            3000                          3000
+      7839 KING             5000                          5000
+      7844 TURNER           1500          0                  0
+      7876 ADAMS            1100                          1100
+      7900 JAMES             950                           950
+      7902 FORD             3000                          3000
+      7934 MILLER           1300                          1300
+
+14 rows selected.

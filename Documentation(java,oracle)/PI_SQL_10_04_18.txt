@@ -1,0 +1,228 @@
+
+SQL> @f:/pl_sql/welcome.sql
+SP2-0310: unable to open file "f:/pl_sql/welcome.sql"
+SQL> @e:/pl_sql/welcome.sql
+
+PL/SQL procedure successfully completed.
+
+SQL> set serveroutput on;
+SQL> @e:/pl_sql/welcome.sql
+Welcome to pl/sql
+
+PL/SQL procedure successfully completed.
+
+SQL> @e:/pl_sql/salaryincrement.sql
+Enter value for employee_number: 7966
+old   6: v_eno:=&employee_number;
+new   6: v_eno:=7966;
+Enter value for increment_amount: 500
+old   7: v_incrementSalary:=&increment_amount;
+new   7: v_incrementSalary:=500;
+select sal into v_sal from emp where empno=v_eno;
+                           *
+ERROR at line 8:
+ORA-06550: line 8, column 28:
+PL/SQL: ORA-00942: table or view does not exist
+ORA-06550: line 8, column 1:
+PL/SQL: SQL Statement ignored
+ORA-06550: line 13, column 9:
+PL/SQL: ORA-00942: table or view does not exist
+ORA-06550: line 13, column 2:
+PL/SQL: SQL Statement ignored
+
+
+SQL> select * from emp;
+select * from emp
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> show user;
+USER is "SYS"
+SQL> conn scott/tiger;
+Connected.
+SQL> @e:/pl_sql/salaryincrement.sql
+Enter value for employee_number: 7966
+old   6: v_eno:=&employee_number;
+new   6: v_eno:=7966;
+Enter value for increment_amount: 500
+old   7: v_incrementSalary:=&increment_amount;
+new   7: v_incrementSalary:=500;
+declare
+*
+ERROR at line 1:
+ORA-01403: no data found
+ORA-06512: at line 8
+
+
+SQL> set verify off;
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+
+16 rows selected.
+
+SQL> @e:/pl_sql/salaryincrement.sql
+Enter value for employee_number: 2
+Enter value for increment_amount: 500
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  3000
+         2 sunny                                                                   40
+
+16 rows selected.
+
+SQL> @e:/pl_sql/salaryincrement.sql
+Enter value for employee_number: 8800
+Enter value for increment_amount: 1200
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  4200
+         2 sunny                                                                   40
+
+16 rows selected.
+
+SQL> @e:/pl_sql/salaryincrement.sql
+Enter value for employee_number: 1
+Enter value for increment_amount: 1000
+declare
+*
+ERROR at line 1:
+ORA-01403: no data found
+ORA-06512: at line 8
+
+
+SQL> @e:/pl_sql/salaryincrement.sql
+Enter value for employee_number: 1
+Enter value for increment_amount: 1200
+
+PL/SQL procedure successfully completed.
+
+SQL> @e:/pl_sql/salaryincrement.sql
+Enter value for employee_number: 14
+Enter value for increment_amount: 1245
+
+PL/SQL procedure successfully completed.
+
+SQL> set serveroutput on;
+SQL> @e:/pl_sql/salaryincrement.sql
+Enter value for employee_number: 45
+Enter value for increment_amount: 145
+No such employee found
+
+PL/SQL procedure successfully completed.
+
+SQL> @e:/pl_sql/incsal.sql
+Enter value for empno: 2
+        v_sal=0.1*v_sal;
+             *
+ERROR at line 8:
+ORA-06550: line 8, column 7:
+PLS-00103: Encountered the symbol "=" when expecting one of the following:
+:= . ( @ % ;
+ORA-06550: line 9, column 1:
+PLS-00103: Encountered the symbol "ELSIF"
+
+
+SQL> @e:/pl_sql/incsal.sql
+Enter value for empno: 2
+end;
+   *
+ERROR at line 17:
+ORA-06550: line 17, column 4:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+if
+
+
+SQL> @e:/pl_sql/incsal.sql
+Enter value for empno: 2
+Salary before bonus :
+Bonus salary is :
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO DNAME
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- --------------------
+      7369 SMITH      CLERK           7902 17-DEC-80       4800                    20 RESEARCH
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 SALES
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30 SALES
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 RESEARCH
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 SALES
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 SALES
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10 ACCOUNTING
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 RESEARCH
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 ACCOUNTING
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 SALES
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 RESEARCH
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 SALES
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 RESEARCH
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10 ACCOUNTING
+      8800 pk         ceo                                  4200
+         2 sunny                                                                   40
+
+16 rows selected.
+
+SQL> @e:/pl_sql/incsal.sql
+Enter value for empno: 7369
+Salary before bonus : 4800
+Bonus salary is : 240
+
+PL/SQL procedure successfully completed.

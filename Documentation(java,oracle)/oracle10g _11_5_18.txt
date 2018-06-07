@@ -1,0 +1,461 @@
+Oracle 10 g
+
+12:44:08 SQL> select systimestamp from dual;
+
+SYSTIMESTAMP
+---------------------------------------------------------------------------
+12-MAY-18 12.44.54.948000 +05:30
+
+12:44:54 SQL> drop table test;
+
+Table dropped.
+
+12:46:18 SQL> create table test(sno number(10),name varchar2(10));
+
+Table created.
+
+12:46:48 SQL> insert into test values(&sno,'&name');
+Enter value for sno: 1
+Enter value for name: prashant
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(1,'prashant')
+
+1 row created.
+
+12:47:20 SQL> /
+Enter value for sno: 2
+Enter value for name: ravikant
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(2,'ravikant')
+
+1 row created.
+
+12:47:25 SQL> /
+Enter value for sno: 3
+Enter value for name: prabhat
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(3,'prabhat')
+
+1 row created.
+
+12:47:31 SQL> /
+Enter value for sno: 4
+Enter value for name: shubham
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(4,'shubham')
+
+1 row created.
+
+12:47:36 SQL> select * from test;
+
+       SNO NAME
+---------- ----------
+         1 prashant
+         2 ravikant
+         3 prabhat
+         4 shubham
+
+12:47:43 SQL> commit;
+
+Commit complete.
+
+12:47:52 SQL> delete * from test;
+delete * from test
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+12:48:09 SQL> delete from test;
+
+4 rows deleted.
+
+12:48:14 SQL> select * from test;
+
+no rows selected
+
+12:48:23 SQL> select * from test as of timestamp to_timestamp('12:47:36','HH:MI:SS');
+select * from test as of timestamp to_timestamp('12:47:36','HH:MI:SS')
+              *
+ERROR at line 1:
+ORA-01466: unable to read data - table definition has changed
+
+
+12:49:29 SQL> select * from test as of timestamp to_timestamp('12-MAY-18 12:47:36','DD-MON-YY HH:MI:SS');
+
+no rows selected
+
+12:50:31 SQL> select * from test as of timestamp to_timestamp('12-MAY-18 12:48:09','DD-MON-YY HH:MI:SS');
+
+       SNO NAME
+---------- ----------
+         1 prashant
+         2 ravikant
+         3 prabhat
+         4 shubham
+
+12:50:50 SQL> select * from test as of timestamp to_timestamp('12-MAY-18 12:48:00','DD-MON-YY HH:MI:SS');
+
+       SNO NAME
+---------- ----------
+         1 prashant
+         2 ravikant
+         3 prabhat
+         4 shubham
+
+12:50:59 SQL> select * from test as of timestamp to_timestamp('12-MAY-18 12:45:00','DD-MON-YY HH:MI:SS');
+select * from test as of timestamp to_timestamp('12-MAY-18 12:45:00','DD-MON-YY HH:MI:SS')
+              *
+ERROR at line 1:
+ORA-01466: unable to read data - table definition has changed
+
+
+
+12:53:36 SQL> select * from test as of timestamp to_timestamp('12-MAY-18 12:48:00','DD-MON-YY HH:MI:SS');
+
+       SNO NAME
+---------- ----------
+         1 prashant
+         2 ravikant
+         3 prabhat
+         4 shubham
+
+12:53:40 SQL> select * from test;
+
+no rows selected
+
+12:53:46 SQL> insert into test select * from test as of timestamp to_timestamp('12-MAY-18 12:48:00','DD-MON-YY HH:MI:SS');
+
+4 rows created.
+
+12:54:06 SQL> select * from test;
+
+       SNO NAME
+---------- ----------
+         1 prashant
+         2 ravikant
+         3 prabhat
+         4 shubham
+
+SQL> desc user_tablespaces;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ TABLESPACE_NAME                                       NOT NULL VARCHAR2(30)
+ BLOCK_SIZE                                            NOT NULL NUMBER
+ INITIAL_EXTENT                                                 NUMBER
+ NEXT_EXTENT                                                    NUMBER
+ MIN_EXTENTS                                           NOT NULL NUMBER
+ MAX_EXTENTS                                                    NUMBER
+ PCT_INCREASE                                                   NUMBER
+ MIN_EXTLEN                                                     NUMBER
+ STATUS                                                         VARCHAR2(9)
+ CONTENTS                                                       VARCHAR2(9)
+ LOGGING                                                        VARCHAR2(9)
+ FORCE_LOGGING                                                  VARCHAR2(3)
+ EXTENT_MANAGEMENT                                              VARCHAR2(10)
+ ALLOCATION_TYPE                                                VARCHAR2(9)
+ SEGMENT_SPACE_MANAGEMENT                                       VARCHAR2(6)
+ DEF_TAB_COMPRESSION                                            VARCHAR2(8)
+ RETENTION                                                      VARCHAR2(11)
+ BIGFILE                                                        VARCHAR2(3)
+
+SQL> select tablespace_name from user_tablespaces;
+
+TABLESPACE_NAME
+------------------------------
+SYSTEM
+UNDO
+SYSAUX
+TEMP
+USERS
+
+SQL> select tablespace_name,default_tablespace from user_tablespaces;
+select tablespace_name,default_tablespace from user_tablespaces
+                       *
+ERROR at line 1:
+ORA-00904: "DEFAULT_TABLESPACE": invalid identifier
+
+
+SQL> desc dba_users;
+ERROR:
+ORA-04043: object "SYS"."DBA_USERS" does not exist
+
+
+SQL> conn sys as sysdba
+Enter password:
+Connected.
+SQL> desc dba_users;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ USERNAME                                              NOT NULL VARCHAR2(30)
+ USER_ID                                               NOT NULL NUMBER
+ PASSWORD                                                       VARCHAR2(30)
+ ACCOUNT_STATUS                                        NOT NULL VARCHAR2(32)
+ LOCK_DATE                                                      DATE
+ EXPIRY_DATE                                                    DATE
+ DEFAULT_TABLESPACE                                    NOT NULL VARCHAR2(30)
+ TEMPORARY_TABLESPACE                                  NOT NULL VARCHAR2(30)
+ CREATED                                               NOT NULL DATE
+ PROFILE                                               NOT NULL VARCHAR2(30)
+ INITIAL_RSRC_CONSUMER_GROUP                                    VARCHAR2(30)
+ EXTERNAL_NAME                                                  VARCHAR2(4000)
+
+SQL> select username,default_tablespace from dba_users;
+
+USERNAME                       DEFAULT_TABLESPACE
+------------------------------ ------------------------------
+PRASHANT                       SYSTEM
+SYS                            SYSTEM
+SYSTEM                         SYSTEM
+ANONYMOUS                      SYSAUX
+SCOTT                          USERS
+MDSYS                          SYSTEM
+OUTLN                          SYSTEM
+DIP                            SYSTEM
+TSMSYS                         SYSTEM
+FLOWS_FILES                    SYSAUX
+CTXSYS                         SYSAUX
+DBSNMP                         SYSAUX
+FLOWS_020100                   SYSAUX
+XDB                            SYSAUX
+HR                             USERS
+
+15 rows selected.
+
+SQL> desc user_indexes;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ INDEX_NAME                                            NOT NULL VARCHAR2(30)
+ INDEX_TYPE                                                     VARCHAR2(27)
+ TABLE_OWNER                                           NOT NULL VARCHAR2(30)
+ TABLE_NAME                                            NOT NULL VARCHAR2(30)
+ TABLE_TYPE                                                     VARCHAR2(11)
+ UNIQUENESS                                                     VARCHAR2(9)
+ COMPRESSION                                                    VARCHAR2(8)
+ PREFIX_LENGTH                                                  NUMBER
+ TABLESPACE_NAME                                                VARCHAR2(30)
+ INI_TRANS                                                      NUMBER
+ MAX_TRANS                                                      NUMBER
+ INITIAL_EXTENT                                                 NUMBER
+ NEXT_EXTENT                                                    NUMBER
+ MIN_EXTENTS                                                    NUMBER
+ MAX_EXTENTS                                                    NUMBER
+ PCT_INCREASE                                                   NUMBER
+ PCT_THRESHOLD                                                  NUMBER
+ INCLUDE_COLUMN                                                 NUMBER
+ FREELISTS                                                      NUMBER
+ FREELIST_GROUPS                                                NUMBER
+ PCT_FREE                                                       NUMBER
+ LOGGING                                                        VARCHAR2(3)
+ BLEVEL                                                         NUMBER
+ LEAF_BLOCKS                                                    NUMBER
+ DISTINCT_KEYS                                                  NUMBER
+ AVG_LEAF_BLOCKS_PER_KEY                                        NUMBER
+ AVG_DATA_BLOCKS_PER_KEY                                        NUMBER
+ CLUSTERING_FACTOR                                              NUMBER
+ STATUS                                                         VARCHAR2(8)
+ NUM_ROWS                                                       NUMBER
+ SAMPLE_SIZE                                                    NUMBER
+ LAST_ANALYZED                                                  DATE
+ DEGREE                                                         VARCHAR2(40)
+ INSTANCES                                                      VARCHAR2(40)
+ PARTITIONED                                                    VARCHAR2(3)
+ TEMPORARY                                                      VARCHAR2(1)
+ GENERATED                                                      VARCHAR2(1)
+ SECONDARY                                                      VARCHAR2(1)
+ BUFFER_POOL                                                    VARCHAR2(7)
+ USER_STATS                                                     VARCHAR2(3)
+ DURATION                                                       VARCHAR2(15)
+ PCT_DIRECT_ACCESS                                              NUMBER
+ ITYP_OWNER                                                     VARCHAR2(30)
+ ITYP_NAME                                                      VARCHAR2(30)
+ PARAMETERS                                                     VARCHAR2(1000)
+ GLOBAL_STATS                                                   VARCHAR2(3)
+ DOMIDX_STATUS                                                  VARCHAR2(12)
+ DOMIDX_OPSTATUS                                                VARCHAR2(6)
+ FUNCIDX_STATUS                                                 VARCHAR2(8)
+ JOIN_INDEX                                                     VARCHAR2(3)
+ IOT_REDUNDANT_PKEY_ELIM                                        VARCHAR2(3)
+ DROPPED                                                        VARCHAR2(3)
+
+
+SQL> set autotrace on explain;
+SQL> select * from test;
+select * from test
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from scott.test;
+
+       SNO NAME
+---------- ----------
+         1 prashant
+         2 ravikant
+         3 prabhat
+         4 shubham
+
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 1357081020
+
+--------------------------------------------------------------------------
+| Id  | Operation         | Name | Rows  | Bytes | Cost (%CPU)| Time     |
+--------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |      |     4 |    80 |     3   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS FULL| TEST |     4 |    80 |     3   (0)| 00:00:01 |
+--------------------------------------------------------------------------
+
+Note
+-----
+   - dynamic sampling used for this statement
+
+SQL> conn scott/tiger
+Connected.
+SQL> select index_name,index_type from user_indexes where table_name='EMP';
+
+INDEX_NAME                     INDEX_TYPE
+------------------------------ ---------------------------
+PK_EMP                         NORMAL
+
+SQL> desc user_ind_columns;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ INDEX_NAME                                                     VARCHAR2(30)
+ TABLE_NAME                                                     VARCHAR2(30)
+ COLUMN_NAME                                                    VARCHAR2(4000)
+ COLUMN_POSITION                                                NUMBER
+ COLUMN_LENGTH                                                  NUMBER
+ CHAR_LENGTH                                                    NUMBER
+ DESCEND                                                        VARCHAR2(4)
+
+SQL> select * from user_ind_columns;
+
+INDEX_NAME	 TABLE_NAME 	 COLUMN_NAME  	COLUMN_POSITION  COLUMN_LENGTH	 CHAR_LENGTH 	DESC
+-----------	-------------	-------------	----------------  ---------- 	 -----------	----
+PK_DEPT  	  DEPT		DEPTNO	    	 1     		  22          		 0	 ASC
+PK_EMP            EMP		EMPNO            1                22   			 0	 ASC
+PK_EMP2           MV1		EMPNO            1                22                     0       ASC
+PK_EMP3           MV2		EMPNO            1    		  22    		 0	 ASC
+PK_EMP4           MV3		EMPNO            1        	  22          		 0	 ASC
+SYS_C004072      STUDENT	ROLL             1          	  22           		 0	 ASC
+PK_EMP1         GETDATAMV	EMPNO            1           	  22           		 0	 ASC
+
+7 rows selected.
+
+SQL> select data_default,column_name from user_tab_columns where table_name='EMP';
+DATA_DEFAULT                                                                     COLUMN_NAME
+-------------------------------------------------------------------------------- ------------------------------
+                                                                                 EMPNO
+                                                                                 ENAME
+                                                                                 JOB
+                                                                                 MGR
+                                                                                 HIREDATE
+                                                                                 SAL
+                                                                                 COMM
+                                                                                 DEPTNO
+
+8 rows selected.
+
+SQL> drop table test1;
+
+Table dropped.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> desc test1;
+ERROR:
+ORA-04043: object test1 does not exist
+
+
+SQL> drop table test;
+
+Table dropped.
+
+SQL> create table test(sno number(10),name varchar2(10));
+
+Table created.
+
+SQL> insert into test values(&sno,'&name');
+Enter value for sno: 1
+Enter value for name: pk;
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(1,'pk;')
+
+1 row created.
+
+SQL> /
+Enter value for sno: 2
+Enter value for name: we
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(2,'we')
+
+1 row created.
+
+SQL> savepoint s1;
+
+Savepoint created.
+
+SQL> /
+
+Savepoint created.
+
+SQL> insert into test values(&sno,'&name');
+Enter value for sno: 3
+Enter value for name: 4rt
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(3,'4rt')
+
+1 row created.
+
+SQL> /
+Enter value for sno: 4
+Enter value for name: dfg
+old   1: insert into test values(&sno,'&name')
+new   1: insert into test values(4,'dfg')
+
+1 row created.
+
+SQL> savepoint s2;
+
+Savepoint created.
+
+SQL> select * from test;
+
+       SNO NAME
+---------- ----------
+         1 pk;
+         2 we
+         3 4rt
+         4 dfg
+
+SQL> rollback to s1;
+
+Rollback complete.
+
+SQL> select * from test;
+
+       SNO NAME
+---------- ----------
+         1 pk;
+         2 we
+
+SQL> rollback to s2;
+rollback to s2
+*
+ERROR at line 1:
+ORA-01086: savepoint 'S2' never established
+
+SQL> select job,sum(decode(deptno,10,sal)) "dept 10",sum(decode(deptno,20,sal))" dept 20",sum(decode(deptno,30,sal))"dept 30" from emp group by job;
+
+JOB          dept 10    dept 20    dept 30
+--------- ---------- ---------- ----------
+CLERK           1300       1900        950
+SALESMAN                              5600
+PRESIDENT       5000
+MANAGER         2450       2975       2850
+ANALYST                    6000
